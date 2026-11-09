@@ -268,4 +268,12 @@ export interface AIExplainedPractice {
   sourceCitation: string;
   disclaimer: string;
   source: 'gemini' | 'rule_fallback';
+  isAIGenerated?: boolean;
+  verifiedAttributes?: {
+    category: string;
+    suitableCrops: string[];
+    suitableSoilTypes: string[];
+    verifiedSource: string;
+  };
 }
+

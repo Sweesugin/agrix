@@ -106,7 +106,18 @@ class DataStore {
     }
   }
 
-  private persist() {
+  /**
+   * Persists the in-memory state to JSON file using an atomic write pattern:
+   * 1. Serialize entire state to JSON.
+   * 2. Write to a unique temporary file on the same filesystem.
+   * 3. Atomically rename the temporary file over the target DATA_FILE.
+   * 
+   * Architectural Note for Research / Production:
+   * This file-backed persistence engine provides durability and atomic updates for a single Node.js process.
+   * For horizontally scaled multi-container production environments, a centralized relational database
+   * (e.g., PostgreSQL / Cloud SQL) with row-level ACID transactions should be used.
+   */
+  public persist(): void {
     try {
       const dataDir = path.dirname(DATA_FILE);
       if (!fs.existsSync(dataDir)) {
@@ -123,14 +134,23 @@ class DataStore {
         posts: Array.from(this.posts.entries()),
         comments: Array.from(this.comments.entries()),
         products: Array.from(this.products.entries()),
+        cartItems: Array.from(this.cartItems.entries()),
+        reports: Array.from(this.reports.entries()),
         activities: this.activities,
         rewardTransactions: Array.from(this.rewardTransactions.entries()),
         recommendationLogs: this.recommendationLogs,
       };
 
-      fs.writeFileSync(DATA_FILE, JSON.stringify(serialized, null, 2), 'utf-8');
-    } catch (err) {
-      console.warn('Persistence warning (in-memory mode maintained):', err);
+      const jsonString = JSON.stringify(serialized, null, 2);
+      const tempFile = `${DATA_FILE}.tmp.${process.pid}.${Date.now()}`;
+
+      // Write to temporary file first
+      fs.writeFileSync(tempFile, jsonString, 'utf-8');
+
+      // Atomic rename over the destination
+      fs.renameSync(tempFile, DATA_FILE);
+    } catch (err: any) {
+      console.warn('Atomic persistence warning (in-memory mode maintained):', err?.message || err);
     }
   }
 
@@ -151,6 +171,8 @@ class DataStore {
       this.posts = new Map(data.posts);
       this.comments = new Map(data.comments);
       this.products = new Map(data.products);
+      this.cartItems = new Map(data.cartItems || []);
+      this.reports = new Map(data.reports || []);
       this.activities = data.activities || [];
       this.rewardTransactions = new Map(data.rewardTransactions || []);
       this.recommendationLogs = data.recommendationLogs || [];
@@ -166,8 +188,18 @@ class DataStore {
       });
 
       return true;
-    } catch (err) {
-      console.warn('Failed to load persisted data store, falling back to seed data:', err);
+    } catch (err: any) {
+      console.warn('Failed to load persisted data store, falling back to seed data:', err?.message || err);
+      // Attempt safe backup of corrupted file for post-incident diagnostics
+      try {
+        if (fs.existsSync(DATA_FILE)) {
+          const corruptedBackupPath = `${DATA_FILE}.corrupted.${Date.now()}`;
+          fs.copyFileSync(DATA_FILE, corruptedBackupPath);
+          console.warn(`Preserved corrupted store backup at ${corruptedBackupPath}`);
+        }
+      } catch (backupErr) {
+        console.error('Failed to create backup of corrupted store:', backupErr);
+      }
       return false;
     }
   }
@@ -560,6 +592,81 @@ class DataStore {
     this.persist();
     return newlyAwarded;
   }
+
+  // --- Entity Mutation Helpers Guaranteeing Atomic Persistence ---
+
+  saveUserChallenge(uc: UserChallenge): UserChallenge {
+    this.userChallenges.set(uc.id, uc);
+    this.persist();
+    return uc;
+  }
+
+  getUserChallenge(userId: string, challengeId: string): UserChallenge | undefined {
+    return Array.from(this.userChallenges.values()).find(
+      (uc) => uc.userId === userId && uc.challengeId === challengeId
+    );
+  }
+
+  savePost(post: CommunityPost): CommunityPost {
+    this.posts.set(post.id, post);
+    this.persist();
+    return post;
+  }
+
+  deletePost(id: string): boolean {
+    const existed = this.posts.delete(id);
+    if (existed) this.persist();
+    return existed;
+  }
+
+  saveComment(comment: CommunityComment): CommunityComment {
+    this.comments.set(comment.id, comment);
+    this.persist();
+    return comment;
+  }
+
+  saveReport(report: ReportItem): ReportItem {
+    this.reports.set(report.id, report);
+    this.persist();
+    return report;
+  }
+
+  saveChallenge(challenge: Challenge): Challenge {
+    this.challenges.set(challenge.id, challenge);
+    this.persist();
+    return challenge;
+  }
+
+  deleteChallenge(id: string): boolean {
+    const existed = this.challenges.delete(id);
+    if (existed) this.persist();
+    return existed;
+  }
+
+  savePractice(practice: SustainablePractice): SustainablePractice {
+    this.practices.set(practice.id, practice);
+    this.persist();
+    return practice;
+  }
+
+  deletePractice(id: string): boolean {
+    const existed = this.practices.delete(id);
+    if (existed) this.persist();
+    return existed;
+  }
+
+  saveProduct(product: MarketplaceProduct): MarketplaceProduct {
+    this.products.set(product.id, product);
+    this.persist();
+    return product;
+  }
+
+  deleteProduct(id: string): boolean {
+    const existed = this.products.delete(id);
+    if (existed) this.persist();
+    return existed;
+  }
 }
 
 export const db = new DataStore();
+

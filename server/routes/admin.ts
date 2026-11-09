@@ -100,7 +100,7 @@ router.post('/challenges', (req: AuthRequest, res: Response) => {
     createdAt: new Date().toISOString(),
   };
 
-  db.challenges.set(id, newChallenge);
+  db.saveChallenge(newChallenge);
   return res.status(201).json({ message: 'Challenge created successfully', challenge: newChallenge });
 });
 
@@ -115,7 +115,7 @@ router.put('/challenges/:id', (req: AuthRequest, res: Response) => {
     points: req.body.points !== undefined ? Number(req.body.points) : challenge.points,
   };
 
-  db.challenges.set(challenge.id, updated);
+  db.saveChallenge(updated);
   return res.json({ message: 'Challenge updated successfully', challenge: updated });
 });
 
@@ -125,9 +125,10 @@ router.delete('/challenges/:id', (req: AuthRequest, res: Response) => {
   if (!db.challenges.has(id)) {
     return res.status(404).json({ error: 'Challenge not found' });
   }
-  db.challenges.delete(id);
+  db.deleteChallenge(id);
   return res.json({ message: 'Challenge deleted successfully' });
 });
+
 
 // PRACTICES MANAGEMENT
 // POST /api/admin/practices
@@ -159,7 +160,7 @@ router.post('/practices', (req: AuthRequest, res: Response) => {
     relatedChallengeId: req.body.relatedChallengeId || 'chal_custom',
   };
 
-  db.practices.set(id, newPractice);
+  db.savePractice(newPractice);
   return res.status(201).json({ message: 'Practice created successfully', practice: newPractice });
 });
 
@@ -169,7 +170,7 @@ router.put('/practices/:id', (req: AuthRequest, res: Response) => {
   if (!practice) return res.status(404).json({ error: 'Practice not found' });
 
   const updated: SustainablePractice = { ...practice, ...req.body };
-  db.practices.set(practice.id, updated);
+  db.savePractice(updated);
   return res.json({ message: 'Practice updated', practice: updated });
 });
 
@@ -177,7 +178,7 @@ router.put('/practices/:id', (req: AuthRequest, res: Response) => {
 router.delete('/practices/:id', (req: AuthRequest, res: Response) => {
   const id = req.params.id;
   if (!db.practices.has(id)) return res.status(404).json({ error: 'Practice not found' });
-  db.practices.delete(id);
+  db.deletePractice(id);
   return res.json({ message: 'Practice deleted' });
 });
 
@@ -206,7 +207,7 @@ router.post('/products', (req: AuthRequest, res: Response) => {
     reviewsCount: 1,
   };
 
-  db.products.set(id, newProduct);
+  db.saveProduct(newProduct);
   return res.status(201).json({ message: 'Product created', product: newProduct });
 });
 
@@ -220,7 +221,7 @@ router.put('/products/:id', (req: AuthRequest, res: Response) => {
     ...req.body,
     price: req.body.price !== undefined ? Number(req.body.price) : prod.price,
   };
-  db.products.set(prod.id, updated);
+  db.saveProduct(updated);
   return res.json({ message: 'Product updated', product: updated });
 });
 
@@ -228,7 +229,7 @@ router.put('/products/:id', (req: AuthRequest, res: Response) => {
 router.delete('/products/:id', (req: AuthRequest, res: Response) => {
   const id = req.params.id;
   if (!db.products.has(id)) return res.status(404).json({ error: 'Product not found' });
-  db.products.delete(id);
+  db.deleteProduct(id);
   return res.json({ message: 'Product deleted' });
 });
 
@@ -250,18 +251,21 @@ router.post('/reports/:id/resolve', (req: AuthRequest, res: Response) => {
 
   const { action } = req.body; // 'delete_post' or 'dismiss'
   report.status = 'resolved';
+  report.resolvedAt = new Date().toISOString();
 
   if (action === 'delete_post') {
-    db.posts.delete(report.targetId);
+    db.deletePost(report.targetId);
   } else if (action === 'dismiss') {
     const post = db.posts.get(report.targetId);
     if (post) {
       post.isReported = false;
       post.reportedReason = undefined;
       post.reportedBy = [];
+      db.savePost(post);
     }
   }
 
+  db.saveReport(report);
   return res.json({ message: `Report marked as ${action}` });
 });
 
@@ -269,9 +273,10 @@ router.post('/reports/:id/resolve', (req: AuthRequest, res: Response) => {
 router.delete('/posts/:id', (req: AuthRequest, res: Response) => {
   const id = req.params.id;
   if (!db.posts.has(id)) return res.status(404).json({ error: 'Post not found' });
-  db.posts.delete(id);
+  db.deletePost(id);
   return res.json({ message: 'Post removed by administrator' });
 });
+
 
 // BADGES MANAGEMENT
 // POST /api/admin/badges

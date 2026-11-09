@@ -474,6 +474,19 @@ export const RecommendationsPage: React.FC<RecommendationsPageProps> = ({ onSele
               </div>
             ) : aiExplanation ? (
               <div className="space-y-4 text-xs">
+                {/* AI Provenance Badge */}
+                <div className="flex items-center justify-between p-2.5 rounded-xl bg-stone-100 border border-stone-200">
+                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-stone-700">
+                    <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+                    <span>
+                      {aiExplanation.isAIGenerated ? 'AI-Synthesized Agronomic Guidance' : 'Verified Knowledge-Base Guidance'}
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                    ICAR / Extension Grounded
+                  </span>
+                </div>
+
                 {/* Farmer Custom Why */}
                 <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-2xl space-y-1">
                   <h4 className="font-bold text-emerald-950 flex items-center gap-1.5">
@@ -484,6 +497,7 @@ export const RecommendationsPage: React.FC<RecommendationsPageProps> = ({ onSele
                     {aiExplanation.whyForFarmer}
                   </p>
                 </div>
+
 
                 {/* Practical Overview */}
                 <div className="space-y-1">

@@ -10,11 +10,243 @@ import { User } from '../db/types';
 
 const router = Router();
 
-// GET /api/evaluation/recommendations/compare
-router.get('/recommendations/compare', optionalAuthenticate, (req: AuthRequest, res: Response) => {
-  const { crop, soil, method, farmSize, experience, location, state } = req.query;
+/**
+ * Expert-Curated Agronomic Ground-Truth Archetypes
+ * For IEEE research evaluation, ground-truth relevance grades are defined on a 0-3 ordinal scale:
+ * 3 = Highly Relevant (Core agro-ecological practice for this archetype)
+ * 2 = Relevant (Valuable synergistic practice)
+ * 1 = Marginally Relevant
+ * 0 = Irrelevant or Contraindicated
+ */
+export interface ExpertArchetype {
+  id: string;
+  name: string;
+  agroZone: string;
+  profile: Partial<User> & { currentSeason?: 'Kharif' | 'Rabi' | 'Zaid' };
+  groundTruthRelevance: Record<string, number>; // practiceId -> grade 0-3
+}
 
-  const testProfile: Partial<User> = req.user
+export const EXPERT_ARCHETYPES: ExpertArchetype[] = [
+  {
+    id: 'archetype_semi_arid_tomato',
+    name: 'Archetype A [Anonymized]: Semi-Arid Vegetable Smallholder',
+    agroZone: 'Western Semi-Arid (Loamy Sand / Sandy Loam)',
+    profile: {
+      id: 'eval_archetype_a',
+      name: 'Farmer Archetype A',
+      mainCrop: 'Tomato',
+      soilType: 'Loamy',
+      farmingMethod: 'Organic',
+      farmSize: 2.0,
+      experienceLevel: 'Intermediate',
+      location: 'Regional Zone W-1',
+      state: 'Gujarat',
+      currentSeason: 'Rabi',
+    },
+    groundTruthRelevance: {
+      prac_3: 3, // Mulching: Critical for vegetable evaporation control
+      prac_7: 3, // Sticky Traps: Vital IPM for sucking pests on tomato
+      prac_2: 3, // Drip Irrigation: High-precision water delivery
+      prac_6: 2, // Vermicomposting: Soil organic conditioner
+      prac_10: 2, // Percolation pit: Water harvesting
+      prac_8: 1, // Biofertilizers: Supplemental
+      prac_1: 0, // AWD is strictly for wetland paddy, not tomato
+    },
+  },
+  {
+    id: 'archetype_wetland_paddy',
+    name: 'Archetype B [Anonymized]: Delta Wetland Paddy Cultivator',
+    agroZone: 'Southern River Basin (Clay / Heavy Alluvial)',
+    profile: {
+      id: 'eval_archetype_b',
+      name: 'Farmer Archetype B',
+      mainCrop: 'Paddy / Rice',
+      soilType: 'Clayey',
+      farmingMethod: 'Conventional',
+      farmSize: 3.5,
+      experienceLevel: 'Experienced',
+      location: 'Regional Zone S-2',
+      state: 'Tamil Nadu',
+      currentSeason: 'Kharif',
+    },
+    groundTruthRelevance: {
+      prac_1: 3, // Alternate Wetting & Drying: Proven wetland paddy technique
+      prac_9: 3, // Green Manuring (Dhaincha): Prime biological nitrogen
+      prac_8: 2, // Biofertilizers (Azotobacter/PSB)
+      prac_10: 2, // Percolation Pit / Farm Pond
+      prac_4: 2, // Crop rotation with pulses
+      prac_7: 1, // Sticky traps: Secondary in open flooded field
+    },
+  },
+  {
+    id: 'archetype_rainfed_cotton',
+    name: 'Archetype C [Anonymized]: Rainfed Black Soil Farmer',
+    agroZone: 'Central Plateau (Vertisol / Black Cotton Soil)',
+    profile: {
+      id: 'eval_archetype_c',
+      name: 'Farmer Archetype C',
+      mainCrop: 'Cotton',
+      soilType: 'Black',
+      farmingMethod: 'Natural farming',
+      farmSize: 4.5,
+      experienceLevel: 'Beginner',
+      location: 'Regional Zone C-3',
+      state: 'Maharashtra',
+      currentSeason: 'Kharif',
+    },
+    groundTruthRelevance: {
+      prac_5: 3, // Agroforestry & Windbreaks: Buffer moisture loss in dry periods
+      prac_6: 3, // Vermicomposting: Humus replenishment in cracking Vertisols
+      prac_4: 3, // Legume intercropping/rotation with cotton
+      prac_7: 2, // Sticky traps & Border trap crops
+      prac_10: 2, // Water harvesting trench
+      prac_1: 0, // AWD is contraindicated for non-paddy upland crops
+    },
+  },
+];
+
+/**
+ * Computes Discounted Cumulative Gain (DCG@K)
+ */
+function computeDCG(relevanceGrades: number[]): number {
+  return relevanceGrades.reduce((sum, rel, index) => {
+    const rank = index + 1;
+    const numerator = Math.pow(2, rel) - 1;
+    const denominator = Math.log2(rank + 1);
+    return sum + numerator / denominator;
+  }, 0);
+}
+
+/**
+ * Computes Ideal DCG (IDCG@K) given all ground truth grades
+ */
+function computeIDCG(allGrades: number[], k: number): number {
+  const sorted = [...allGrades].sort((a, b) => b - a).slice(0, k);
+  return computeDCG(sorted);
+}
+
+// GET /api/evaluation/accuracy/benchmark
+// Dedicated IR benchmark endpoint computing Precision@K, Recall@K, and NDCG@K
+router.get('/accuracy/benchmark', (req, res: Response) => {
+  const k = 4; // Top-4 recommendation evaluation
+
+  const archetypeBenchmarks = EXPERT_ARCHETYPES.map((arch) => {
+    const multiFactorRecs = WeightedMultiFactorRecommendationEngine.getRecommendationsForUser(
+      arch.profile,
+      k,
+      DEFAULT_FACTOR_WEIGHTS
+    );
+
+    const baselineRecs = RecommendationEngineBaseline.getRecommendationsForUser(arch.profile, k);
+
+    // Multi-Factor Grades
+    const mfGrades = multiFactorRecs.map(
+      (r) => arch.groundTruthRelevance[r.practice.id] ?? 0
+    );
+
+    // Baseline Grades
+    const baseGrades = baselineRecs.map(
+      (r) => arch.groundTruthRelevance[r.practice.id] ?? 0
+    );
+
+    // All ground-truth items with Grade >= 2 are considered "Relevant" for Precision/Recall
+    const totalRelevantGroundTruth = Object.values(arch.groundTruthRelevance).filter(
+      (g) => g >= 2
+    ).length;
+
+    // Precision@K = (Relevant items in top K) / K
+    const mfPrecisionAtK = mfGrades.filter((g) => g >= 2).length / k;
+    const basePrecisionAtK = baseGrades.filter((g) => g >= 2).length / k;
+
+    // Recall@K = (Relevant items in top K) / (Total relevant ground truth)
+    const mfRecallAtK = totalRelevantGroundTruth > 0
+      ? mfGrades.filter((g) => g >= 2).length / totalRelevantGroundTruth
+      : 1.0;
+    const baseRecallAtK = totalRelevantGroundTruth > 0
+      ? baseGrades.filter((g) => g >= 2).length / totalRelevantGroundTruth
+      : 1.0;
+
+    // NDCG@K
+    const idcg = computeIDCG(Object.values(arch.groundTruthRelevance), k);
+    const mfDcg = computeDCG(mfGrades);
+    const baseDcg = computeDCG(baseGrades);
+
+    const mfNdcgAtK = idcg > 0 ? Number((mfDcg / idcg).toFixed(4)) : 1.0;
+    const baseNdcgAtK = idcg > 0 ? Number((baseDcg / idcg).toFixed(4)) : 1.0;
+
+    return {
+      archetypeId: arch.id,
+      archetypeName: arch.name,
+      agroZone: arch.agroZone,
+      k,
+      multiFactorMetrics: {
+        precisionAtK: Number(mfPrecisionAtK.toFixed(4)),
+        recallAtK: Number(mfRecallAtK.toFixed(4)),
+        ndcgAtK: mfNdcgAtK,
+        topKPracticeIds: multiFactorRecs.map((r) => r.practice.id),
+      },
+      baselineMetrics: {
+        precisionAtK: Number(basePrecisionAtK.toFixed(4)),
+        recallAtK: Number(baseRecallAtK.toFixed(4)),
+        ndcgAtK: baseNdcgAtK,
+        topKPracticeIds: baselineRecs.map((r) => r.practice.id),
+      },
+      groundTruthOverview: arch.groundTruthRelevance,
+    };
+  });
+
+  // Calculate Macro-Averaged Summary Metrics
+  const avgMfPrecision =
+    archetypeBenchmarks.reduce((sum, b) => sum + b.multiFactorMetrics.precisionAtK, 0) /
+    archetypeBenchmarks.length;
+  const avgBasePrecision =
+    archetypeBenchmarks.reduce((sum, b) => sum + b.baselineMetrics.precisionAtK, 0) /
+    archetypeBenchmarks.length;
+
+  const avgMfRecall =
+    archetypeBenchmarks.reduce((sum, b) => sum + b.multiFactorMetrics.recallAtK, 0) /
+    archetypeBenchmarks.length;
+  const avgBaseRecall =
+    archetypeBenchmarks.reduce((sum, b) => sum + b.baselineMetrics.recallAtK, 0) /
+    archetypeBenchmarks.length;
+
+  const avgMfNdcg =
+    archetypeBenchmarks.reduce((sum, b) => sum + b.multiFactorMetrics.ndcgAtK, 0) /
+    archetypeBenchmarks.length;
+  const avgBaseNdcg =
+    archetypeBenchmarks.reduce((sum, b) => sum + b.baselineMetrics.ndcgAtK, 0) /
+    archetypeBenchmarks.length;
+
+  return res.json({
+    evaluationType: 'SIMULATED_BENCHMARK',
+    disclaimer:
+      'These metrics are algorithmic Information Retrieval benchmarks calculated against curated agronomic archetypes in a simulated testbed. They are not empirical agronomic field trials.',
+    evaluationDate: new Date().toISOString(),
+    macroAveragedMetrics: {
+      k,
+      multiFactor: {
+        meanPrecisionAtK: Number(avgMfPrecision.toFixed(4)),
+        meanRecallAtK: Number(avgMfRecall.toFixed(4)),
+        meanNdcgAtK: Number(avgMfNdcg.toFixed(4)),
+      },
+      baseline: {
+        meanPrecisionAtK: Number(avgBasePrecision.toFixed(4)),
+        meanRecallAtK: Number(avgBaseRecall.toFixed(4)),
+        meanNdcgAtK: Number(avgBaseNdcg.toFixed(4)),
+      },
+      relativeNdcgImprovementPercent: Number(
+        (((avgMfNdcg - avgBaseNdcg) / (avgBaseNdcg || 1)) * 100).toFixed(2)
+      ),
+    },
+    archetypeBenchmarks,
+  });
+});
+
+// GET /api/evaluation/recommendations/compare (Empirical difference comparison)
+router.get('/recommendations/compare', optionalAuthenticate, (req: AuthRequest, res: Response) => {
+  const { crop, soil, method, farmSize, experience, location, state, season } = req.query;
+
+  const testProfile: Partial<User> & { currentSeason?: 'Kharif' | 'Rabi' | 'Zaid' } = req.user
     ? {
         ...req.user,
         ...(crop && { mainCrop: crop as string }),
@@ -24,17 +256,19 @@ router.get('/recommendations/compare', optionalAuthenticate, (req: AuthRequest, 
         ...(experience && { experienceLevel: experience as any }),
         ...(location && { location: location as string }),
         ...(state && { state: state as string }),
+        ...(season && { currentSeason: season as any }),
       }
     : {
         id: 'eval_sample_farmer',
-        name: 'Evaluation Sample Profile',
+        name: 'Evaluation Sample Profile [Anonymized]',
         mainCrop: (crop as string) || 'Tomato',
         soilType: (soil as any) || 'Sandy',
         farmingMethod: (method as any) || 'Organic',
         farmSize: farmSize ? Number(farmSize) : 3.5,
         experienceLevel: (experience as any) || 'Intermediate',
-        location: (location as string) || 'Anand',
+        location: (location as string) || 'Zone W',
         state: (state as string) || 'Gujarat',
+        currentSeason: (season as any) || 'Rabi',
       };
 
   // 1. Run Baseline Engine
@@ -54,14 +288,14 @@ router.get('/recommendations/compare', optionalAuthenticate, (req: AuthRequest, 
   // Jaccard similarity between top-K sets
   const intersection = baselineIds.filter((id) => multiFactorIds.includes(id));
   const union = Array.from(new Set([...baselineIds, ...multiFactorIds]));
-  const jaccardSimilarity = union.length > 0 ? (intersection.length / union.length) : 1;
+  const jaccardSimilarity = union.length > 0 ? intersection.length / union.length : 1;
 
   // Average score differences
   const avgBaselineScore = Math.round(
-    baselineRecs.reduce((sum, r) => sum + r.matchScore, 0) / baselineRecs.length
+    baselineRecs.reduce((sum, r) => sum + r.matchScore, 0) / (baselineRecs.length || 1)
   );
   const avgMultiFactorScore = Math.round(
-    multiFactorRecs.reduce((sum, r) => sum + r.matchScore, 0) / multiFactorRecs.length
+    multiFactorRecs.reduce((sum, r) => sum + r.matchScore, 0) / (multiFactorRecs.length || 1)
   );
 
   // Rank displacement
@@ -78,14 +312,17 @@ router.get('/recommendations/compare', optionalAuthenticate, (req: AuthRequest, 
   const safetyFilteredCount = multiFactorRecs.filter((r) => r.isSafetyFiltered).length;
 
   return res.json({
-    researchTitle: 'AgriX Recommendation Engine Empirical Comparison Study',
+    researchTitle: 'AgriX Recommendation Engine Algorithmic Comparison Study',
+    evaluationType: 'SIMULATED_BENCHMARK',
+    disclaimer:
+      'This algorithmic comparison reflects computational divergence between the multi-factor and baseline heuristics under simulated conditions.',
     profileEvaluated: {
       crop: testProfile.mainCrop,
       soil: testProfile.soilType,
       method: testProfile.farmingMethod,
       farmSize: testProfile.farmSize,
       experience: testProfile.experienceLevel,
-      location: `${testProfile.location}, ${testProfile.state}`,
+      location: `${testProfile.location || 'Unspecified'}, ${testProfile.state || 'Unspecified'}`,
     },
     metrics: {
       topKOverlapCount: intersection.length,
@@ -152,10 +389,11 @@ router.get('/metrics', (req, res) => {
     activeFactorWeights: DEFAULT_FACTOR_WEIGHTS,
     researchMethodology: {
       architecture: 'Multi-Factor Normalized Additive Weighting (NAW) with Constraint Filtering',
-      evaluationFramework: 'Comparative study against baseline 5-factor heuristic algorithm',
+      evaluationFramework: 'Comparative study against baseline 5-factor heuristic algorithm and expert ground truth',
       transparencyModel: 'Deterministic multi-factor score attribution + ICAR agronomic source citations',
     },
   });
 });
 
 export default router;
+

@@ -72,7 +72,7 @@ router.post('/posts', authenticate, (req: AuthRequest, res: Response) => {
     createdAt: new Date().toISOString(),
   };
 
-  db.posts.set(postId, newPost);
+  db.savePost(newPost);
 
   // Award +10 points for sharing with community!
   const pointsAwarded = 10;
@@ -125,6 +125,8 @@ router.post('/posts/:id/like', authenticate, (req: AuthRequest, res: Response) =
     liked = true;
   }
 
+  db.savePost(post);
+
   return res.json({
     postId: post.id,
     isLiked: liked,
@@ -168,8 +170,9 @@ router.post('/posts/:id/comments', authenticate, (req: AuthRequest, res: Respons
     createdAt: new Date().toISOString(),
   };
 
-  db.comments.set(commentId, newComment);
   post.commentCount += 1;
+  db.saveComment(newComment);
+  db.savePost(post);
 
   return res.status(201).json({
     message: 'Comment added',
@@ -203,12 +206,14 @@ router.post('/posts/:id/report', authenticate, (req: AuthRequest, res: Response)
     status: 'pending',
     createdAt: new Date().toISOString(),
   };
-  db.reports.set(reportId, reportItem);
+  db.saveReport(reportItem);
+  db.savePost(post);
 
   return res.json({
     message: 'Thank you. The post has been flagged for agricultural moderation review.',
     reportId,
   });
 });
+
 
 export default router;

@@ -149,20 +149,34 @@ router.get('/me', authenticate, (req: AuthRequest, res: Response) => {
 
 // POST /api/auth/demo-switch (Quick switcher for testing and demonstration)
 router.post('/demo-switch', (req, res: Response) => {
+  if (process.env.NODE_ENV === 'production') {
+    return res.status(403).json({
+      error: 'Forbidden: Demo identity switching is disabled in production environments. Valid JWT authentication required.',
+    });
+  }
+
   const { userId } = req.body;
+  if (!userId) {
+    return res.status(400).json({ error: 'User ID is required' });
+  }
+
   const user = db.getUserById(userId);
   if (!user) {
     return res.status(404).json({ error: 'Demo user not found' });
   }
 
-  const token = generateToken(user);
-  const { passwordHash: _, ...safeUser } = user;
+  try {
+    const token = generateToken(user);
+    const { passwordHash: _, ...safeUser } = user;
 
-  return res.json({
-    message: `Switched to demo user ${user.name}`,
-    token,
-    user: safeUser,
-  });
+    return res.json({
+      message: `Switched to demo user ${user.name}`,
+      token,
+      user: safeUser,
+    });
+  } catch (err: any) {
+    return res.status(500).json({ error: err.message || 'Authentication token generation failed' });
+  }
 });
 
 export default router;

@@ -345,32 +345,26 @@ export const ChallengesPage: React.FC<ChallengesPageProps> = ({ onSelectTab }) =
                       <Upload className="w-3.5 h-3.5" />
                       <span>Submit Implementation Proof</span>
                     </button>
-                    <button
-                      onClick={() => handleInstantVerify(challenge)}
-                      disabled={activeSubmittingId === challenge.id}
-                      className="w-full py-1.5 px-3 bg-stone-100 hover:bg-stone-200 text-stone-700 font-medium text-[11px] rounded-xl flex items-center justify-center gap-1.5 cursor-pointer"
-                    >
-                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                      <span>Instant Self-Verify (+{challenge.points} pts)</span>
-                    </button>
+                    <p className="text-[10px] text-stone-500 text-center">
+                      Detailed field proof is reviewed by an agricultural officer before points are awarded.
+                    </p>
                   </div>
                 )}
 
                 {isSubmitted && (
                   <div className="space-y-1.5">
-                    <div className="w-full py-2 px-3 bg-amber-100 text-amber-900 text-xs font-bold rounded-xl text-center">
-                      Awaiting Agricultural Officer Review
+                    <div className="w-full py-2.5 px-3 bg-amber-50 border border-amber-200 text-amber-900 text-xs font-bold rounded-xl text-center flex items-center justify-center gap-2">
+                      <Clock className="w-4 h-4 text-amber-600 animate-pulse" />
+                      <span>Awaiting Inspector Verification</span>
                     </div>
-                    <button
-                      onClick={() => handleInstantVerify(challenge)}
-                      disabled={activeSubmittingId === challenge.id}
-                      className="w-full py-1.5 px-3 bg-stone-100 hover:bg-stone-200 text-stone-700 font-medium text-[11px] rounded-xl flex items-center justify-center gap-1.5 cursor-pointer"
-                    >
-                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                      <span>Fast-Track Instant Verify</span>
-                    </button>
+                    {challenge.proofNote && (
+                      <p className="text-[10px] text-stone-500 px-1 truncate italic">
+                        Proof: "{challenge.proofNote}"
+                      </p>
+                    )}
                   </div>
                 )}
+
 
                 {isVerified && (
                   <div className="w-full py-2.5 px-4 bg-emerald-100 text-emerald-900 text-xs font-extrabold rounded-xl text-center flex items-center justify-center gap-1.5">

@@ -16,7 +16,7 @@ router.get('/', optionalAuthenticate, (req: AuthRequest, res: Response) => {
   let user: User | undefined = req.user;
 
   if (!user) {
-    const { crop, soil, method, location, experience, state, farmSize } = req.query;
+    const { crop, soil, method, location, experience, state, farmSize, season } = req.query;
     user = {
       id: 'guest',
       name: 'Guest Farmer',
@@ -24,12 +24,12 @@ router.get('/', optionalAuthenticate, (req: AuthRequest, res: Response) => {
       passwordHash: '',
       role: 'farmer',
       phone: '',
-      location: (location as string) || 'Anand',
-      state: (state as string) || 'Gujarat',
-      farmSize: farmSize ? Number(farmSize) : 3,
-      soilType: (soil as any) || 'Loamy',
-      mainCrop: (crop as string) || 'Tomato',
-      farmingMethod: (method as any) || 'Mixed',
+      location: (location as string) || '',
+      state: (state as string) || '',
+      farmSize: farmSize ? Number(farmSize) : 2.5,
+      soilType: (soil as any) || '',
+      mainCrop: (crop as string) || '',
+      farmingMethod: (method as any) || '',
       experienceLevel: (experience as any) || 'Intermediate',
       points: 100,
       level: 1,
@@ -38,7 +38,11 @@ router.get('/', optionalAuthenticate, (req: AuthRequest, res: Response) => {
       lastActiveDate: new Date().toISOString().split('T')[0],
       createdAt: new Date().toISOString(),
     };
+    if (season) {
+      (user as any).currentSeason = season;
+    }
   }
+
 
   const selectedAlgo = algorithm === 'baseline' ? 'baseline' : 'weighted_multifactor';
   const recommendations =
