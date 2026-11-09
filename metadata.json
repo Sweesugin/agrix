@@ -1,0 +1,6 @@
+{
+  "name": "AgriX – Gamified Sustainable Farming Platform",
+  "description": "Personalized sustainable farming recommendations, gamified challenges, points, badges, leaderboard, community sharing, marketplace, and AI assistant.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
