@@ -30,15 +30,21 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({ onSelectTab }) => {
     categoryCounts: Record<string, number>;
     recentActivities: UserActivity[];
     levelInfo: LevelInfo;
+    user?: any;
   } | null>(null);
+  const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchGamificationData = async () => {
       try {
         setLoading(true);
-        const data = await api.getGamificationProfile();
+        const [data, txData] = await Promise.all([
+          api.getGamificationProfile(),
+          api.getTransactions(),
+        ]);
         setProfileData(data);
+        setTransactions(txData.transactions || []);
       } catch (err) {
         console.error(err);
       } finally {
@@ -319,6 +325,71 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({ onSelectTab }) => {
             );
           })}
         </div>
+      </section>
+
+      {/* VERIFIED REWARD TRANSACTIONS LEDGER (AUDIT & RESEARCH) */}
+      <section className="bg-white rounded-3xl border border-stone-200 p-6 sm:p-8 shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-100 pb-3">
+          <div>
+            <h3 className="text-base font-bold text-stone-900 flex items-center gap-2">
+              <Award className="w-4 h-4 text-emerald-600" />
+              Verified Reward Transactions Ledger
+            </h3>
+            <p className="text-xs text-stone-500">
+              Tamper-evident transaction records with deduplicated points attribution and verification timestamps.
+            </p>
+          </div>
+          <span className="text-xs font-bold px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full w-fit">
+            {transactions.length} Verified Records
+          </span>
+        </div>
+
+        {transactions.length === 0 ? (
+          <p className="text-xs text-stone-400 py-4 text-center">
+            No completed reward transactions yet. Start and verify a challenge to record your first verified points!
+          </p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead>
+                <tr className="border-b border-stone-200 text-stone-500 text-[11px] uppercase tracking-wider font-bold">
+                  <th className="py-2.5 px-3">Transaction ID</th>
+                  <th className="py-2.5 px-3">Reason / Challenge</th>
+                  <th className="py-2.5 px-3">Points Awarded</th>
+                  <th className="py-2.5 px-3">Verified By</th>
+                  <th className="py-2.5 px-3">Timestamp</th>
+                  <th className="py-2.5 px-3">Ledger Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-stone-100 text-stone-700">
+                {transactions.map((tx) => (
+                  <tr key={tx.id} className="hover:bg-stone-50">
+                    <td className="py-2.5 px-3 font-mono text-stone-500 text-[11px] font-bold">
+                      {tx.id}
+                    </td>
+                    <td className="py-2.5 px-3 font-medium text-stone-900">
+                      {tx.reason}
+                    </td>
+                    <td className="py-2.5 px-3 font-bold text-emerald-700">
+                      +{tx.pointsAwarded} pts
+                    </td>
+                    <td className="py-2.5 px-3 text-stone-600">
+                      {tx.verifiedBy || 'System Verified'}
+                    </td>
+                    <td className="py-2.5 px-3 text-stone-500">
+                      {new Date(tx.timestamp).toLocaleString()}
+                    </td>
+                    <td className="py-2.5 px-3">
+                      <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px]">
+                        Awarded & Deduplicated
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
     </div>
   );

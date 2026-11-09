@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import {
   User,
   SustainablePractice,
@@ -11,6 +14,8 @@ import {
   CartItem,
   UserActivity,
   ReportItem,
+  RewardTransaction,
+  RecommendationLog,
 } from './types';
 import {
   SEED_USERS,
@@ -20,9 +25,19 @@ import {
   SEED_POSTS,
   SEED_COMMENTS,
   SEED_PRODUCTS,
+  SEED_REWARD_TRANSACTIONS,
 } from './seedData';
 
-export function calculateLevel(points: number): { level: number; levelTitle: string; nextLevelPoints: number; progressPercent: number } {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DATA_FILE = path.resolve(__dirname, '../data/agrix_store.json');
+
+export function calculateLevel(points: number): {
+  level: number;
+  levelTitle: string;
+  nextLevelPoints: number;
+  progressPercent: number;
+} {
   if (points < 200) {
     return {
       level: 1,
@@ -76,9 +91,85 @@ class DataStore {
   cartItems: Map<string, CartItem> = new Map();
   activities: UserActivity[] = [];
   reports: Map<string, ReportItem> = new Map();
+  rewardTransactions: Map<string, RewardTransaction> = new Map();
+  recommendationLogs: RecommendationLog[] = [];
 
   constructor() {
-    this.seed();
+    this.init();
+  }
+
+  private init() {
+    const loaded = this.loadFromFile();
+    if (!loaded) {
+      this.seed();
+      this.persist();
+    }
+  }
+
+  private persist() {
+    try {
+      const dataDir = path.dirname(DATA_FILE);
+      if (!fs.existsSync(dataDir)) {
+        fs.mkdirSync(dataDir, { recursive: true });
+      }
+
+      const serialized = {
+        users: Array.from(this.users.entries()),
+        practices: Array.from(this.practices.entries()),
+        challenges: Array.from(this.challenges.entries()),
+        userChallenges: Array.from(this.userChallenges.entries()),
+        badges: Array.from(this.badges.entries()),
+        userBadges: Array.from(this.userBadges.entries()),
+        posts: Array.from(this.posts.entries()),
+        comments: Array.from(this.comments.entries()),
+        products: Array.from(this.products.entries()),
+        activities: this.activities,
+        rewardTransactions: Array.from(this.rewardTransactions.entries()),
+        recommendationLogs: this.recommendationLogs,
+      };
+
+      fs.writeFileSync(DATA_FILE, JSON.stringify(serialized, null, 2), 'utf-8');
+    } catch (err) {
+      console.warn('Persistence warning (in-memory mode maintained):', err);
+    }
+  }
+
+  private loadFromFile(): boolean {
+    try {
+      if (!fs.existsSync(DATA_FILE)) return false;
+      const raw = fs.readFileSync(DATA_FILE, 'utf-8');
+      const data = JSON.parse(raw);
+
+      if (!data.users || !data.practices) return false;
+
+      this.users = new Map(data.users);
+      this.practices = new Map(data.practices);
+      this.challenges = new Map(data.challenges);
+      this.userChallenges = new Map(data.userChallenges);
+      this.badges = new Map(data.badges);
+      this.userBadges = new Map(data.userBadges);
+      this.posts = new Map(data.posts);
+      this.comments = new Map(data.comments);
+      this.products = new Map(data.products);
+      this.activities = data.activities || [];
+      this.rewardTransactions = new Map(data.rewardTransactions || []);
+      this.recommendationLogs = data.recommendationLogs || [];
+
+      // Ensure seed practices are current with newly added properties
+      SEED_PRACTICES.forEach((sp) => {
+        const existing = this.practices.get(sp.id);
+        if (existing) {
+          this.practices.set(sp.id, { ...existing, ...sp });
+        } else {
+          this.practices.set(sp.id, { ...sp });
+        }
+      });
+
+      return true;
+    } catch (err) {
+      console.warn('Failed to load persisted data store, falling back to seed data:', err);
+      return false;
+    }
   }
 
   seed() {
@@ -89,31 +180,41 @@ class DataStore {
     SEED_POSTS.forEach((p) => this.posts.set(p.id, { ...p }));
     SEED_COMMENTS.forEach((c) => this.comments.set(c.id, { ...c }));
     SEED_PRODUCTS.forEach((pr) => this.products.set(pr.id, { ...pr }));
+    SEED_REWARD_TRANSACTIONS.forEach((tx) => this.rewardTransactions.set(tx.id, { ...tx }));
 
-    // Seed some initial user challenges & user badges for realistic profiles
+    // Seed initial user challenges
     // Ramesh Patel
     this.userChallenges.set('uc_1', {
       id: 'uc_1',
       userId: 'user_ramesh',
       challengeId: 'chal_1', // Mulching
-      status: 'completed',
+      practiceId: 'prac_3',
+      status: 'verified',
       startedAt: '2026-10-01T10:00:00Z',
+      submittedAt: '2026-10-02T11:00:00Z',
+      verifiedAt: '2026-10-02T12:00:00Z',
       completedAt: '2026-10-02T12:00:00Z',
       proofNote: 'Applied paddy straw across tomato rows.',
+      verifiedBy: 'user_admin',
     });
     this.userChallenges.set('uc_2', {
       id: 'uc_2',
       userId: 'user_ramesh',
       challengeId: 'chal_4', // Sticky traps
-      status: 'completed',
+      practiceId: 'prac_7',
+      status: 'verified',
       startedAt: '2026-10-03T09:00:00Z',
+      submittedAt: '2026-10-03T10:30:00Z',
+      verifiedAt: '2026-10-03T11:00:00Z',
       completedAt: '2026-10-03T11:00:00Z',
       proofNote: 'Placed 10 yellow traps in greenhouse.',
+      verifiedBy: 'user_admin',
     });
     this.userChallenges.set('uc_3', {
       id: 'uc_3',
       userId: 'user_ramesh',
       challengeId: 'chal_5', // Drip lateral flush
+      practiceId: 'prac_2',
       status: 'in_progress',
       startedAt: '2026-10-06T08:00:00Z',
     });
@@ -136,26 +237,38 @@ class DataStore {
       id: 'uc_4',
       userId: 'user_ananya',
       challengeId: 'chal_3', // AWD
-      status: 'completed',
+      practiceId: 'prac_1',
+      status: 'verified',
       startedAt: '2026-09-20T08:00:00Z',
+      submittedAt: '2026-09-27T09:00:00Z',
+      verifiedAt: '2026-09-27T10:00:00Z',
       completedAt: '2026-09-27T10:00:00Z',
       proofNote: 'Installed perforated pipe in Samba plot.',
+      verifiedBy: 'user_admin',
     });
     this.userChallenges.set('uc_5', {
       id: 'uc_5',
       userId: 'user_ananya',
       challengeId: 'chal_5', // Drip
-      status: 'completed',
+      practiceId: 'prac_2',
+      status: 'verified',
       startedAt: '2026-09-28T09:00:00Z',
+      submittedAt: '2026-09-28T11:30:00Z',
+      verifiedAt: '2026-09-28T12:00:00Z',
       completedAt: '2026-09-28T12:00:00Z',
+      verifiedBy: 'user_admin',
     });
     this.userChallenges.set('uc_6', {
       id: 'uc_6',
       userId: 'user_ananya',
       challengeId: 'chal_7', // Percolation pit
-      status: 'completed',
+      practiceId: 'prac_10',
+      status: 'verified',
       startedAt: '2026-09-29T10:00:00Z',
+      submittedAt: '2026-09-30T16:00:00Z',
+      verifiedAt: '2026-09-30T17:00:00Z',
       completedAt: '2026-09-30T17:00:00Z',
+      verifiedBy: 'user_admin',
     });
 
     this.userBadges.set('ub_3', {
@@ -220,7 +333,7 @@ class DataStore {
     ];
   }
 
-  // User methods
+  // --- User Methods ---
   getUserById(id: string): User | undefined {
     return this.users.get(id);
   }
@@ -236,6 +349,7 @@ class DataStore {
 
   createUser(user: User): User {
     this.users.set(user.id, user);
+    this.persist();
     return user;
   }
 
@@ -245,7 +359,6 @@ class DataStore {
 
     const updated = { ...existing, ...updates };
 
-    // Update level if points changed
     if (updates.points !== undefined) {
       const lvl = calculateLevel(updated.points);
       updated.level = lvl.level;
@@ -253,6 +366,7 @@ class DataStore {
     }
 
     this.users.set(id, updated);
+    this.persist();
     return updated;
   }
 
@@ -260,7 +374,7 @@ class DataStore {
     return Array.from(this.users.values());
   }
 
-  // Activity methods
+  // --- Activity Methods ---
   logActivity(userId: string, type: UserActivity['type'], title: string, pointsEarned: number = 0) {
     const act: UserActivity = {
       id: `act_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
@@ -272,6 +386,7 @@ class DataStore {
     };
     this.activities.unshift(act);
     if (this.activities.length > 100) this.activities.pop();
+    this.persist();
     return act;
   }
 
@@ -283,7 +398,73 @@ class DataStore {
     return this.activities.slice(0, limit);
   }
 
-  // Check and award badges for user
+  // --- Reward Ledger & Transactions ---
+  recordRewardTransaction(
+    userId: string,
+    challengeId: string,
+    pointsAwarded: number,
+    reason: string,
+    practiceId?: string,
+    verifiedBy?: string
+  ): { transaction: RewardTransaction; isDuplicate: boolean } {
+    // Check if an awarded transaction already exists for this user and challenge
+    const existing = Array.from(this.rewardTransactions.values()).find(
+      (tx) => tx.userId === userId && tx.challengeId === challengeId && tx.status === 'awarded'
+    );
+
+    if (existing) {
+      return { transaction: existing, isDuplicate: true };
+    }
+
+    const id = `tx_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const tx: RewardTransaction = {
+      id,
+      userId,
+      challengeId,
+      practiceId,
+      pointsAwarded,
+      reason,
+      status: 'awarded',
+      timestamp: new Date().toISOString(),
+      verifiedBy,
+    };
+
+    this.rewardTransactions.set(id, tx);
+    this.persist();
+    return { transaction: tx, isDuplicate: false };
+  }
+
+  getRewardTransactionsForUser(userId: string): RewardTransaction[] {
+    return Array.from(this.rewardTransactions.values())
+      .filter((tx) => tx.userId === userId)
+      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+  }
+
+  getMonthlyPointsForUser(userId: string): number {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+
+    const transactions = Array.from(this.rewardTransactions.values()).filter(
+      (tx) => tx.userId === userId && tx.status === 'awarded' && tx.timestamp >= startOfMonth
+    );
+
+    return transactions.reduce((acc, tx) => acc + tx.pointsAwarded, 0);
+  }
+
+  // --- Recommendation Logging ---
+  logRecommendation(log: Omit<RecommendationLog, 'id' | 'timestamp'>): RecommendationLog {
+    const completeLog: RecommendationLog = {
+      ...log,
+      id: `rec_log_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      timestamp: new Date().toISOString(),
+    };
+    this.recommendationLogs.unshift(completeLog);
+    if (this.recommendationLogs.length > 500) this.recommendationLogs.pop();
+    this.persist();
+    return completeLog;
+  }
+
+  // --- Badges Check & Award ---
   checkAndAwardBadges(userId: string): Badge[] {
     const user = this.getUserById(userId);
     if (!user) return [];
@@ -292,8 +473,9 @@ class DataStore {
     const awardedBadgeIds = new Set(existingUserBadges.map((ub) => ub.badgeId));
     const newlyAwarded: Badge[] = [];
 
+    // Consider both 'verified' and 'completed' as valid completions
     const completedUserChallenges = Array.from(this.userChallenges.values()).filter(
-      (uc) => uc.userId === userId && uc.status === 'completed'
+      (uc) => uc.userId === userId && (uc.status === 'verified' || (uc.status as any) === 'completed')
     );
     const completedChallengeIds = new Set(completedUserChallenges.map((uc) => uc.challengeId));
     const completedChallenges = Array.from(this.challenges.values()).filter((c) => completedChallengeIds.has(c.id));
@@ -375,6 +557,7 @@ class DataStore {
       );
     });
 
+    this.persist();
     return newlyAwarded;
   }
 }

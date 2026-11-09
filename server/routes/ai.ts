@@ -1,6 +1,7 @@
 import { Router, Response } from 'express';
-import { askAgriXAssistant } from '../services/gemini';
+import { askAgriXAssistant, explainPracticeWithAI } from '../services/gemini';
 import { optionalAuthenticate, AuthRequest } from '../middleware/auth';
+import { db } from '../db/store';
 
 const router = Router();
 
@@ -14,8 +15,8 @@ function checkRateLimit(ipOrId: string): boolean {
     requestCounts.set(ipOrId, { count: 1, resetTime: now + 60000 });
     return true;
   }
-  if (current.count >= 25) {
-    return false; // exceed 25 requests per minute
+  if (current.count >= 30) {
+    return false; // exceed 30 requests per minute
   }
   current.count += 1;
   return true;
@@ -61,6 +62,46 @@ router.post('/chat', optionalAuthenticate, async (req: AuthRequest, res: Respons
     console.error('AI chat endpoint error:', err);
     return res.status(500).json({
       error: 'Failed to generate advisory response. Please try again.',
+    });
+  }
+});
+
+// POST /api/ai/explain-practice
+router.post('/explain-practice', optionalAuthenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    const { practiceId } = req.body;
+    if (!practiceId) {
+      return res.status(400).json({ error: 'practiceId is required' });
+    }
+
+    const practice = db.practices.get(practiceId);
+    if (!practice) {
+      return res.status(404).json({ error: `Practice with ID ${practiceId} not found` });
+    }
+
+    const userProfile = req.user
+      ? {
+          name: req.user.name,
+          mainCrop: req.user.mainCrop,
+          soilType: req.user.soilType,
+          farmingMethod: req.user.farmingMethod,
+          farmSize: req.user.farmSize,
+          location: req.user.location,
+          state: req.user.state,
+          experienceLevel: req.user.experienceLevel,
+        }
+      : undefined;
+
+    const explanation = await explainPracticeWithAI(practice, userProfile);
+
+    return res.json({
+      success: true,
+      explanation,
+    });
+  } catch (err: any) {
+    console.error('Explain practice endpoint error:', err);
+    return res.status(500).json({
+      error: 'Failed to generate practice explanation.',
     });
   }
 });

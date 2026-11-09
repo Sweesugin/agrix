@@ -51,6 +51,26 @@ export interface User {
   createdAt: string;
 }
 
+export interface FactorWeights {
+  crop: number; // 0.25 (25%)
+  soil: number; // 0.20 (20%)
+  season: number; // 0.15 (15%)
+  location: number; // 0.15 (15%)
+  farmingMethod: number; // 0.10 (10%)
+  experience: number; // 0.10 (10%)
+  farmSize: number; // 0.05 (5%)
+}
+
+export interface FactorScores {
+  cropScore: number; // 0 - 100
+  soilScore: number; // 0 - 100
+  seasonScore: number; // 0 - 100
+  locationScore: number; // 0 - 100
+  farmingMethodScore: number; // 0 - 100
+  experienceScore: number; // 0 - 100
+  farmSizeScore: number; // 0 - 100
+}
+
 export interface SustainablePractice {
   id: string;
   title: string;
@@ -58,6 +78,8 @@ export interface SustainablePractice {
   suitableCrops: string[];
   suitableSoilTypes: SoilType[];
   suitableSeasons: string[];
+  suitableAgroClimates?: string[]; // e.g. ['Tropical', 'Semi-Arid', 'Subtropical', 'Humid', 'All']
+  suitableStates?: string[]; // e.g. ['Tamil Nadu', 'Punjab', 'Gujarat', 'Maharashtra', 'Karnataka', 'All']
   suitableFarmingMethods: FarmingMethod[];
   difficulty: DifficultyLevel;
   description: string;
@@ -66,12 +88,20 @@ export interface SustainablePractice {
   estimatedCompletion: string; // e.g. "15 minutes", "1 day", "1 week"
   points: number;
   steps: string[];
+  requiredMaterials: string[];
+  precautions: string[];
+  expectedBenefits: string[];
   scientificContext?: string;
+  sourceCitation?: string; // e.g. 'ICAR Bulletin / TNAU Agritech Portal'
+  relatedChallengeId: string; // Exact bidirectional link to Challenge
+  minFarmSize?: number; // in acres
+  maxFarmSize?: number;
+  safetyCritical?: boolean;
 }
 
 export interface Challenge {
   id: string;
-  practiceId?: string;
+  practiceId: string; // Exact bidirectional link to SustainablePractice
   title: string;
   description: string;
   category: ChallengeCategory;
@@ -85,17 +115,61 @@ export interface Challenge {
   createdAt: string;
 }
 
-export type ChallengeStatus = 'not_started' | 'in_progress' | 'completed';
+export type ChallengeStatus = 'not_started' | 'in_progress' | 'submitted' | 'verified' | 'rejected' | 'completed';
 
 export interface UserChallenge {
   id: string;
   userId: string;
   challengeId: string;
+  practiceId: string;
   status: ChallengeStatus;
   startedAt?: string;
+  submittedAt?: string;
+  verifiedAt?: string;
+  rejectedAt?: string;
   completedAt?: string;
   proofNote?: string;
   proofImageUrl?: string;
+  verificationNotes?: string;
+  verifiedBy?: string;
+}
+
+export interface RewardTransaction {
+  id: string;
+  userId: string;
+  challengeId: string;
+  practiceId?: string;
+  pointsAwarded: number;
+  reason: string;
+  status: 'awarded' | 'revoked';
+  timestamp: string;
+  verifiedBy?: string;
+}
+
+export interface RecommendationLog {
+  id: string;
+  userId: string;
+  algorithm: 'baseline' | 'weighted_multifactor';
+  farmerProfileSnapshot: {
+    crop: string;
+    soil: string;
+    season?: string;
+    location: string;
+    state?: string;
+    farmingMethod: string;
+    experienceLevel: string;
+    farmSize: number;
+  };
+  recommendations: Array<{
+    practiceId: string;
+    title: string;
+    compatibilityScore: number;
+    factorScores: FactorScores;
+    rank: number;
+  }>;
+  executionTimeMs: number;
+  timestamp: string;
+  userFeedback?: 'helpful' | 'unhelpful';
 }
 
 export interface Badge {
@@ -178,7 +252,14 @@ export interface CartItem {
 export interface UserActivity {
   id: string;
   userId: string;
-  type: 'challenge_started' | 'challenge_completed' | 'badge_earned' | 'post_created' | 'streak_maintained';
+  type:
+    | 'challenge_started'
+    | 'challenge_submitted'
+    | 'challenge_verified'
+    | 'challenge_completed'
+    | 'badge_earned'
+    | 'post_created'
+    | 'streak_maintained';
   title: string;
   pointsEarned: number;
   timestamp: string;

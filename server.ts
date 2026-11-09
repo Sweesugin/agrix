@@ -17,6 +17,7 @@ import communityRouter from './server/routes/community';
 import marketplaceRouter from './server/routes/marketplace';
 import aiRouter from './server/routes/ai';
 import adminRouter from './server/routes/admin';
+import evaluationRouter from './server/routes/evaluation';
 
 async function startServer() {
   const app = express();
@@ -38,6 +39,7 @@ async function startServer() {
   app.use('/api/cart', marketplaceRouter);
   app.use('/api/ai', aiRouter);
   app.use('/api/admin', adminRouter);
+  app.use('/api/evaluation', evaluationRouter);
 
   // Health check
   app.get('/api/health', (req, res) => {

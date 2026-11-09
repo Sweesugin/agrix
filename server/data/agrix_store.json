@@ -1,0 +1,2636 @@
+{
+  "users": [
+    [
+      "user_ramesh",
+      {
+        "id": "user_ramesh",
+        "name": "Ramesh Patel",
+        "email": "ramesh@agrix.org",
+        "passwordHash": "$2b$08$WrIUGxm2nuaNaShTGzkLwOsw27fWATbzD8a9X0Ehrm1/N9vYadmve",
+        "role": "farmer",
+        "phone": "+91 98450 12345",
+        "location": "Anand",
+        "state": "Gujarat",
+        "farmSize": 4.5,
+        "soilType": "Loamy",
+        "mainCrop": "Tomato",
+        "farmingMethod": "Mixed",
+        "experienceLevel": "Intermediate",
+        "avatarUrl": "https://images.unsplash.com/photo-1544717302-de2939b7ef71?w=150&auto=format&fit=crop&q=80",
+        "points": 820,
+        "level": 3,
+        "levelTitle": "Cultivator",
+        "streak": 6,
+        "lastActiveDate": "2026-10-06",
+        "createdAt": "2026-08-15T09:00:00Z"
+      }
+    ],
+    [
+      "user_ananya",
+      {
+        "id": "user_ananya",
+        "name": "Ananya Sharma",
+        "email": "ananya@agrix.org",
+        "passwordHash": "$2b$08$WrIUGxm2nuaNaShTGzkLwOsw27fWATbzD8a9X0Ehrm1/N9vYadmve",
+        "role": "farmer",
+        "phone": "+91 94120 67890",
+        "location": "Thanjavur",
+        "state": "Tamil Nadu",
+        "farmSize": 6,
+        "soilType": "Clay",
+        "mainCrop": "Rice",
+        "farmingMethod": "Natural farming",
+        "experienceLevel": "Experienced",
+        "avatarUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+        "points": 1250,
+        "level": 4,
+        "levelTitle": "Sustainable Farmer",
+        "streak": 12,
+        "lastActiveDate": "2026-10-07",
+        "createdAt": "2026-07-10T10:30:00Z"
+      }
+    ],
+    [
+      "user_harpreet",
+      {
+        "id": "user_harpreet",
+        "name": "Harpreet Singh",
+        "email": "harpreet@agrix.org",
+        "passwordHash": "$2b$08$WrIUGxm2nuaNaShTGzkLwOsw27fWATbzD8a9X0Ehrm1/N9vYadmve",
+        "role": "farmer",
+        "phone": "+91 98765 43210",
+        "location": "Ludhiana",
+        "state": "Punjab",
+        "farmSize": 8.5,
+        "soilType": "Silty",
+        "mainCrop": "Wheat",
+        "farmingMethod": "Conventional",
+        "experienceLevel": "Experienced",
+        "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+        "points": 640,
+        "level": 3,
+        "levelTitle": "Cultivator",
+        "streak": 4,
+        "lastActiveDate": "2026-10-05",
+        "createdAt": "2026-09-01T08:15:00Z"
+      }
+    ],
+    [
+      "user_lakshmi",
+      {
+        "id": "user_lakshmi",
+        "name": "Lakshmi Devi",
+        "email": "lakshmi@agrix.org",
+        "passwordHash": "$2b$08$WrIUGxm2nuaNaShTGzkLwOsw27fWATbzD8a9X0Ehrm1/N9vYadmve",
+        "role": "farmer",
+        "phone": "+91 97411 22334",
+        "location": "Shivamogga",
+        "state": "Karnataka",
+        "farmSize": 3.2,
+        "soilType": "Red soil",
+        "mainCrop": "Banana",
+        "farmingMethod": "Organic",
+        "experienceLevel": "Intermediate",
+        "avatarUrl": "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=150&auto=format&fit=crop&q=80",
+        "points": 980,
+        "level": 4,
+        "levelTitle": "Sustainable Farmer",
+        "streak": 9,
+        "lastActiveDate": "2026-10-07",
+        "createdAt": "2026-08-20T11:00:00Z"
+      }
+    ],
+    [
+      "user_suresh",
+      {
+        "id": "user_suresh",
+        "name": "Suresh Deshmukh",
+        "email": "suresh@agrix.org",
+        "passwordHash": "$2b$08$WrIUGxm2nuaNaShTGzkLwOsw27fWATbzD8a9X0Ehrm1/N9vYadmve",
+        "role": "farmer",
+        "phone": "+91 98220 55443",
+        "location": "Solapur",
+        "state": "Maharashtra",
+        "farmSize": 5,
+        "soilType": "Black soil",
+        "mainCrop": "Sugarcane",
+        "farmingMethod": "Conventional",
+        "experienceLevel": "Intermediate",
+        "avatarUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+        "points": 410,
+        "level": 2,
+        "levelTitle": "Grower",
+        "streak": 3,
+        "lastActiveDate": "2026-10-06",
+        "createdAt": "2026-09-12T14:20:00Z"
+      }
+    ],
+    [
+      "user_priya",
+      {
+        "id": "user_priya",
+        "name": "Priya Verma",
+        "email": "priya@agrix.org",
+        "passwordHash": "$2b$08$WrIUGxm2nuaNaShTGzkLwOsw27fWATbzD8a9X0Ehrm1/N9vYadmve",
+        "role": "farmer",
+        "phone": "+91 94567 89012",
+        "location": "Varanasi",
+        "state": "Uttar Pradesh",
+        "farmSize": 1.8,
+        "soilType": "Loamy",
+        "mainCrop": "Vegetables",
+        "farmingMethod": "Organic",
+        "experienceLevel": "Beginner",
+        "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+        "points": 330,
+        "level": 2,
+        "levelTitle": "Grower",
+        "streak": 5,
+        "lastActiveDate": "2026-10-07",
+        "createdAt": "2026-09-22T07:45:00Z"
+      }
+    ],
+    [
+      "user_admin",
+      {
+        "id": "user_admin",
+        "name": "Dr. Vandana Rao (Agri Officer)",
+        "email": "admin@agrix.org",
+        "passwordHash": "$2b$08$WrIUGxm2nuaNaShTGzkLwOsw27fWATbzD8a9X0Ehrm1/N9vYadmve",
+        "role": "admin",
+        "phone": "+91 99000 88888",
+        "location": "Hyderabad",
+        "state": "Telangana",
+        "farmSize": 15,
+        "soilType": "Red soil",
+        "mainCrop": "Millets",
+        "farmingMethod": "Organic",
+        "experienceLevel": "Experienced",
+        "avatarUrl": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&auto=format&fit=crop&q=80",
+        "points": 2150,
+        "level": 5,
+        "levelTitle": "Green Champion",
+        "streak": 30,
+        "lastActiveDate": "2026-10-07",
+        "createdAt": "2026-06-01T08:00:00Z"
+      }
+    ]
+  ],
+  "practices": [
+    [
+      "prac_1",
+      {
+        "id": "prac_1",
+        "title": "Alternate Wetting and Drying (AWD)",
+        "category": "Water Conservation",
+        "suitableCrops": [
+          "Rice",
+          "Paddy"
+        ],
+        "suitableSoilTypes": [
+          "Clay",
+          "Loamy",
+          "Black soil"
+        ],
+        "suitableSeasons": [
+          "Kharif",
+          "Rabi",
+          "All season"
+        ],
+        "suitableAgroClimates": [
+          "Tropical Wet",
+          "Humid Subtropical",
+          "Subtropical"
+        ],
+        "suitableStates": [
+          "Tamil Nadu",
+          "Andhra Pradesh",
+          "West Bengal",
+          "Punjab",
+          "Odisha",
+          "All"
+        ],
+        "suitableFarmingMethods": [
+          "Conventional",
+          "Organic",
+          "Mixed",
+          "Natural farming"
+        ],
+        "difficulty": "Medium",
+        "description": "A controlled periodic irrigation practice where paddy fields are allowed to dry naturally for several days until water level drops 15cm below the soil surface before re-flooding.",
+        "sustainabilityBenefit": "Conserves 20-30% irrigation water, lowers pumping fuel expenditure, and significantly curbs anaerobic soil methane emissions without penalizing grain yield.",
+        "whyRecommended": "Ideal for clayey rice paddies to balance aeration and prevent continuous swamp stagnation.",
+        "estimatedCompletion": "1 week",
+        "points": 75,
+        "steps": [
+          "Install a 30cm perforated plastic pipe (field water tube) 15cm deep into the paddy plot.",
+          "Irrigate the field with 5cm of water initially.",
+          "Monitor the tube daily: only irrigate when the water drops 15cm below soil surface.",
+          "Suspend AWD during flowering stage to avoid moisture stress."
+        ],
+        "requiredMaterials": [
+          "30cm perforated PVC observation tube (10-15cm diameter with perforations)",
+          "Hand ruler or dipstick for measuring water depth",
+          "Protective field cap to prevent soil silting inside tube"
+        ],
+        "precautions": [
+          "Never allow AWD drying during panicle initiation and flowering stage (maintain 5cm standing water).",
+          "Not suitable for highly coarse sandy soils where percolation is excessively rapid."
+        ],
+        "expectedBenefits": [
+          "20-30% reduction in total irrigation water applied",
+          "30-40% reduction in net paddy methane (CH4) emissions",
+          "Decreased lodging risk due to stronger root anchorage"
+        ],
+        "scientificContext": "Conceptual water balance approach adapted from field water management studies (e.g. IRRI AWD guidelines).",
+        "sourceCitation": "ICAR-National Rice Research Institute (NRRI) & IRRI AWD Technical Bulletin",
+        "relatedChallengeId": "chal_3",
+        "minFarmSize": 0.5,
+        "maxFarmSize": 50,
+        "safetyCritical": true
+      }
+    ],
+    [
+      "prac_2",
+      {
+        "id": "prac_2",
+        "title": "Precision Drip Irrigation Setup",
+        "category": "Water Conservation",
+        "suitableCrops": [
+          "Tomato",
+          "Banana",
+          "Sugarcane",
+          "Vegetables",
+          "Cotton",
+          "Groundnut"
+        ],
+        "suitableSoilTypes": [
+          "Loamy",
+          "Sandy",
+          "Red soil",
+          "Black soil"
+        ],
+        "suitableSeasons": [
+          "All season",
+          "Rabi",
+          "Zaid"
+        ],
+        "suitableAgroClimates": [
+          "Semi-Arid",
+          "Arid",
+          "Tropical Dry",
+          "Subtropical"
+        ],
+        "suitableStates": [
+          "Gujarat",
+          "Maharashtra",
+          "Karnataka",
+          "Tamil Nadu",
+          "Rajasthan",
+          "All"
+        ],
+        "suitableFarmingMethods": [
+          "Conventional",
+          "Organic",
+          "Mixed",
+          "Natural farming"
+        ],
+        "difficulty": "Medium",
+        "description": "Targeted micro-irrigation delivering filtered water directly to root zones using pressure-compensating inline emitters and sub-main regulating valves.",
+        "sustainabilityBenefit": "Improves water-use efficiency up to 50-70% over flood furrow systems, prevents nutrient leaching, and keeps foliage dry to curb foliar blight.",
+        "whyRecommended": "Highly effective for row vegetables and fruit orchards on well-draining loamy soils.",
+        "estimatedCompletion": "2 days",
+        "points": 80,
+        "steps": [
+          "Inspect sub-main valves and flush sand/disc filters before each watering cycle.",
+          "Check lateral line emitter uniformity at the farthest bed row.",
+          "Schedule watering during early morning hours to minimize evaporative losses.",
+          "Check soil moisture 10cm beneath drip line using a soil probe or finger test."
+        ],
+        "requiredMaterials": [
+          "16mm UV-stabilized LLDPE lateral tubing with inline pressure-compensating emitters",
+          "Screen/disc filtration unit (120 mesh)",
+          "Pressure regulator and end flush valves"
+        ],
+        "precautions": [
+          "Acid flush (dilute phosphoric/hydrochloric acid) periodically if hard groundwater causes calcium scale.",
+          "Inspect lateral tubes regularly for rodent chew marks or puncture leaks."
+        ],
+        "expectedBenefits": [
+          "40-60% irrigation water savings compared to surface flooding",
+          "25-30% fertilizer efficiency boost when paired with fertigation",
+          "Significantly suppressed weed growth in non-wetted inter-row spaces"
+        ],
+        "sourceCitation": "National Committee on Precision Agriculture & Horticulture (NCPAH) & TNAU Micro-Irrigation Protocols",
+        "relatedChallengeId": "chal_5",
+        "minFarmSize": 0.25,
+        "maxFarmSize": 100,
+        "safetyCritical": false
+      }
+    ],
+    [
+      "prac_3",
+      {
+        "id": "prac_3",
+        "title": "Organic Mulching Application",
+        "category": "Soil Health",
+        "suitableCrops": [
+          "Tomato",
+          "Banana",
+          "Vegetables",
+          "Millets",
+          "Sugarcane",
+          "Groundnut"
+        ],
+        "suitableSoilTypes": [
+          "Loamy",
+          "Sandy",
+          "Clay",
+          "Red soil",
+          "Black soil",
+          "Silty"
+        ],
+        "suitableSeasons": [
+          "All season",
+          "Kharif",
+          "Zaid"
+        ],
+        "suitableAgroClimates": [
+          "All",
+          "Semi-Arid",
+          "Tropical",
+          "Subtropical"
+        ],
+        "suitableStates": [
+          "All",
+          "Gujarat",
+          "Maharashtra",
+          "Karnataka",
+          "Uttar Pradesh",
+          "Tamil Nadu"
+        ],
+        "suitableFarmingMethods": [
+          "Conventional",
+          "Organic",
+          "Mixed",
+          "Natural farming"
+        ],
+        "difficulty": "Easy",
+        "description": "Covering bare topsoil around crop root zones with crop residues, dried paddy straw, sugarcane trash, or shredded dry leaves.",
+        "sustainabilityBenefit": "Moderates soil temperature extremes, retains sub-surface moisture, suppresses weed proliferation, and decomposes into active humus.",
+        "whyRecommended": "Immediately accessible technique that protects fragile topsoils from direct sun baking and evaporative crusting.",
+        "estimatedCompletion": "1 day",
+        "points": 50,
+        "steps": [
+          "Collect dried crop residue, paddy straw, or dry shredded leaves.",
+          "Weed the row beds lightly around the active plant base.",
+          "Spread a 3 to 4-inch uniform layer around plants, maintaining 2 inches clearance from main stem.",
+          "Lightly spray water to settle the mulch layer."
+        ],
+        "requiredMaterials": [
+          "Air-dried paddy straw, sugarcane trash, or dry agro-residue biomass (2-3 tons/acre)",
+          "Hand rake and light transport wheelbarrow/cart"
+        ],
+        "precautions": [
+          "Ensure mulch is pulled back 5cm (2 inches) from tender plant collars to prevent fungal collar rot.",
+          "Do not use residues with active fungal disease lesions or mature weed seed heads."
+        ],
+        "expectedBenefits": [
+          "30-40% reduction in root-zone soil water evaporation",
+          "Suppression of light-germinating annual weed seeds by 60-70%",
+          "Gradual addition of 1.5 to 2.5 tons of organic carbon per acre upon decomposition"
+        ],
+        "sourceCitation": "ICAR-Central Research Institute for Dryland Agriculture (CRIDA) Technical Bulletin on In-situ Moisture Conservation",
+        "relatedChallengeId": "chal_1",
+        "minFarmSize": 0.1,
+        "maxFarmSize": 50,
+        "safetyCritical": false
+      }
+    ],
+    [
+      "prac_4",
+      {
+        "id": "prac_4",
+        "title": "Neem-Based Botanical Pest Spray",
+        "category": "Pest Management",
+        "suitableCrops": [
+          "Tomato",
+          "Vegetables",
+          "Rice",
+          "Cotton",
+          "Groundnut",
+          "Millets"
+        ],
+        "suitableSoilTypes": [
+          "Sandy",
+          "Clay",
+          "Loamy",
+          "Silty",
+          "Black soil",
+          "Red soil"
+        ],
+        "suitableSeasons": [
+          "All season",
+          "Kharif",
+          "Rabi"
+        ],
+        "suitableAgroClimates": [
+          "All",
+          "Tropical",
+          "Subtropical",
+          "Semi-Arid"
+        ],
+        "suitableStates": [
+          "All",
+          "Gujarat",
+          "Tamil Nadu",
+          "Karnataka",
+          "Maharashtra",
+          "Andhra Pradesh"
+        ],
+        "suitableFarmingMethods": [
+          "Organic",
+          "Mixed",
+          "Natural farming"
+        ],
+        "difficulty": "Easy",
+        "description": "Preparation and targeted foliar application of cold-pressed neem seed oil emulsion (Azadirachtin 10,000 ppm) or 5% neem kernel extract.",
+        "sustainabilityBenefit": "Acts as an anti-feedant, oviposition deterrent, and growth disruptor for sucking pests while sparing pollinators, ladybird beetles, and spiders.",
+        "whyRecommended": "Cost-effective natural preventative against aphid, whitefly, and thrip population surges without chemical toxicity.",
+        "estimatedCompletion": "2 hours",
+        "points": 50,
+        "steps": [
+          "Dilute 5ml pure cold-pressed neem oil with 1ml natural mild soap emulsifier in 1 liter clean water.",
+          "Shake thoroughly until a milky emulsion forms with no oil separation.",
+          "Spray early morning or after 4 PM to prevent phytotoxicity from midday heat.",
+          "Target both upper and lower leaf surfaces where sucking pests congregate."
+        ],
+        "requiredMaterials": [
+          "Cold-pressed neem seed oil (10,000 ppm Azadirachtin) or dry neem seed kernels",
+          "Organic soap / bio-emulsifier liquid",
+          "Clean water (pH 6.5 - 7.5)",
+          "Knapsack or battery sprayer with fine cone nozzle"
+        ],
+        "precautions": [
+          "Never spray during peak sun hours (11 AM - 3 PM) to avoid leaf scorching and rapid ultraviolet breakdown of Azadirachtin.",
+          "Prepare fresh solution within 4 hours of use; do not store diluted mixture overnight."
+        ],
+        "expectedBenefits": [
+          "Broad deterrent against aphids, whiteflies, thrips, and mites",
+          "Zero synthetic chemical residues on harvestable produce",
+          "Protection of honeybees and entomopathogenic predators"
+        ],
+        "sourceCitation": "ICAR-National Centre for Integrated Pest Management (NCIPM) Botanical Formulations Guide",
+        "relatedChallengeId": "chal_2",
+        "minFarmSize": 0.1,
+        "maxFarmSize": 50,
+        "safetyCritical": false
+      }
+    ],
+    [
+      "prac_5",
+      {
+        "id": "prac_5",
+        "title": "Farm-Scale Vermicomposting Bed",
+        "category": "Organic Farming",
+        "suitableCrops": [
+          "Tomato",
+          "Banana",
+          "Vegetables",
+          "Rice",
+          "Sugarcane",
+          "Groundnut",
+          "Millets"
+        ],
+        "suitableSoilTypes": [
+          "Loamy",
+          "Clay",
+          "Sandy",
+          "Red soil",
+          "Black soil",
+          "Silty"
+        ],
+        "suitableSeasons": [
+          "All season"
+        ],
+        "suitableAgroClimates": [
+          "All",
+          "Tropical",
+          "Subtropical",
+          "Temperate"
+        ],
+        "suitableStates": [
+          "All",
+          "Karnataka",
+          "Maharashtra",
+          "Tamil Nadu",
+          "Gujarat",
+          "Punjab"
+        ],
+        "suitableFarmingMethods": [
+          "Organic",
+          "Natural farming",
+          "Mixed"
+        ],
+        "difficulty": "Medium",
+        "description": "Decomposing farm organic biomass, vegetable peelings, and semi-cured cattle dung utilizing epigeic earthworm species (Eisenia fetida) to generate premium worm castings.",
+        "sustainabilityBenefit": "Supplies slow-release macro and micronutrients, enhances beneficial microbial biodiversity, improves soil water holding capacity, and eliminates organic farm waste.",
+        "whyRecommended": "Replaces commercial synthetic fertilizers with high-potency closed-loop organic fertility manufactured directly on farm.",
+        "estimatedCompletion": "3 days",
+        "points": 90,
+        "steps": [
+          "Prepare a shaded, well-drained bed 6ft x 3ft x 2ft elevated off standing puddle paths.",
+          "Layer 3 inches dry biomass (twigs/paddy straw) at the bottom for drainage aeration.",
+          "Add pre-decomposed farm waste and cow dung slurry in alternating layers.",
+          "Introduce healthy earthworm culture and cover with damp jute gunny sacks."
+        ],
+        "requiredMaterials": [
+          "Eisenia fetida earthworm culture (1-2 kg starter)",
+          "Pre-cured cow dung (2-3 weeks semi-decomposed)",
+          "Chopped farm agro-biomass, dried leaves, or paddy straw",
+          "Jute gunny bags and shade netting roof"
+        ],
+        "precautions": [
+          "Keep moisture consistently at 60-70%; avoid water-logging which suffocates earthworms.",
+          "Protect bed edges from red ant colonies and birds with turmeric border or water moat."
+        ],
+        "expectedBenefits": [
+          "Production of nutrient-dense humus rich in auxins and gibberellins",
+          "Up to 30% reduction in synthetic NPK dependency",
+          "Significant increase in beneficial mycorrhizal colonization in treated crop root zones"
+        ],
+        "sourceCitation": "ICAR-Indian Institute of Soil Science (IISS) Vermitechnology Handbook",
+        "relatedChallengeId": "chal_6",
+        "minFarmSize": 0.2,
+        "maxFarmSize": 100,
+        "safetyCritical": false
+      }
+    ],
+    [
+      "prac_6",
+      {
+        "id": "prac_6",
+        "title": "Leguminous Green Manuring (Dhaincha/Sunn Hemp)",
+        "category": "Soil Health",
+        "suitableCrops": [
+          "Rice",
+          "Sugarcane",
+          "Wheat",
+          "Vegetables",
+          "Tomato"
+        ],
+        "suitableSoilTypes": [
+          "Clay",
+          "Loamy",
+          "Black soil",
+          "Silty"
+        ],
+        "suitableSeasons": [
+          "Kharif",
+          "Zaid"
+        ],
+        "suitableAgroClimates": [
+          "Tropical",
+          "Subtropical",
+          "Humid"
+        ],
+        "suitableStates": [
+          "Punjab",
+          "Haryana",
+          "Uttar Pradesh",
+          "Tamil Nadu",
+          "West Bengal",
+          "All"
+        ],
+        "suitableFarmingMethods": [
+          "Conventional",
+          "Organic",
+          "Mixed",
+          "Natural farming"
+        ],
+        "difficulty": "Medium",
+        "description": "Sowing fast-growing leguminous green cover crops (Sesbania aculeata or Crotalaria juncea) and plowing them into moist soil prior to full flowering stage.",
+        "sustainabilityBenefit": "Fixes 60-90 kg atmospheric nitrogen biologically per hectare, adds 15-20 tons of fresh organic biomass, and improves soil tilth and percolation.",
+        "whyRecommended": "Replenishes heavily tilled soils before high-demand cereal crops like rice or wheat.",
+        "estimatedCompletion": "2 weeks",
+        "points": 85,
+        "steps": [
+          "Broadcast 15-20 kg/acre seeds of Sesbania (Dhaincha) or Sunn hemp with pre-monsoon showers.",
+          "Let crop grow for 40-45 days until early flower initiation.",
+          "Incorporate biomass directly into soil using rotavator or disk plough.",
+          "Allow 10-14 days decomposition before transplanting subsequent cash crop."
+        ],
+        "requiredMaterials": [
+          "Dhaincha (Sesbania) or Sunn hemp certified seeds (15-20 kg per acre)",
+          "Tractor or bullock-drawn disk plough / rotavator"
+        ],
+        "precautions": [
+          "Incorporate strictly at 50% flowering; delayed plowing makes stalks woody and locks up soil nitrogen.",
+          "Ensure adequate soil moisture during incorporation to facilitate aerobic microbial decomposition."
+        ],
+        "expectedBenefits": [
+          "Addition of 15 to 20 tons green organic matter per hectare",
+          "Biological fixation of 60 to 90 kg N/ha, cutting initial urea requirement",
+          "Substantial improvement in soil crumb structure and bulk density"
+        ],
+        "sourceCitation": "ICAR-Central Soil Salinity Research Institute (CSSRI) & TNAU Agronomy Compendium",
+        "relatedChallengeId": "chal_10",
+        "minFarmSize": 1,
+        "maxFarmSize": 50,
+        "safetyCritical": false
+      }
+    ],
+    [
+      "prac_7",
+      {
+        "id": "prac_7",
+        "title": "Yellow & Blue Sticky Traps Installation",
+        "category": "Pest Management",
+        "suitableCrops": [
+          "Tomato",
+          "Vegetables",
+          "Banana",
+          "Cotton",
+          "Millets"
+        ],
+        "suitableSoilTypes": [
+          "Sandy",
+          "Clay",
+          "Loamy",
+          "Silty",
+          "Black soil",
+          "Red soil"
+        ],
+        "suitableSeasons": [
+          "All season"
+        ],
+        "suitableAgroClimates": [
+          "All",
+          "Tropical",
+          "Semi-Arid",
+          "Subtropical"
+        ],
+        "suitableStates": [
+          "All",
+          "Gujarat",
+          "Maharashtra",
+          "Karnataka",
+          "Tamil Nadu",
+          "Andhra Pradesh"
+        ],
+        "suitableFarmingMethods": [
+          "Conventional",
+          "Organic",
+          "Mixed",
+          "Natural farming"
+        ],
+        "difficulty": "Easy",
+        "description": "Placing chromatic sticky cards at active canopy height to monitor and intercept flying insect pests like thrips, whiteflies, leaf miners, and winged aphids.",
+        "sustainabilityBenefit": "Provides real-time pest population surveillance, reducing premature or unnecessary broad-spectrum chemical sprays.",
+        "whyRecommended": "Essential passive protection for tomato and vegetable plots during early vegetative growth stages.",
+        "estimatedCompletion": "1 hour",
+        "points": 40,
+        "steps": [
+          "Mount 10 yellow traps (for whiteflies/aphids) and 5 blue traps (for thrips) per acre.",
+          "Adjust height so trap remains 15cm above active plant canopy.",
+          "Inspect count twice weekly to detect threshold population shifts."
+        ],
+        "requiredMaterials": [
+          "Weather-resistant yellow & blue corrugated plastic sheets with non-drying insect glue",
+          "Bamboo support stakes (4-5 feet height)",
+          "Securing wire or twine"
+        ],
+        "precautions": [
+          "Reposition traps upward as crop canopy grows to keep traps 15cm above terminal shoots.",
+          "Replace or scrape traps when surface coverage exceeds 70% with dust or insects."
+        ],
+        "expectedBenefits": [
+          "Early warning indicator before economic injury threshold is breached",
+          "Continuous 24/7 interception of adult sucking pests without chemical drift",
+          "Suppression of virus transmission by vector insects (e.g. Tomato Leaf Curl Virus)"
+        ],
+        "sourceCitation": "ICAR-Indian Institute of Horticultural Research (IIHR) Eco-Friendly IPM Protocols",
+        "relatedChallengeId": "chal_4",
+        "minFarmSize": 0.1,
+        "maxFarmSize": 50,
+        "safetyCritical": false
+      }
+    ],
+    [
+      "prac_8",
+      {
+        "id": "prac_8",
+        "title": "Intercropping with Short-Duration Pulses",
+        "category": "Biodiversity",
+        "suitableCrops": [
+          "Sugarcane",
+          "Banana",
+          "Tomato",
+          "Millets",
+          "Cotton"
+        ],
+        "suitableSoilTypes": [
+          "Loamy",
+          "Black soil",
+          "Red soil",
+          "Clay"
+        ],
+        "suitableSeasons": [
+          "Kharif",
+          "Rabi"
+        ],
+        "suitableAgroClimates": [
+          "Tropical",
+          "Semi-Arid",
+          "Subtropical"
+        ],
+        "suitableStates": [
+          "Maharashtra",
+          "Karnataka",
+          "Tamil Nadu",
+          "Gujarat",
+          "Andhra Pradesh",
+          "All"
+        ],
+        "suitableFarmingMethods": [
+          "Organic",
+          "Mixed",
+          "Natural farming",
+          "Conventional"
+        ],
+        "difficulty": "Medium",
+        "description": "Cultivating compatible pulse crops (cowpea, blackgram, or green gram) in the wide inter-row spaces of primary cash crops.",
+        "sustainabilityBenefit": "Improves land equivalent ratio, provides additional farmer revenue stream, enhances pollinator habitat, and enriches soil nitrogen symbiotically.",
+        "whyRecommended": "Capitalizes on wide spacing in sugarcane, banana, or staked tomato rows before canopy closes.",
+        "estimatedCompletion": "1 day",
+        "points": 70,
+        "steps": [
+          "Select short-duration, shade-tolerant pulse variety (e.g. green gram or cowpea).",
+          "Sow 2 parallel inter-rows between primary crop beds spaced 4 to 5 feet apart.",
+          "Apply light irrigation to foster simultaneous germination.",
+          "Harvest grain pods or incorporate residue after pod picking."
+        ],
+        "requiredMaterials": [
+          "Certified short-duration pulse seed (cowpea/green gram/blackgram, 4-6 kg/acre)",
+          "Rhizobium bio-inoculant packet for legume seed treatment"
+        ],
+        "precautions": [
+          "Ensure the legume variety matures within 60-70 days so it does not compete with main crop canopy.",
+          "Do not apply high synthetic nitrogen fertilizers which inhibit root nodule rhizobial activity."
+        ],
+        "expectedBenefits": [
+          "Land Equivalent Ratio (LER) improvement to 1.3 - 1.4",
+          "Biological nitrogen contribution of 25-35 kg N/ha to base soil",
+          "Secondary farm income source within 65 days of planting"
+        ],
+        "sourceCitation": "ICAR-Indian Institute of Pulses Research (IIPR) Intercropping Systems Guideline",
+        "relatedChallengeId": "chal_11",
+        "minFarmSize": 0.5,
+        "maxFarmSize": 50,
+        "safetyCritical": false
+      }
+    ],
+    [
+      "prac_9",
+      {
+        "id": "prac_9",
+        "title": "Panchagavya Biostimulant Preparation",
+        "category": "Organic Farming",
+        "suitableCrops": [
+          "Tomato",
+          "Banana",
+          "Vegetables",
+          "Rice",
+          "Sugarcane",
+          "Groundnut",
+          "Millets"
+        ],
+        "suitableSoilTypes": [
+          "Sandy",
+          "Clay",
+          "Loamy",
+          "Red soil",
+          "Black soil"
+        ],
+        "suitableSeasons": [
+          "All season"
+        ],
+        "suitableAgroClimates": [
+          "All",
+          "Tropical",
+          "Subtropical",
+          "Semi-Arid"
+        ],
+        "suitableStates": [
+          "Tamil Nadu",
+          "Kerala",
+          "Karnataka",
+          "Andhra Pradesh",
+          "Maharashtra",
+          "All"
+        ],
+        "suitableFarmingMethods": [
+          "Organic",
+          "Natural farming"
+        ],
+        "difficulty": "Medium",
+        "description": "Traditional fermented concoction prepared from 5 cow products (dung, urine, milk, curd, ghee) enriched with sugarcane jaggery and tender coconut.",
+        "sustainabilityBenefit": "Acts as a natural growth promoter loaded with beneficial lactobacillus, yeast, and auxins; boosts crop immunity against foliar pathogens.",
+        "whyRecommended": "Key restorative formulation in traditional regenerative farming to invigorate vegetative vigor.",
+        "estimatedCompletion": "3 days",
+        "points": 65,
+        "steps": [
+          "Mix 5kg fresh cow dung with 500g ghee in an earthen or food-grade plastic barrel; stir daily for 3 days.",
+          "On day 4, add cow urine (3L), cow milk (2L), curd (2L), tender coconut water (3L), and jaggery solution (500g in 3L water).",
+          "Stir clockwise twice daily for 15 days under shade.",
+          "Dilute 300ml of filtered solution per 10L water for foliar spray."
+        ],
+        "requiredMaterials": [
+          "Fresh indigenous cow dung (5 kg) and cow ghee (500 g)",
+          "Cow urine (3L), raw milk (2L), curd (2L)",
+          "Tender coconut water (3L) and sugarcane jaggery (500g dissolved)",
+          "Food-grade 50L plastic or earthen fermentation drum"
+        ],
+        "precautions": [
+          "Keep barrel under deep shade and cover with fine muslin cloth to avoid housefly oviposition.",
+          "Filter thoroughly through fine double-layered mesh before pouring into knapsack sprayer to avoid nozzle blockages."
+        ],
+        "expectedBenefits": [
+          "Enriched microbial flora supplying natural plant growth promoters (IAA, GA)",
+          "Increased leaf chlorophyll content and fruit set percentage in horticultural crops",
+          "Enhanced plant stress tolerance during brief dry spells"
+        ],
+        "sourceCitation": "Tamil Nadu Agricultural University (TNAU) Organic Agriculture Portal & Panchagavya Research Bulletin",
+        "relatedChallengeId": "chal_12",
+        "minFarmSize": 0.1,
+        "maxFarmSize": 25,
+        "safetyCritical": false
+      }
+    ],
+    [
+      "prac_10",
+      {
+        "id": "prac_10",
+        "title": "Rainwater Bunding and In-Field Trenching",
+        "category": "Water Conservation",
+        "suitableCrops": [
+          "Millets",
+          "Groundnut",
+          "Tomato",
+          "Banana",
+          "Sugarcane",
+          "Cotton"
+        ],
+        "suitableSoilTypes": [
+          "Red soil",
+          "Sandy",
+          "Loamy",
+          "Black soil"
+        ],
+        "suitableSeasons": [
+          "Kharif",
+          "All season"
+        ],
+        "suitableAgroClimates": [
+          "Semi-Arid",
+          "Arid",
+          "Tropical Dry"
+        ],
+        "suitableStates": [
+          "Karnataka",
+          "Andhra Pradesh",
+          "Telangana",
+          "Rajasthan",
+          "Gujarat",
+          "Tamil Nadu"
+        ],
+        "suitableFarmingMethods": [
+          "Conventional",
+          "Organic",
+          "Mixed",
+          "Natural farming"
+        ],
+        "difficulty": "Medium",
+        "description": "Constructing earthen contour bunds and percolation trenches across the farm slope to arrest torrential monsoon runoff.",
+        "sustainabilityBenefit": "Recharges shallow farm aquifers, arrests topsoil erosion, and extends root-zone moisture during prolonged rain dry-spells.",
+        "whyRecommended": "Critical for rainfed and red soil farms vulnerable to quick moisture depletion.",
+        "estimatedCompletion": "2 days",
+        "points": 80,
+        "steps": [
+          "Determine slope contour line across the field boundary using an A-frame or visual level.",
+          "Excavate continuous trenches 1.5ft wide and 1.5ft deep along field peripheries.",
+          "Tamp the excavated soil into a compact downslope bund reinforced with native grasses.",
+          "Ensure safe vegetative overflow outlets to prevent bund breaches."
+        ],
+        "requiredMaterials": [
+          "A-frame or hose level for contour line mapping",
+          "Excavation shovels, pickaxes, and soil tamping rammer",
+          "Stylo or Vetiver grass slips for bund embankment reinforcement"
+        ],
+        "precautions": [
+          "Always construct stone or grass waste weirs at regular intervals to prevent violent bund washouts during cloudbursts.",
+          "Never dig trenches perpendicular to slope contour, as this accelerates gully erosion."
+        ],
+        "expectedBenefits": [
+          "Arrests topsoil erosion by 60-80% on sloping terrain",
+          "Prolongs soil moisture retention by 7-14 days during dry spells",
+          "Recharges on-farm open wells and tube-well water tables"
+        ],
+        "sourceCitation": "ICAR-Indian Institute of Soil and Water Conservation (IISWC) Watershed Engineering Bulletin",
+        "relatedChallengeId": "chal_7",
+        "minFarmSize": 1,
+        "maxFarmSize": 100,
+        "safetyCritical": true
+      }
+    ],
+    [
+      "prac_11",
+      {
+        "id": "prac_11",
+        "title": "Biological Seed Treatment with Trichoderma",
+        "category": "Soil Health",
+        "suitableCrops": [
+          "Rice",
+          "Tomato",
+          "Groundnut",
+          "Vegetables",
+          "Wheat",
+          "Millets"
+        ],
+        "suitableSoilTypes": [
+          "Sandy",
+          "Clay",
+          "Loamy",
+          "Silty",
+          "Black soil",
+          "Red soil"
+        ],
+        "suitableSeasons": [
+          "All season"
+        ],
+        "suitableAgroClimates": [
+          "All",
+          "Tropical",
+          "Subtropical",
+          "Temperate"
+        ],
+        "suitableStates": [
+          "All",
+          "Gujarat",
+          "Tamil Nadu",
+          "Karnataka",
+          "Maharashtra",
+          "Uttar Pradesh"
+        ],
+        "suitableFarmingMethods": [
+          "Conventional",
+          "Organic",
+          "Mixed",
+          "Natural farming"
+        ],
+        "difficulty": "Easy",
+        "description": "Coating healthy certified seeds with antagonistic fungus Trichoderma viride or harzianum prior to nursery raising or direct sowing.",
+        "sustainabilityBenefit": "Colonizes young seedlings to defend against soil-borne damping off, collar rot, and Fusarium root wilt pathogens without chemical seed dressings.",
+        "whyRecommended": "Lowest-cost insurance policy for vegetable nurseries and direct seeded crops.",
+        "estimatedCompletion": "30 minutes",
+        "points": 45,
+        "steps": [
+          "Take 5-10g Trichoderma viride powder per kg of clean seed.",
+          "Add 50ml rice starch or jaggery water as a sticky natural binder.",
+          "Mix gently by hand until every seed is uniformly coated with a gray-green film.",
+          "Shade dry for 30 minutes before immediate nursery sowing."
+        ],
+        "requiredMaterials": [
+          "Trichoderma viride / harzianum bio-fungicide powder (2x 10^8 CFU/g)",
+          "Clean water with 5% dissolved jaggery or boiled rice gruel binder",
+          "Plastic tray or clean tarpaulin for gentle hand mixing"
+        ],
+        "precautions": [
+          "Do not expose treated seed to direct scorching sunlight.",
+          "Do not mix or coat simultaneously with synthetic chemical fungicides (e.g. Carbendazim or Mancozeb)."
+        ],
+        "expectedBenefits": [
+          "Protection against seed rot, collar rot, and nursery damping-off",
+          "Promotes early root elongation through fungal metabolite stimulation",
+          "Safe, non-toxic handling for farm workers and family nurseries"
+        ],
+        "sourceCitation": "ICAR-Directorate of Seed Research (DSR) & National Bureau of Agriculturally Important Microorganisms (NBAIM)",
+        "relatedChallengeId": "chal_8",
+        "minFarmSize": 0.1,
+        "maxFarmSize": 100,
+        "safetyCritical": false
+      }
+    ],
+    [
+      "prac_12",
+      {
+        "id": "prac_12",
+        "title": "Solar Photovoltaic Pumping & Nighttime Off-Peak Scheduling",
+        "category": "Energy Efficiency",
+        "suitableCrops": [
+          "Rice",
+          "Sugarcane",
+          "Banana",
+          "Tomato",
+          "Vegetables",
+          "Groundnut"
+        ],
+        "suitableSoilTypes": [
+          "Sandy",
+          "Clay",
+          "Loamy",
+          "Silty",
+          "Black soil",
+          "Red soil"
+        ],
+        "suitableSeasons": [
+          "All season"
+        ],
+        "suitableAgroClimates": [
+          "Semi-Arid",
+          "Tropical",
+          "Arid",
+          "Subtropical"
+        ],
+        "suitableStates": [
+          "Rajasthan",
+          "Gujarat",
+          "Maharashtra",
+          "Tamil Nadu",
+          "Karnataka",
+          "All"
+        ],
+        "suitableFarmingMethods": [
+          "Conventional",
+          "Organic",
+          "Mixed",
+          "Natural farming"
+        ],
+        "difficulty": "Medium",
+        "description": "Optimizing pump runtimes with solar PV arrays and high-efficiency submersible controllers during maximum sun hours.",
+        "sustainabilityBenefit": "Eliminates diesel emissions, cuts electricity grid strain, and prevents over-pumping during midday heat evaporation.",
+        "whyRecommended": "Reduces operational power expenditures and transitions farm irrigation to zero-emission solar energy.",
+        "estimatedCompletion": "1 day",
+        "points": 75,
+        "steps": [
+          "Inspect solar collector panels for dust or residue build-up; clean weekly.",
+          "Calibrate pump timer to deliver steady pressurized flow between 9 AM and 3 PM.",
+          "Combine with localized drip or sprinkler systems to maximize pressure head efficiency."
+        ],
+        "requiredMaterials": [
+          "Solar PV array with VFD (Variable Frequency Drive) controller",
+          "Pressure gauge and flow monitoring water meter",
+          "Microfiber soft cleaning mop for solar glass modules"
+        ],
+        "precautions": [
+          "Avoid running the pump dry: ensure borewell / sump water level sensor probes are operational.",
+          "Clean panels only in early mornings or evenings to prevent thermal shock to hot tempered glass."
+        ],
+        "expectedBenefits": [
+          "Elimination of diesel fuel recurring expenditure",
+          "Estimated 2.5 to 4.5 metric tons CO2 equivalent avoided per pump annually",
+          "Reliable daytime watering independent of rural grid power cuts"
+        ],
+        "sourceCitation": "Ministry of New & Renewable Energy (PM-KUSUM Scheme Documentation) & ICAR-CIAE Bhopal",
+        "relatedChallengeId": "chal_14",
+        "minFarmSize": 1,
+        "maxFarmSize": 100,
+        "safetyCritical": false
+      }
+    ],
+    [
+      "prac_13",
+      {
+        "id": "prac_13",
+        "title": "Crop Residue In-Situ Shredding (Anti-Stubble Burning)",
+        "category": "Waste Reduction",
+        "suitableCrops": [
+          "Wheat",
+          "Rice",
+          "Sugarcane",
+          "Millets",
+          "Cotton"
+        ],
+        "suitableSoilTypes": [
+          "Clay",
+          "Loamy",
+          "Silty",
+          "Black soil"
+        ],
+        "suitableSeasons": [
+          "Kharif",
+          "Rabi"
+        ],
+        "suitableAgroClimates": [
+          "Subtropical",
+          "Tropical Wet",
+          "Semi-Arid"
+        ],
+        "suitableStates": [
+          "Punjab",
+          "Haryana",
+          "Uttar Pradesh",
+          "Madhya Pradesh",
+          "All"
+        ],
+        "suitableFarmingMethods": [
+          "Conventional",
+          "Organic",
+          "Mixed",
+          "Natural farming"
+        ],
+        "difficulty": "Medium",
+        "description": "Mechanically chopping and incorporating harvest stubble back into soil beds using super-seeders or mulcher attachments.",
+        "sustainabilityBenefit": "Prevents air pollution and greenhouse gas emissions from burning, restores soil carbon levels, and maintains soil structure.",
+        "whyRecommended": "Essential climate-smart alternative for grain and cane farmers following harvest.",
+        "estimatedCompletion": "1 day",
+        "points": 85,
+        "steps": [
+          "Attach tractor-driven stubble flail chopper immediately following combine harvester.",
+          "Shred post-harvest stalks into 2-3 inch uniform chips.",
+          "Apply bio-decomposer spray (Pusa decomposer or fermented cow dung slurry).",
+          "Directly seed the next crop using Happy Seeder / Zero-till drill."
+        ],
+        "requiredMaterials": [
+          "Tractor-mounted straw management system (Super Seeder or Straw Mulcher)",
+          "Bio-decomposer capsule / liquid formulation (ICAR-IARI Pusa Decomposer)",
+          "Boom sprayer for uniform bio-inoculant distribution"
+        ],
+        "precautions": [
+          "Do not bury green succulent stubble too deeply without moisture; anaerobic fermentation can cause temporary seedling yellowing.",
+          "Ensure straw is spread uniformly across field width to avoid clumps interfering with seed drill."
+        ],
+        "expectedBenefits": [
+          "100% elimination of particulate matter (PM2.5, PM10) smoke emissions from field fires",
+          "Return of approximately 5.5 kg N, 2.3 kg P, and 25 kg K per ton of retained straw",
+          "Significant elevation in soil organic carbon (SOC) across consecutive seasons"
+        ],
+        "sourceCitation": "ICAR-Indian Agricultural Research Institute (IARI) In-situ Crop Residue Management Handbook",
+        "relatedChallengeId": "chal_13",
+        "minFarmSize": 1.5,
+        "maxFarmSize": 100,
+        "safetyCritical": true
+      }
+    ],
+    [
+      "prac_14",
+      {
+        "id": "prac_14",
+        "title": "Biochar Application for Long-Term Carbon Sequestration",
+        "category": "Soil Health",
+        "suitableCrops": [
+          "Groundnut",
+          "Tomato",
+          "Banana",
+          "Millets",
+          "Vegetables"
+        ],
+        "suitableSoilTypes": [
+          "Sandy",
+          "Red soil",
+          "Loamy"
+        ],
+        "suitableSeasons": [
+          "All season"
+        ],
+        "suitableAgroClimates": [
+          "Semi-Arid",
+          "Tropical",
+          "Arid"
+        ],
+        "suitableStates": [
+          "Tamil Nadu",
+          "Karnataka",
+          "Andhra Pradesh",
+          "Rajasthan",
+          "All"
+        ],
+        "suitableFarmingMethods": [
+          "Organic",
+          "Natural farming",
+          "Mixed"
+        ],
+        "difficulty": "Advanced",
+        "description": "Pyrolyzed carbonaceous biomass charged with microbial inoculants and compost tea applied into row trenches.",
+        "sustainabilityBenefit": "Persists in topsoil for decades, permanently binding soil moisture, boosting nutrient holding capacity, and stabilizing acidic soils.",
+        "whyRecommended": "Transforms degraded red and sandy soils into sponges with high organic carbon retention.",
+        "estimatedCompletion": "2 days",
+        "points": 95,
+        "steps": [
+          "Activate raw biochar by soaking it in compost slurry or liquid panchagavya for 14 days.",
+          "Apply charged biochar at 500 kg per acre in planting furrows.",
+          "Incorporate to a depth of 15cm with tilling tines before bed shaping."
+        ],
+        "requiredMaterials": [
+          "Pyrolyzed agro-biomass biochar (crushed to 2-5mm grain size)",
+          "Active liquid compost tea, vermiwash, or cattle dung slurry for microbial charging",
+          "Protective dust mask and safety goggles for handling fine biochar powder"
+        ],
+        "precautions": [
+          "Never apply raw, uncharged biochar directly to seeds; raw char absorbs soil moisture and nutrients, temporarily starving plants.",
+          "Wear a respiratory mask when handling and sieving dry biochar to avoid inhalation of carbon dust."
+        ],
+        "expectedBenefits": [
+          "Recalcitrant soil carbon persistence estimated at 100+ years",
+          "Increase in soil cation exchange capacity (CEC) by up to 20-30%",
+          "Enhanced moisture retention in coarse sandy and drought-prone red soils"
+        ],
+        "sourceCitation": "ICAR-Central Research Institute for Dryland Agriculture (CRIDA) Biochar Systems Research Bulletin",
+        "relatedChallengeId": "chal_15",
+        "minFarmSize": 0.5,
+        "maxFarmSize": 50,
+        "safetyCritical": false
+      }
+    ],
+    [
+      "prac_15",
+      {
+        "id": "prac_15",
+        "title": "Floral Border Strips for Beneficial Pollinators",
+        "category": "Biodiversity",
+        "suitableCrops": [
+          "Tomato",
+          "Vegetables",
+          "Banana",
+          "Rice",
+          "Cotton",
+          "Groundnut",
+          "Millets"
+        ],
+        "suitableSoilTypes": [
+          "Sandy",
+          "Clay",
+          "Loamy",
+          "Silty",
+          "Black soil",
+          "Red soil"
+        ],
+        "suitableSeasons": [
+          "All season"
+        ],
+        "suitableAgroClimates": [
+          "All",
+          "Tropical",
+          "Subtropical",
+          "Semi-Arid"
+        ],
+        "suitableStates": [
+          "All",
+          "Karnataka",
+          "Maharashtra",
+          "Gujarat",
+          "Tamil Nadu",
+          "Uttar Pradesh"
+        ],
+        "suitableFarmingMethods": [
+          "Conventional",
+          "Organic",
+          "Mixed",
+          "Natural farming"
+        ],
+        "difficulty": "Easy",
+        "description": "Planting nectar-rich flowering borders (marigold, mustard, coriander, fennel) along farm perimeters and bunds.",
+        "sustainabilityBenefit": "Attracts natural predators (syrphid flies, parasitic wasps) and honeybees, increasing fruit set in tomatoes and cucurbits.",
+        "whyRecommended": "Low investment landscape feature that dramatically enhances ecological balance.",
+        "estimatedCompletion": "2 hours",
+        "points": 50,
+        "steps": [
+          "Sow African marigold and coriander seeds on field border bunds 10 days before primary cash crop.",
+          "Maintain continuous flowering succession throughout the growing season.",
+          "Refrain from spraying broad chemical insecticides on border rows."
+        ],
+        "requiredMaterials": [
+          "Companion flower seeds: African Marigold, Coriander, Fennel, Sweet Basil",
+          "Nursery seedling tray or shallow planting hoe"
+        ],
+        "precautions": [
+          "Strictly avoid spraying chemical insecticides on flowering border strips to prevent pollinator kill.",
+          "Ensure flower species do not serve as alternative hosts for primary viral diseases of the cash crop."
+        ],
+        "expectedBenefits": [
+          "Documented 15-25% boost in fruit set and pollination in cross-pollinated crops",
+          "Habitat provision for predatory ladybirds, syrphid flies, and parasitoid wasps",
+          "Natural trap cropping effect: attracts American bollworm and thrips away from cash beds"
+        ],
+        "sourceCitation": "ICAR-National Bureau of Agricultural Insect Resources (NBAIR) Ecological Engineering for Pest Management",
+        "relatedChallengeId": "chal_9",
+        "minFarmSize": 0.1,
+        "maxFarmSize": 50,
+        "safetyCritical": false
+      }
+    ]
+  ],
+  "challenges": [
+    [
+      "chal_1",
+      {
+        "id": "chal_1",
+        "practiceId": "prac_3",
+        "title": "Start Mulching Your Crop Rows",
+        "description": "Apply an appropriate layer of organic mulch (paddy straw, sugarcane bagasse, or shredded dry leaves) around selected crop beds.",
+        "category": "Soil Health",
+        "difficulty": "Easy",
+        "duration": "1 day",
+        "points": 50,
+        "sustainabilityBenefit": "Shields soil moisture, stops weed outbreaks, and enriches soil organic matter naturally.",
+        "instructions": [
+          "Select a demonstration plot or 20-30 crop plants.",
+          "Apply a 3-inch layer of dry straw or dry biomass leaving stem room.",
+          "Observe moisture levels after 48 hours compared to unmulched soil."
+        ],
+        "verificationHint": "Share a photo or note on the community board describing your mulch type and moisture retention.",
+        "createdAt": "2026-08-01T00:00:00Z"
+      }
+    ],
+    [
+      "chal_2",
+      {
+        "id": "chal_2",
+        "practiceId": "prac_4",
+        "title": "Prepare & Apply Neem Foliar Spray",
+        "description": "Brew or dilute a batch of organic neem oil emulsion and spray during cooler evening hours to deter sucking insects.",
+        "category": "Pest Management",
+        "difficulty": "Easy",
+        "duration": "2 hours",
+        "points": 50,
+        "sustainabilityBenefit": "Controls soft-bodied pests without hurting friendly bees and ladybug beetles.",
+        "instructions": [
+          "Mix 50ml cold pressed neem oil with 10ml liquid soap in 10L clean water.",
+          "Spray before dusk on upper and lower leaf canopy.",
+          "Check pest activity after 3 days."
+        ],
+        "verificationHint": "Log the crop treated and whether pest movement reduced.",
+        "createdAt": "2026-08-02T00:00:00Z"
+      }
+    ],
+    [
+      "chal_3",
+      {
+        "id": "chal_3",
+        "practiceId": "prac_1",
+        "title": "Install Field Water Tube for Rice AWD",
+        "description": "Sink a perforated water pipe into your paddy plot to implement Alternate Wetting and Drying.",
+        "category": "Water Conservation",
+        "difficulty": "Medium",
+        "duration": "1 week",
+        "points": 75,
+        "sustainabilityBenefit": "Saves 20-30% irrigation water and reduces swamp gas methane without lowering harvest yields.",
+        "instructions": [
+          "Insert a 30cm perforated tube 15cm into the soil.",
+          "Let field dry until tube water recedes 15cm below ground level before re-flooding.",
+          "Record irrigation dates over 7 days."
+        ],
+        "verificationHint": "Note how many pumping cycles you avoided this week.",
+        "createdAt": "2026-08-03T00:00:00Z"
+      }
+    ],
+    [
+      "chal_4",
+      {
+        "id": "chal_4",
+        "practiceId": "prac_7",
+        "title": "Deploy Yellow & Blue Sticky Traps",
+        "description": "Hang 10 yellow and 5 blue pest cards across your vegetable or cash crop plots at canopy height.",
+        "category": "Pest Management",
+        "difficulty": "Easy",
+        "duration": "1 hour",
+        "points": 40,
+        "sustainabilityBenefit": "Passive non-chemical pest suppression and early warning system for whiteflies & thrips.",
+        "instructions": [
+          "Install traps at canopy height facing prevailing wind.",
+          "Check cards every 48 hours to gauge insect activity."
+        ],
+        "verificationHint": "Count insect captures and note the dominant species.",
+        "createdAt": "2026-08-04T00:00:00Z"
+      }
+    ],
+    [
+      "chal_5",
+      {
+        "id": "chal_5",
+        "practiceId": "prac_2",
+        "title": "Drip Lateral Flush & Leak Inspection",
+        "description": "Run an end-to-end drip line pressure test, flush sediment from lateral end caps, and repair cracked emitters.",
+        "category": "Water Conservation",
+        "difficulty": "Medium",
+        "duration": "2 hours",
+        "points": 60,
+        "sustainabilityBenefit": "Ensures even water delivery, stops wasteful pressure leaks, and maximizes pump efficiency.",
+        "instructions": [
+          "Open lateral end caps and run pump for 3 minutes to flush silt.",
+          "Walk lines to fix leaks with joiners and replace clogged drippers.",
+          "Check emitter driprate uniformity along the last bed."
+        ],
+        "verificationHint": "Report number of leaks fixed or lateral ends flushed.",
+        "createdAt": "2026-08-05T00:00:00Z"
+      }
+    ],
+    [
+      "chal_6",
+      {
+        "id": "chal_6",
+        "practiceId": "prac_5",
+        "title": "Establish a Vermicomposting Pit or Bin",
+        "description": "Set up an active organic worm bed using farm weeds, cattle dung, and earthworms.",
+        "category": "Organic Farming",
+        "difficulty": "Medium",
+        "duration": "3 days",
+        "points": 90,
+        "sustainabilityBenefit": "Converts farm waste into top-grade organic humus with rich microflora.",
+        "instructions": [
+          "Construct a shaded bed with bottom gravel aeration.",
+          "Add alternate layers of half-cured cow dung and organic farm residues.",
+          "Introduce earthworms and sprinkle water to maintain 60% moisture."
+        ],
+        "verificationHint": "Confirm the bed dimensions and biomass types utilized.",
+        "createdAt": "2026-08-06T00:00:00Z"
+      }
+    ],
+    [
+      "chal_7",
+      {
+        "id": "chal_7",
+        "practiceId": "prac_10",
+        "title": "Dig a Rainwater In-Field Percolation Pit",
+        "description": "Excavate a contour infiltration pit or trench to capture surface rain runoff during monsoons.",
+        "category": "Water Conservation",
+        "difficulty": "Medium",
+        "duration": "2 days",
+        "points": 80,
+        "sustainabilityBenefit": "Recharges ground aquifers and preserves sub-surface moisture for winter crops.",
+        "instructions": [
+          "Locate low runoff collection points in the field slope.",
+          "Dig trench 3ft deep and fill bottom foot with gravel/pebbles.",
+          "Create earthen bund downslope."
+        ],
+        "verificationHint": "Record trench location and water absorption time after rain.",
+        "createdAt": "2026-08-07T00:00:00Z"
+      }
+    ],
+    [
+      "chal_8",
+      {
+        "id": "chal_8",
+        "practiceId": "prac_11",
+        "title": "Seed Treatment with Bio-Fungicide (Trichoderma)",
+        "description": "Coat seeds with bio-agent Trichoderma viride before nursery planting to ward off root rot.",
+        "category": "Soil Health",
+        "difficulty": "Easy",
+        "duration": "30 minutes",
+        "points": 45,
+        "sustainabilityBenefit": "Reduces dependence on toxic synthetic fungicide seed dips.",
+        "instructions": [
+          "Mix 10g Trichoderma per kg seed with mild jaggery water.",
+          "Ensure complete surface coating.",
+          "Dry in shade for 30 minutes before planting."
+        ],
+        "verificationHint": "Record seedling emergence rate after 5 days.",
+        "createdAt": "2026-08-08T00:00:00Z"
+      }
+    ],
+    [
+      "chal_9",
+      {
+        "id": "chal_9",
+        "practiceId": "prac_15",
+        "title": "Plant Pollinator Border Strips (Marigolds & Herbs)",
+        "description": "Establish blooming marigolds or aromatic coriander borders around crop perimeters.",
+        "category": "Biodiversity",
+        "difficulty": "Easy",
+        "duration": "2 hours",
+        "points": 50,
+        "sustainabilityBenefit": "Attracts natural predators of worms and encourages bee pollination.",
+        "instructions": [
+          "Sow marigold plants every 3 feet along bunds.",
+          "Water thoroughly to establish seedling roots."
+        ],
+        "verificationHint": "Confirm flowers planted along your boundary.",
+        "createdAt": "2026-08-09T00:00:00Z"
+      }
+    ],
+    [
+      "chal_10",
+      {
+        "id": "chal_10",
+        "practiceId": "prac_6",
+        "title": "Incorporate Green Manure into Field Beds",
+        "description": "Plough down a 45-day stand of Sesbania (Dhaincha) or Sunn hemp to enrich organic nitrogen.",
+        "category": "Soil Health",
+        "difficulty": "Medium",
+        "duration": "2 weeks",
+        "points": 85,
+        "sustainabilityBenefit": "Adds up to 10-15 tons of green biomass and fixes atmospheric nitrogen.",
+        "instructions": [
+          "Inspect green crop at 50% flowering stage.",
+          "Chop and rotavate biomass into wet topsoil.",
+          "Allow 10 days for bio-decomposition."
+        ],
+        "verificationHint": "Verify acreage plowed and green manure variety used.",
+        "createdAt": "2026-08-10T00:00:00Z"
+      }
+    ],
+    [
+      "chal_11",
+      {
+        "id": "chal_11",
+        "practiceId": "prac_8",
+        "title": "Intercrop Cowpea or Blackgram in Wide Rows",
+        "description": "Plant two rows of short-duration legumes between wide cash crop rows.",
+        "category": "Biodiversity",
+        "difficulty": "Medium",
+        "duration": "1 day",
+        "points": 70,
+        "sustainabilityBenefit": "Increases farm income, stops soil baking, and adds symbiotic rhizobial nitrogen.",
+        "instructions": [
+          "Sow certified legume seeds at 20cm spacing between main crop beds.",
+          "Irrigate gently to germinate."
+        ],
+        "verificationHint": "Share intercrop layout details.",
+        "createdAt": "2026-08-11T00:00:00Z"
+      }
+    ],
+    [
+      "chal_12",
+      {
+        "id": "chal_12",
+        "practiceId": "prac_9",
+        "title": "Ferment a Batch of Organic Panchagavya",
+        "description": "Prepare and stir a traditional 5-ingredient cow dung, urine, milk concoction over 15 days.",
+        "category": "Organic Farming",
+        "difficulty": "Medium",
+        "duration": "3 days",
+        "points": 65,
+        "sustainabilityBenefit": "Supplies living microflora and natural plant auxins to bolster crop immunity.",
+        "instructions": [
+          "Mix cow dung and ghee; let rest 3 days.",
+          "Add milk, curd, urine, tender coconut water, and jaggery.",
+          "Stir clockwise twice daily under shade."
+        ],
+        "verificationHint": "Describe fermentation aroma and dilution ratio prepared.",
+        "createdAt": "2026-08-12T00:00:00Z"
+      }
+    ],
+    [
+      "chal_13",
+      {
+        "id": "chal_13",
+        "practiceId": "prac_13",
+        "title": "In-Situ Shredding of Harvest Stubble",
+        "description": "Chop and spread harvest crop residue back on the field instead of open-air burning.",
+        "category": "Waste Reduction",
+        "difficulty": "Medium",
+        "duration": "1 day",
+        "points": 85,
+        "sustainabilityBenefit": "Eliminates smoky air pollution and returns carbon minerals into your soil bank.",
+        "instructions": [
+          "Use flail shredder or rotavator over post-harvest stalks.",
+          "Spray bio-culture slurry to hasten breakdown."
+        ],
+        "verificationHint": "Record acreage treated without burning.",
+        "createdAt": "2026-08-13T00:00:00Z"
+      }
+    ],
+    [
+      "chal_14",
+      {
+        "id": "chal_14",
+        "practiceId": "prac_12",
+        "title": "Tune Pump Schedule to Solar Peak Hours",
+        "description": "Align daily water pumping between 9 AM and 3 PM to take advantage of solar power and lower thermal evaporation.",
+        "category": "Energy Efficiency",
+        "difficulty": "Medium",
+        "duration": "1 day",
+        "points": 75,
+        "sustainabilityBenefit": "Zero grid dependency, lower energy costs, and reduced peak-demand stress.",
+        "instructions": [
+          "Adjust pump timers to midday solar peak.",
+          "Check for pipeline friction loss and clean suction strainers."
+        ],
+        "verificationHint": "Confirm pump hours shifted away from fossil/diesel backup.",
+        "createdAt": "2026-08-14T00:00:00Z"
+      }
+    ],
+    [
+      "chal_15",
+      {
+        "id": "chal_15",
+        "practiceId": "prac_14",
+        "title": "Charge Biochar with Compost Tea",
+        "description": "Impregnate raw porous charcoal with active compost slurry and apply to high-value planting furrows.",
+        "category": "Soil Health",
+        "difficulty": "Advanced",
+        "duration": "2 days",
+        "points": 95,
+        "sustainabilityBenefit": "Permanent micro-cavities for mycorrhizal fungi and water storage in thirsty soils.",
+        "instructions": [
+          "Crush biochar to 2-5mm grain size.",
+          "Submerge in active aerated compost tea for 7 days.",
+          "Spread into seed trenches before covering."
+        ],
+        "verificationHint": "Share kilograms of biochar activated and crops treated.",
+        "createdAt": "2026-08-15T00:00:00Z"
+      }
+    ]
+  ],
+  "userChallenges": [
+    [
+      "uc_1",
+      {
+        "id": "uc_1",
+        "userId": "user_ramesh",
+        "challengeId": "chal_1",
+        "practiceId": "prac_3",
+        "status": "verified",
+        "startedAt": "2026-10-01T10:00:00Z",
+        "submittedAt": "2026-10-02T11:00:00Z",
+        "verifiedAt": "2026-10-02T12:00:00Z",
+        "completedAt": "2026-10-02T12:00:00Z",
+        "proofNote": "Applied paddy straw across tomato rows.",
+        "verifiedBy": "user_admin"
+      }
+    ],
+    [
+      "uc_2",
+      {
+        "id": "uc_2",
+        "userId": "user_ramesh",
+        "challengeId": "chal_4",
+        "practiceId": "prac_7",
+        "status": "verified",
+        "startedAt": "2026-10-03T09:00:00Z",
+        "submittedAt": "2026-10-03T10:30:00Z",
+        "verifiedAt": "2026-10-03T11:00:00Z",
+        "completedAt": "2026-10-03T11:00:00Z",
+        "proofNote": "Placed 10 yellow traps in greenhouse.",
+        "verifiedBy": "user_admin"
+      }
+    ],
+    [
+      "uc_3",
+      {
+        "id": "uc_3",
+        "userId": "user_ramesh",
+        "challengeId": "chal_5",
+        "practiceId": "prac_2",
+        "status": "in_progress",
+        "startedAt": "2026-10-06T08:00:00Z"
+      }
+    ],
+    [
+      "uc_4",
+      {
+        "id": "uc_4",
+        "userId": "user_ananya",
+        "challengeId": "chal_3",
+        "practiceId": "prac_1",
+        "status": "verified",
+        "startedAt": "2026-09-20T08:00:00Z",
+        "submittedAt": "2026-09-27T09:00:00Z",
+        "verifiedAt": "2026-09-27T10:00:00Z",
+        "completedAt": "2026-09-27T10:00:00Z",
+        "proofNote": "Installed perforated pipe in Samba plot.",
+        "verifiedBy": "user_admin"
+      }
+    ],
+    [
+      "uc_5",
+      {
+        "id": "uc_5",
+        "userId": "user_ananya",
+        "challengeId": "chal_5",
+        "practiceId": "prac_2",
+        "status": "verified",
+        "startedAt": "2026-09-28T09:00:00Z",
+        "submittedAt": "2026-09-28T11:30:00Z",
+        "verifiedAt": "2026-09-28T12:00:00Z",
+        "completedAt": "2026-09-28T12:00:00Z",
+        "verifiedBy": "user_admin"
+      }
+    ],
+    [
+      "uc_6",
+      {
+        "id": "uc_6",
+        "userId": "user_ananya",
+        "challengeId": "chal_7",
+        "practiceId": "prac_10",
+        "status": "verified",
+        "startedAt": "2026-09-29T10:00:00Z",
+        "submittedAt": "2026-09-30T16:00:00Z",
+        "verifiedAt": "2026-09-30T17:00:00Z",
+        "completedAt": "2026-09-30T17:00:00Z",
+        "verifiedBy": "user_admin"
+      }
+    ]
+  ],
+  "badges": [
+    [
+      "badge_first_step",
+      {
+        "id": "badge_first_step",
+        "name": "🌱 First Step",
+        "icon": "🌱",
+        "description": "Completed your very first sustainable farming challenge on AgriX.",
+        "criteria": "Complete 1 challenge",
+        "category": "General",
+        "targetCount": 1,
+        "pointsReward": 50
+      }
+    ],
+    [
+      "badge_water_saver",
+      {
+        "id": "badge_water_saver",
+        "name": "💧 Water Saver",
+        "icon": "💧",
+        "description": "Mastered water stewardship by completing 3 water conservation challenges.",
+        "criteria": "Complete 3 Water Conservation challenges",
+        "category": "Water Conservation",
+        "targetCount": 3,
+        "pointsReward": 100
+      }
+    ],
+    [
+      "badge_soil_guardian",
+      {
+        "id": "badge_soil_guardian",
+        "name": "🌿 Soil Guardian",
+        "icon": "🌿",
+        "description": "Nourished your land by finishing 3 soil health and fertility challenges.",
+        "criteria": "Complete 3 Soil Health challenges",
+        "category": "Soil Health",
+        "targetCount": 3,
+        "pointsReward": 100
+      }
+    ],
+    [
+      "badge_eco_protector",
+      {
+        "id": "badge_eco_protector",
+        "name": "🐝 Eco Protector",
+        "icon": "🐝",
+        "description": "Protected beneficial agro-ecosystems with 3 biodiversity or pest management challenges.",
+        "criteria": "Complete 3 Biodiversity or Pest Management challenges",
+        "category": "Biodiversity",
+        "targetCount": 3,
+        "pointsReward": 100
+      }
+    ],
+    [
+      "badge_green_champion",
+      {
+        "id": "badge_green_champion",
+        "name": "🏆 Green Champion",
+        "icon": "🏆",
+        "description": "Earned 1000+ points through dedicated sustainable practices and community leadership.",
+        "criteria": "Accumulate 1000 total points",
+        "category": "General",
+        "targetCount": 1000,
+        "pointsReward": 200
+      }
+    ],
+    [
+      "badge_streak_cultivator",
+      {
+        "id": "badge_streak_cultivator",
+        "name": "☀️ Consistent Cultivator",
+        "icon": "☀️",
+        "description": "Maintained an active sustainable habit streak of 5 consecutive days.",
+        "criteria": "Reach 5-day activity streak",
+        "category": "General",
+        "targetCount": 5,
+        "pointsReward": 75
+      }
+    ],
+    [
+      "badge_community_voice",
+      {
+        "id": "badge_community_voice",
+        "name": "💬 Community Voice",
+        "icon": "💬",
+        "description": "Contributed your first farm learning or photograph to the community board.",
+        "criteria": "Publish 1 community post",
+        "category": "General",
+        "targetCount": 1,
+        "pointsReward": 30
+      }
+    ],
+    [
+      "badge_harvest_innovator",
+      {
+        "id": "badge_harvest_innovator",
+        "name": "🌾 Harvest Innovator",
+        "icon": "🌾",
+        "description": "Completed challenges across at least 4 distinct sustainability categories.",
+        "criteria": "Complete challenges across 4 categories",
+        "category": "General",
+        "targetCount": 4,
+        "pointsReward": 150
+      }
+    ]
+  ],
+  "userBadges": [
+    [
+      "ub_1",
+      {
+        "id": "ub_1",
+        "userId": "user_ramesh",
+        "badgeId": "badge_first_step",
+        "unlockedAt": "2026-10-02T12:00:00Z"
+      }
+    ],
+    [
+      "ub_2",
+      {
+        "id": "ub_2",
+        "userId": "user_ramesh",
+        "badgeId": "badge_community_voice",
+        "unlockedAt": "2026-10-06T14:30:00Z"
+      }
+    ],
+    [
+      "ub_3",
+      {
+        "id": "ub_3",
+        "userId": "user_ananya",
+        "badgeId": "badge_first_step",
+        "unlockedAt": "2026-09-27T10:00:00Z"
+      }
+    ],
+    [
+      "ub_4",
+      {
+        "id": "ub_4",
+        "userId": "user_ananya",
+        "badgeId": "badge_water_saver",
+        "unlockedAt": "2026-09-30T17:00:00Z"
+      }
+    ],
+    [
+      "ub_5",
+      {
+        "id": "ub_5",
+        "userId": "user_ananya",
+        "badgeId": "badge_green_champion",
+        "unlockedAt": "2026-10-05T10:15:00Z"
+      }
+    ],
+    [
+      "ub_6",
+      {
+        "id": "ub_6",
+        "userId": "user_ananya",
+        "badgeId": "badge_streak_cultivator",
+        "unlockedAt": "2026-10-06T09:00:00Z"
+      }
+    ]
+  ],
+  "posts": [
+    [
+      "post_1",
+      {
+        "id": "post_1",
+        "userId": "user_ramesh",
+        "userName": "Ramesh Patel",
+        "userLocation": "Anand, Gujarat",
+        "userCrop": "Tomato",
+        "userAvatar": "https://images.unsplash.com/photo-1544717302-de2939b7ef71?w=150&auto=format&fit=crop&q=80",
+        "content": "Used organic paddy straw mulch on my tomato plants this week! Soil remained damp even after 3 hot sunny afternoons, and weed growth between lines is noticeably down.",
+        "imageUrl": "https://images.unsplash.com/photo-1592417817098-8f3d6910985b?w=600&auto=format&fit=crop&q=80",
+        "category": "Soil Health",
+        "likes": [
+          "user_ananya",
+          "user_priya",
+          "user_admin"
+        ],
+        "commentCount": 2,
+        "isReported": false,
+        "createdAt": "2026-10-06T14:30:00Z"
+      }
+    ],
+    [
+      "post_2",
+      {
+        "id": "post_2",
+        "userId": "user_ananya",
+        "userName": "Ananya Sharma",
+        "userLocation": "Thanjavur, Tamil Nadu",
+        "userCrop": "Rice",
+        "userAvatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+        "content": "Implemented Alternate Wetting and Drying (AWD) with perforated PVC field tubes across 4 acres of Samba paddy. Reduced diesel pumping by 3 run-cycles this week alone while tillers look sturdy!",
+        "imageUrl": "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=600&auto=format&fit=crop&q=80",
+        "category": "Water Conservation",
+        "likes": [
+          "user_ramesh",
+          "user_lakshmi",
+          "user_suresh",
+          "user_admin"
+        ],
+        "commentCount": 3,
+        "isReported": false,
+        "createdAt": "2026-10-05T10:15:00Z"
+      }
+    ],
+    [
+      "post_3",
+      {
+        "id": "post_3",
+        "userId": "user_priya",
+        "userName": "Priya Verma",
+        "userLocation": "Varanasi, Uttar Pradesh",
+        "userCrop": "Vegetables",
+        "userAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+        "content": "Sprayed cold-pressed neem kernel emulsion mixed with mild soap on my eggplants and chili plants. Spotted ladybug beetles still buzzing happily while aphid colonies cleared up.",
+        "imageUrl": "https://images.unsplash.com/photo-1589923188900-85dae523342b?w=600&auto=format&fit=crop&q=80",
+        "category": "Pest Management",
+        "likes": [
+          "user_ananya",
+          "user_ramesh"
+        ],
+        "commentCount": 1,
+        "isReported": false,
+        "createdAt": "2026-10-04T16:40:00Z"
+      }
+    ],
+    [
+      "post_4",
+      {
+        "id": "post_4",
+        "userId": "user_lakshmi",
+        "userName": "Lakshmi Devi",
+        "userLocation": "Shivamogga, Karnataka",
+        "userCrop": "Banana",
+        "userAvatar": "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=150&auto=format&fit=crop&q=80",
+        "content": "Harvested our second batch of rich vermicompost! Earthworms multiplied very well in the shaded trench. We will incorporate 3kg around each Grand Naine banana plant base.",
+        "imageUrl": "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=600&auto=format&fit=crop&q=80",
+        "category": "Organic Farming",
+        "likes": [
+          "user_ramesh",
+          "user_ananya",
+          "user_priya",
+          "user_harpreet"
+        ],
+        "commentCount": 2,
+        "isReported": false,
+        "createdAt": "2026-10-03T11:20:00Z"
+      }
+    ],
+    [
+      "post_5",
+      {
+        "id": "post_5",
+        "userId": "user_harpreet",
+        "userName": "Harpreet Singh",
+        "userLocation": "Ludhiana, Punjab",
+        "userCrop": "Wheat",
+        "userAvatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+        "content": "Using Happy Seeder to sow wheat directly into standing paddy stubble. Zero burning on our farm this autumn season. Air is clean and topsoil is protected from early frost.",
+        "imageUrl": "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=600&auto=format&fit=crop&q=80",
+        "category": "Waste Reduction",
+        "likes": [
+          "user_admin",
+          "user_ananya",
+          "user_suresh"
+        ],
+        "commentCount": 2,
+        "isReported": false,
+        "createdAt": "2026-10-02T08:50:00Z"
+      }
+    ],
+    [
+      "post_6",
+      {
+        "id": "post_6",
+        "userId": "user_suresh",
+        "userName": "Suresh Deshmukh",
+        "userLocation": "Solapur, Maharashtra",
+        "userCrop": "Sugarcane",
+        "userAvatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+        "content": "Intercropped cowpea between 5-foot spaced sugarcane rows. Cowpea gave us fresh green pods in 50 days, and the incorporated leaves are now decomposing nicely as green manure.",
+        "imageUrl": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&auto=format&fit=crop&q=80",
+        "category": "Biodiversity",
+        "likes": [
+          "user_lakshmi",
+          "user_ramesh"
+        ],
+        "commentCount": 1,
+        "isReported": false,
+        "createdAt": "2026-10-01T15:10:00Z"
+      }
+    ],
+    [
+      "post_7",
+      {
+        "id": "post_7",
+        "userId": "user_admin",
+        "userName": "Dr. Vandana Rao (Agri Officer)",
+        "userLocation": "Hyderabad, Telangana",
+        "userCrop": "Millets",
+        "userAvatar": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&auto=format&fit=crop&q=80",
+        "content": "Reminder for all farmers preparing Kharif beds: seed treatment with Trichoderma viride takes less than 30 minutes but prevents catastrophic nursery damping-off. Avoid overdosing synthetic chemical dyes.",
+        "imageUrl": "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=600&auto=format&fit=crop&q=80",
+        "category": "Soil Health",
+        "likes": [
+          "user_ramesh",
+          "user_ananya",
+          "user_priya",
+          "user_lakshmi",
+          "user_harpreet"
+        ],
+        "commentCount": 4,
+        "isReported": false,
+        "createdAt": "2026-09-30T09:00:00Z"
+      }
+    ],
+    [
+      "post_8",
+      {
+        "id": "post_8",
+        "userId": "user_ramesh",
+        "userName": "Ramesh Patel",
+        "userLocation": "Anand, Gujarat",
+        "userCrop": "Tomato",
+        "userAvatar": "https://images.unsplash.com/photo-1544717302-de2939b7ef71?w=150&auto=format&fit=crop&q=80",
+        "content": "Hung yellow and blue sticky cards across our two tomato greenhouses. Trapped hundreds of whiteflies within 48 hours before they could transmit mosaic virus!",
+        "imageUrl": "https://images.unsplash.com/photo-1582281298055-e25b84a30b0b?w=600&auto=format&fit=crop&q=80",
+        "category": "Pest Management",
+        "likes": [
+          "user_priya",
+          "user_admin"
+        ],
+        "commentCount": 1,
+        "isReported": false,
+        "createdAt": "2026-09-29T12:00:00Z"
+      }
+    ],
+    [
+      "post_9",
+      {
+        "id": "post_9",
+        "userId": "user_priya",
+        "userName": "Priya Verma",
+        "userLocation": "Varanasi, Uttar Pradesh",
+        "userCrop": "Vegetables",
+        "userAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+        "content": "Planted African marigolds along the outer borders of our cabbage patch. Syrphid flies and wild honeybees are all over the blooms today.",
+        "imageUrl": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&auto=format&fit=crop&q=80",
+        "category": "Biodiversity",
+        "likes": [
+          "user_lakshmi",
+          "user_ramesh"
+        ],
+        "commentCount": 1,
+        "isReported": false,
+        "createdAt": "2026-09-28T16:15:00Z"
+      }
+    ],
+    [
+      "post_10",
+      {
+        "id": "post_10",
+        "userId": "user_ananya",
+        "userName": "Ananya Sharma",
+        "userLocation": "Thanjavur, Tamil Nadu",
+        "userCrop": "Rice",
+        "userAvatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+        "content": "Completed the 1000-point Green Champion milestone today! The gamified challenges on AgriX kept our farm hands motivated to check drip emitters and maintain compost moisture every single morning.",
+        "imageUrl": "https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?w=600&auto=format&fit=crop&q=80",
+        "category": "Water Conservation",
+        "likes": [
+          "user_ramesh",
+          "user_priya",
+          "user_lakshmi",
+          "user_harpreet",
+          "user_suresh",
+          "user_admin"
+        ],
+        "commentCount": 3,
+        "isReported": false,
+        "createdAt": "2026-09-27T17:30:00Z"
+      }
+    ]
+  ],
+  "comments": [
+    [
+      "comm_1",
+      {
+        "id": "comm_1",
+        "postId": "post_1",
+        "userId": "user_ananya",
+        "userName": "Ananya Sharma",
+        "userRole": "farmer",
+        "userAvatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+        "content": "Great work Ramesh! Did you keep the mulch 2 inches away from the tomato collar stem to prevent rot?",
+        "createdAt": "2026-10-06T15:00:00Z"
+      }
+    ],
+    [
+      "comm_2",
+      {
+        "id": "comm_2",
+        "postId": "post_1",
+        "userId": "user_ramesh",
+        "userName": "Ramesh Patel",
+        "userRole": "farmer",
+        "userAvatar": "https://images.unsplash.com/photo-1544717302-de2939b7ef71?w=150&auto=format&fit=crop&q=80",
+        "content": "Yes Ananya! Kept a good 2-inch ring around each base as recommended in the challenge instructions.",
+        "createdAt": "2026-10-06T15:20:00Z"
+      }
+    ],
+    [
+      "comm_3",
+      {
+        "id": "comm_3",
+        "postId": "post_2",
+        "userId": "user_admin",
+        "userName": "Dr. Vandana Rao (Agri Officer)",
+        "userRole": "admin",
+        "userAvatar": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&auto=format&fit=crop&q=80",
+        "content": "Excellent implementation of AWD Ananya. Remember to maintain continuous 5cm standing water during the panicle initiation and flowering week.",
+        "createdAt": "2026-10-05T11:00:00Z"
+      }
+    ],
+    [
+      "comm_4",
+      {
+        "id": "comm_4",
+        "postId": "post_4",
+        "userId": "user_priya",
+        "userName": "Priya Verma",
+        "userRole": "farmer",
+        "userAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+        "content": "How many days did it take for the earthworms to convert the biomass, Lakshmi ji?",
+        "createdAt": "2026-10-03T12:00:00Z"
+      }
+    ]
+  ],
+  "products": [
+    [
+      "prod_1",
+      {
+        "id": "prod_1",
+        "name": "Desi Heirloom Tomato Seeds (Organic)",
+        "category": "Seeds",
+        "description": "High-germination open-pollinated traditional seeds with natural resilience to early leaf blight and high pulp sweetness.",
+        "price": 180,
+        "unit": "Pack of 500 seeds",
+        "seller": "Kisan Beej Sahakari",
+        "imageUrl": "https://images.unsplash.com/photo-1592417817098-8f3d6910985b?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Non-GMO, farm-saved genetic vigor, preserves agricultural agro-biodiversity.",
+        "ecoScore": "A+",
+        "inStock": true,
+        "rating": 4.8,
+        "reviewsCount": 34
+      }
+    ],
+    [
+      "prod_2",
+      {
+        "id": "prod_2",
+        "name": "Trichoderma Viride Bio-Fungicide (2x 10^8 CFU)",
+        "category": "Organic fertilizers",
+        "description": "Carrier-based antagonistic fungal formulation for biological seed coating and damping-off prevention.",
+        "price": 240,
+        "unit": "1 kg container",
+        "seller": "Vedic Bio-Agri Solutions",
+        "imageUrl": "https://images.unsplash.com/photo-1628352081506-83c43123ed6d?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Zero toxic chemical residue, protects soil biome from root rot pathogens.",
+        "ecoScore": "A+",
+        "inStock": true,
+        "rating": 4.9,
+        "reviewsCount": 52
+      }
+    ],
+    [
+      "prod_3",
+      {
+        "id": "prod_3",
+        "name": "AWD Field Water Tube Kit (Pack of 5)",
+        "category": "Irrigation equipment",
+        "description": "Calibrated perforated PVC field observation tubes for Alternate Wetting & Drying in rice paddies.",
+        "price": 350,
+        "unit": "Set of 5 tubes with depth ruler",
+        "seller": "Jal-Dhara Conservation Tech",
+        "imageUrl": "https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Enables 20-30% irrigation water reduction in paddy systems.",
+        "ecoScore": "A+",
+        "inStock": true,
+        "rating": 4.7,
+        "reviewsCount": 28
+      }
+    ],
+    [
+      "prod_4",
+      {
+        "id": "prod_4",
+        "name": "Pure Enriched Vermicompost (Cow Dung Castings)",
+        "category": "Compost",
+        "description": "Fully cured, screened Eisenia fetida earthworm castings enriched with beneficial mycorrhiza and humic acid.",
+        "price": 490,
+        "unit": "25 kg bag",
+        "seller": "GreenEarth Organics",
+        "imageUrl": "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Increases topsoil water retention capacity and restores natural microbial activity.",
+        "ecoScore": "A",
+        "inStock": true,
+        "rating": 4.9,
+        "reviewsCount": 76
+      }
+    ],
+    [
+      "prod_5",
+      {
+        "id": "prod_5",
+        "name": "Cold Pressed Neem Seed Oil 10,000 PPM (Azadirachtin)",
+        "category": "Organic fertilizers",
+        "description": "Premium organic botanical extract with natural emulsifier for broad-spectrum sucking pest management.",
+        "price": 320,
+        "unit": "500 ml bottle",
+        "seller": "NeemShakti Natural Extracts",
+        "imageUrl": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Protects pollinator populations and eliminates chemical run-off into groundwater.",
+        "ecoScore": "A+",
+        "inStock": true,
+        "rating": 4.6,
+        "reviewsCount": 41
+      }
+    ],
+    [
+      "prod_6",
+      {
+        "id": "prod_6",
+        "name": "Gravity-Fed Drip Irrigation 0.5 Acre Kit",
+        "category": "Irrigation equipment",
+        "description": "Complete low-pressure drip irrigation layout with filter, main line, inline 16mm drippers (30cm spacing), and joiners.",
+        "price": 2850,
+        "unit": "Complete 0.5 Acre Kit",
+        "seller": "Kisan Micro-Irrigation Ltd",
+        "imageUrl": "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Up to 50% water savings over flood furrow irrigation.",
+        "ecoScore": "A+",
+        "inStock": true,
+        "rating": 4.8,
+        "reviewsCount": 19
+      }
+    ],
+    [
+      "prod_7",
+      {
+        "id": "prod_7",
+        "name": "Yellow & Blue Sticky Pheromone Trap Pack",
+        "category": "Sustainable products",
+        "description": "20 weatherproof UV-stabilized glue traps (15 yellow + 5 blue) for monitoring whiteflies, thrips, and aphids.",
+        "price": 260,
+        "unit": "Pack of 20 sheets",
+        "seller": "BioTrap Agro Systems",
+        "imageUrl": "https://images.unsplash.com/photo-1582281298055-e25b84a30b0b?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Zero poison monitoring and early detection of insect vector outbreaks.",
+        "ecoScore": "A",
+        "inStock": true,
+        "rating": 4.5,
+        "reviewsCount": 39
+      }
+    ],
+    [
+      "prod_8",
+      {
+        "id": "prod_8",
+        "name": "Organic Sesame & Sunn Hemp Green Manure Seeds",
+        "category": "Seeds",
+        "description": "Certified Sesbania aculeata (Dhaincha) seeds for fast nitrogen fixation and summer green mulching.",
+        "price": 420,
+        "unit": "10 kg sack",
+        "seller": "Punjab Seed Producers",
+        "imageUrl": "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Fixes up to 80 kg biological nitrogen per hectare naturally.",
+        "ecoScore": "A+",
+        "inStock": true,
+        "rating": 4.7,
+        "reviewsCount": 22
+      }
+    ],
+    [
+      "prod_9",
+      {
+        "id": "prod_9",
+        "name": "Heavy Duty Ergonomic Hand Weeder & Hoe",
+        "category": "Farming tools",
+        "description": "Hand-forged carbon steel push-pull stirrup hoe for chemical-free weed control between narrow vegetable beds.",
+        "price": 390,
+        "unit": "1 tool piece",
+        "seller": "Desi Agri Implements",
+        "imageUrl": "https://images.unsplash.com/photo-1617576683096-00fc8eecb3af?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Eliminates chemical herbicide sprays around delicate shallow crop roots.",
+        "ecoScore": "A",
+        "inStock": true,
+        "rating": 4.9,
+        "reviewsCount": 45
+      }
+    ],
+    [
+      "prod_10",
+      {
+        "id": "prod_10",
+        "name": "Concentrated Panchagavya Growth Tonic",
+        "category": "Organic fertilizers",
+        "description": "Aged indigenous cow 5-ingredient bio-stimulant brewed with jaggery and coconut water for foliar spray.",
+        "price": 290,
+        "unit": "1 liter bottle",
+        "seller": "Gau Seva Organics",
+        "imageUrl": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Enhances plant immune defenses and soil bacterial density.",
+        "ecoScore": "A",
+        "inStock": true,
+        "rating": 4.8,
+        "reviewsCount": 31
+      }
+    ],
+    [
+      "prod_11",
+      {
+        "id": "prod_11",
+        "name": "Activated Horticultural Biochar Granules",
+        "category": "Sustainable products",
+        "description": "Hardwood pyrolyzed biochar charged with beneficial fungal mycorrhizae and kelp extract for dryland soils.",
+        "price": 550,
+        "unit": "15 kg bag",
+        "seller": "CarbonTerra Agro",
+        "imageUrl": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Permanent carbon sink in soil; stops fertilizer nutrient leaching into rivers.",
+        "ecoScore": "A+",
+        "inStock": true,
+        "rating": 4.6,
+        "reviewsCount": 17
+      }
+    ],
+    [
+      "prod_12",
+      {
+        "id": "prod_12",
+        "name": "Handheld Soil Moisture, pH & Sunlight 3-in-1 Meter",
+        "category": "Farming tools",
+        "description": "Battery-free dual probe gauge for testing root-zone water saturation and soil acidity before irrigation.",
+        "price": 499,
+        "unit": "1 device",
+        "seller": "AgriSense Instruments",
+        "imageUrl": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Prevents both under-watering and wasteful over-irrigation.",
+        "ecoScore": "A",
+        "inStock": true,
+        "rating": 4.4,
+        "reviewsCount": 29
+      }
+    ],
+    [
+      "prod_13",
+      {
+        "id": "prod_13",
+        "name": "Biodegradable Cornstarch Mulch Film (0.02mm)",
+        "category": "Sustainable products",
+        "description": "Fully compostable eco-film that decomposes in-situ after 120 days, eliminating plastic film disposal headaches.",
+        "price": 1450,
+        "unit": "Roll: 1.2m x 200m",
+        "seller": "BioPlast Eco Farms",
+        "imageUrl": "https://images.unsplash.com/photo-1592417817098-8f3d6910985b?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Zero microplastic accumulation in agricultural soils.",
+        "ecoScore": "A+",
+        "inStock": true,
+        "rating": 4.7,
+        "reviewsCount": 14
+      }
+    ],
+    [
+      "prod_14",
+      {
+        "id": "prod_14",
+        "name": "Marigold & Companion Flower Pollinator Seed Mix",
+        "category": "Seeds",
+        "description": "Specially blended companion seeds (African Marigold, Coriander, Mustard, Sweet Basil) for pest suppression borders.",
+        "price": 150,
+        "unit": "250g packet",
+        "seller": "Kisan Beej Sahakari",
+        "imageUrl": "https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Natural trap cropping and predatory wasp habitat attraction.",
+        "ecoScore": "A+",
+        "inStock": true,
+        "rating": 4.8,
+        "reviewsCount": 23
+      }
+    ],
+    [
+      "prod_15",
+      {
+        "id": "prod_15",
+        "name": "Solar Powered Garden / Orchard Pest Light Trap",
+        "category": "Farming tools",
+        "description": "Autonomous solar LED light trap with funneled basin to trap nocturnal moths, armyworms, and stem borers.",
+        "price": 1890,
+        "unit": "1 unit with solar stake",
+        "seller": "SuryaAgri Solutions",
+        "imageUrl": "https://images.unsplash.com/photo-1509391365360-2e959784a276?w=400&auto=format&fit=crop&q=80",
+        "sustainabilityBenefit": "Replaces chemical night fogging with zero-emission solar attraction.",
+        "ecoScore": "A+",
+        "inStock": true,
+        "rating": 4.9,
+        "reviewsCount": 38
+      }
+    ]
+  ],
+  "activities": [
+    {
+      "id": "act_1",
+      "userId": "user_ananya",
+      "type": "badge_earned",
+      "title": "Earned the 🏆 Green Champion badge!",
+      "pointsEarned": 200,
+      "timestamp": "2026-10-05T10:15:00Z"
+    },
+    {
+      "id": "act_2",
+      "userId": "user_ramesh",
+      "type": "post_created",
+      "title": "Shared tomato mulching experience with photo",
+      "pointsEarned": 10,
+      "timestamp": "2026-10-06T14:30:00Z"
+    },
+    {
+      "id": "act_3",
+      "userId": "user_ramesh",
+      "type": "challenge_started",
+      "title": "Started challenge: Drip Lateral Flush & Leak Inspection",
+      "pointsEarned": 0,
+      "timestamp": "2026-10-06T08:00:00Z"
+    },
+    {
+      "id": "act_4",
+      "userId": "user_lakshmi",
+      "type": "challenge_completed",
+      "title": "Completed challenge: Establish a Vermicomposting Pit",
+      "pointsEarned": 90,
+      "timestamp": "2026-10-03T11:20:00Z"
+    }
+  ],
+  "rewardTransactions": [
+    [
+      "tx_1",
+      {
+        "id": "tx_1",
+        "userId": "user_ramesh",
+        "challengeId": "chal_1",
+        "practiceId": "prac_3",
+        "pointsAwarded": 50,
+        "reason": "Verified completion of Mulching challenge with field photo proof",
+        "status": "awarded",
+        "timestamp": "2026-10-02T12:00:00Z",
+        "verifiedBy": "user_admin"
+      }
+    ],
+    [
+      "tx_2",
+      {
+        "id": "tx_2",
+        "userId": "user_ramesh",
+        "challengeId": "chal_4",
+        "practiceId": "prac_7",
+        "pointsAwarded": 40,
+        "reason": "Verified deployment of 15 sticky traps in greenhouse tomato beds",
+        "status": "awarded",
+        "timestamp": "2026-10-03T11:00:00Z",
+        "verifiedBy": "user_admin"
+      }
+    ],
+    [
+      "tx_3",
+      {
+        "id": "tx_3",
+        "userId": "user_ananya",
+        "challengeId": "chal_3",
+        "practiceId": "prac_1",
+        "pointsAwarded": 75,
+        "reason": "Verified AWD field water tube installation across 4 acres Samba paddy",
+        "status": "awarded",
+        "timestamp": "2026-09-27T10:00:00Z",
+        "verifiedBy": "user_admin"
+      }
+    ],
+    [
+      "tx_4",
+      {
+        "id": "tx_4",
+        "userId": "user_ananya",
+        "challengeId": "chal_5",
+        "practiceId": "prac_2",
+        "pointsAwarded": 60,
+        "reason": "Verified lateral flush and drip emitter uniformity maintenance",
+        "status": "awarded",
+        "timestamp": "2026-09-28T12:00:00Z",
+        "verifiedBy": "user_admin"
+      }
+    ],
+    [
+      "tx_5",
+      {
+        "id": "tx_5",
+        "userId": "user_ananya",
+        "challengeId": "chal_7",
+        "practiceId": "prac_10",
+        "pointsAwarded": 80,
+        "reason": "Verified contour rainwater percolation trench construction",
+        "status": "awarded",
+        "timestamp": "2026-09-30T17:00:00Z",
+        "verifiedBy": "user_admin"
+      }
+    ],
+    [
+      "tx_6",
+      {
+        "id": "tx_6",
+        "userId": "user_lakshmi",
+        "challengeId": "chal_6",
+        "practiceId": "prac_5",
+        "pointsAwarded": 90,
+        "reason": "Verified farm-scale vermicomposting pit setup with earthworm culture",
+        "status": "awarded",
+        "timestamp": "2026-10-03T11:20:00Z",
+        "verifiedBy": "user_admin"
+      }
+    ],
+    [
+      "tx_7",
+      {
+        "id": "tx_7",
+        "userId": "user_priya",
+        "challengeId": "chal_2",
+        "practiceId": "prac_4",
+        "pointsAwarded": 50,
+        "reason": "Verified neem botanical foliar emulsion application on vegetables",
+        "status": "awarded",
+        "timestamp": "2026-10-04T16:40:00Z",
+        "verifiedBy": "user_admin"
+      }
+    ],
+    [
+      "tx_8",
+      {
+        "id": "tx_8",
+        "userId": "user_ananya",
+        "challengeId": "chal_9",
+        "practiceId": "prac_15",
+        "pointsAwarded": 50,
+        "reason": "Verified floral border strips planting for pollinator habitat",
+        "status": "awarded",
+        "timestamp": "2026-10-05T09:30:00Z",
+        "verifiedBy": "user_admin"
+      }
+    ],
+    [
+      "tx_1794249423363_pzann",
+      {
+        "id": "tx_1794249423363_pzann",
+        "userId": "test_farmer_1794249423363",
+        "challengeId": "chal_test_dedup",
+        "pointsAwarded": 50,
+        "reason": "First time completion",
+        "status": "awarded",
+        "timestamp": "2026-11-09T18:37:03.363Z"
+      }
+    ],
+    [
+      "tx_1794249423365_8v72x",
+      {
+        "id": "tx_1794249423365_8v72x",
+        "userId": "monthly_farmer_1794249423365",
+        "challengeId": "chal_monthly_1",
+        "pointsAwarded": 75,
+        "reason": "Current month verified challenge",
+        "status": "awarded",
+        "timestamp": "2026-11-09T18:37:03.365Z"
+      }
+    ],
+    [
+      "tx_1794249525270_n98m2",
+      {
+        "id": "tx_1794249525270_n98m2",
+        "userId": "test_farmer_1794249525270",
+        "challengeId": "chal_test_dedup",
+        "pointsAwarded": 50,
+        "reason": "First time completion",
+        "status": "awarded",
+        "timestamp": "2026-11-09T18:38:45.270Z"
+      }
+    ],
+    [
+      "tx_1794249525272_l9w3t",
+      {
+        "id": "tx_1794249525272_l9w3t",
+        "userId": "monthly_farmer_1794249525272",
+        "challengeId": "chal_monthly_1",
+        "pointsAwarded": 75,
+        "reason": "Current month verified challenge",
+        "status": "awarded",
+        "timestamp": "2026-11-09T18:38:45.272Z"
+      }
+    ]
+  ],
+  "recommendationLogs": []
+}

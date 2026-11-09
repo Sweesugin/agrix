@@ -13,6 +13,10 @@ import {
   BarChart2,
   Layers,
   Sprout,
+  Scale,
+  FileCheck,
+  Sliders,
+  Send,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
@@ -20,10 +24,15 @@ import { User, Challenge, SustainablePractice, MarketplaceProduct } from '../typ
 
 export const AdminPage: React.FC = () => {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<'overview' | 'challenges' | 'products' | 'users' | 'moderation'>('overview');
+  const [activeTab, setActiveTab] = useState<
+    'overview' | 'verifications' | 'evaluation' | 'challenges' | 'products' | 'users' | 'moderation'
+  >('overview');
   const [dashboardStats, setDashboardStats] = useState<any>(null);
   const [usersList, setUsersList] = useState<User[]>([]);
   const [reportsList, setReportsList] = useState<any[]>([]);
+  const [pendingSubmissions, setPendingSubmissions] = useState<any[]>([]);
+  const [evalComparison, setEvalComparison] = useState<any>(null);
+  const [evalMetrics, setEvalMetrics] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   // Challenge form
@@ -42,14 +51,22 @@ export const AdminPage: React.FC = () => {
   const loadAdminData = async () => {
     try {
       setLoading(true);
-      const [dash, usersRes, repRes] = await Promise.all([
+      const [dash, usersRes, repRes, pendingRes, evalRes] = await Promise.all([
         api.getAdminDashboard(),
         api.getAdminUsers(),
         api.getAdminReports(),
+        api.getPendingSubmissions().catch(() => ({ count: 0, pendingSubmissions: [] })),
+        api.getEvaluationMetrics().catch(() => null),
       ]);
       setDashboardStats(dash);
       setUsersList(usersRes.users);
       setReportsList(repRes.reports);
+      setPendingSubmissions(pendingRes.pendingSubmissions || []);
+      setEvalMetrics(evalRes);
+
+      // Run sample comparison
+      const comp = await api.compareAlgorithms().catch(() => null);
+      setEvalComparison(comp);
     } catch (err) {
       console.error(err);
     } finally {
@@ -62,6 +79,16 @@ export const AdminPage: React.FC = () => {
       loadAdminData();
     }
   }, [user]);
+
+  const handleVerifySubmission = async (challengeId: string, targetUserId: string) => {
+    try {
+      await api.verifyChallenge(challengeId, targetUserId, 'Verified implementation by Agricultural Extension Officer.');
+      alert('Challenge verified and points ledger credited successfully!');
+      loadAdminData();
+    } catch (err: any) {
+      alert(err.message || 'Error verifying challenge');
+    }
+  };
 
   if (user?.role !== 'admin') {
     return (
@@ -138,7 +165,7 @@ export const AdminPage: React.FC = () => {
             </h1>
           </div>
           <p className="text-stone-600 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
-            Manage sustainable practices, gamified challenges, eco products, community moderation, and platform statistics.
+            Manage sustainable practices, field verification queue, IEEE recommendation evaluation metrics, and platform moderation.
           </p>
         </div>
 
@@ -148,9 +175,11 @@ export const AdminPage: React.FC = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-stone-200 pb-2 text-xs font-bold">
+      <div className="flex flex-wrap items-center gap-2 border-b border-stone-200 pb-2 text-xs font-bold">
         {[
           { id: 'overview', label: 'Platform Statistics', icon: BarChart2 },
+          { id: 'verifications', label: `Verification Queue (${pendingSubmissions.length})`, icon: FileCheck },
+          { id: 'evaluation', label: 'IEEE Research Evaluation', icon: Scale },
           { id: 'challenges', label: 'Manage Challenges', icon: CheckSquare },
           { id: 'products', label: 'Manage Products', icon: ShoppingBag },
           { id: 'users', label: 'Farmers Registry', icon: Users },
@@ -162,7 +191,7 @@ export const AdminPage: React.FC = () => {
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id as any)}
-              className={`px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors ${
+              className={`px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer ${
                 isActive ? 'bg-emerald-800 text-white shadow-sm' : 'text-stone-600 hover:bg-stone-100'
               }`}
             >
@@ -245,6 +274,216 @@ export const AdminPage: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* VERIFICATIONS QUEUE TAB */}
+      {activeTab === 'verifications' && (
+        <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm space-y-5">
+          <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+            <div>
+              <h3 className="font-bold text-stone-900 text-base flex items-center gap-2">
+                <FileCheck className="w-5 h-5 text-emerald-600" />
+                Farmer Challenge Verification Queue
+              </h3>
+              <p className="text-xs text-stone-500">
+                Review submitted field observations, photographic proofs, and approve deduplicated points crediting into the reward ledger.
+              </p>
+            </div>
+            <span className="px-3 py-1 bg-amber-100 text-amber-900 font-bold text-xs rounded-full">
+              {pendingSubmissions.length} Submissions Pending
+            </span>
+          </div>
+
+          {pendingSubmissions.length === 0 ? (
+            <div className="py-12 text-center text-stone-400 space-y-2">
+              <CheckCircle2 className="w-8 h-8 mx-auto text-emerald-500" />
+              <p className="text-xs font-semibold text-stone-700">All submissions verified!</p>
+              <p className="text-[11px] text-stone-400">
+                When farmers complete challenges and submit proof, their requests will appear here for extension officer audit.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {pendingSubmissions.map((sub) => (
+                <div
+                  key={sub.id}
+                  className="p-5 rounded-2xl border border-stone-200 bg-stone-50/60 space-y-3"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200/60 pb-2">
+                    <div>
+                      <div className="font-bold text-stone-900 text-sm">{sub.challengeTitle}</div>
+                      <div className="text-xs text-stone-600">
+                        Submitted by: <strong className="text-stone-900">{sub.userName}</strong> ({sub.userLocation} • {sub.mainCrop})
+                      </div>
+                    </div>
+                    <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-extrabold w-fit">
+                      +{sub.points} Points Eligible
+                    </span>
+                  </div>
+
+                  <div className="bg-white p-3 rounded-xl border border-stone-200 text-xs text-stone-700 space-y-1">
+                    <span className="font-bold text-stone-900 block text-[11px] uppercase tracking-wider">
+                      Farmer Implementation Note:
+                    </span>
+                    <p className="italic leading-relaxed">"{sub.proofNote || 'No notes provided'}"</p>
+                    {sub.proofImageUrl && (
+                      <div className="pt-1">
+                        <a
+                          href={sub.proofImageUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-emerald-700 font-semibold underline text-[11px]"
+                        >
+                          View Uploaded Photo Proof ↗
+                        </a>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex justify-end gap-3 pt-1">
+                    <button
+                      onClick={() => handleVerifySubmission(sub.challengeId, sub.userId)}
+                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>Approve & Credit Reward Ledger</span>
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* IEEE RESEARCH EVALUATION TAB */}
+      {activeTab === 'evaluation' && (
+        <div className="space-y-6">
+          {/* Methodology Banner */}
+          <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm space-y-3">
+            <div className="flex items-center gap-2">
+              <Scale className="w-5 h-5 text-emerald-600" />
+              <h3 className="font-extrabold text-stone-900 text-base">
+                IEEE Empirical Algorithm Evaluation & Benchmark
+              </h3>
+            </div>
+            <p className="text-xs text-stone-600 leading-relaxed max-w-4xl">
+              This panel enables empirical benchmarking between the <strong>Baseline 5-Factor Heuristic</strong> and the <strong>Multi-Factor Normalized Additive Weighting (NAW) Engine</strong> across identical farmer profiles. Metrics measure recommendation set divergence, rank displacement, and safety constraints.
+            </p>
+          </div>
+
+          {/* Metric KPI Cards */}
+          {evalComparison?.metrics && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+                <div className="text-[11px] font-bold text-stone-400 uppercase">Jaccard Similarity</div>
+                <div className="text-3xl font-black text-emerald-700 mt-1">
+                  {evalComparison.metrics.jaccardIndex}
+                </div>
+                <div className="text-[11px] text-stone-500 mt-1">Top-6 candidate overlap</div>
+              </div>
+
+              <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+                <div className="text-[11px] font-bold text-stone-400 uppercase">Rank Displacement</div>
+                <div className="text-3xl font-black text-purple-700 mt-1">
+                  {evalComparison.metrics.rankDisplacementSum}
+                </div>
+                <div className="text-[11px] text-stone-500 mt-1">Cumulative permutation distance</div>
+              </div>
+
+              <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+                <div className="text-[11px] font-bold text-stone-400 uppercase">Score Variance</div>
+                <div className="text-3xl font-black text-blue-700 mt-1">
+                  ±{evalComparison.metrics.scoreVariance}%
+                </div>
+                <div className="text-[11px] text-stone-500 mt-1">Multi-factor vs Baseline avg</div>
+              </div>
+
+              <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+                <div className="text-[11px] font-bold text-stone-400 uppercase">Safety Overrides</div>
+                <div className="text-3xl font-black text-rose-600 mt-1">
+                  {evalComparison.metrics.safetyInterventionsTriggered}
+                </div>
+                <div className="text-[11px] text-stone-500 mt-1">Constrained unsafe practices</div>
+              </div>
+            </div>
+          )}
+
+          {/* Side-by-Side Algorithm Comparison Table */}
+          {evalComparison && (
+            <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm space-y-4">
+              <div className="flex justify-between items-center border-b border-stone-100 pb-3">
+                <h4 className="font-bold text-stone-900 text-sm">
+                  Top-6 Ranked Recommendations Comparison (Sample Profile: {evalComparison.profileEvaluated?.crop} on {evalComparison.profileEvaluated?.soil} soil)
+                </h4>
+                <button
+                  onClick={async () => {
+                    const comp = await api.compareAlgorithms();
+                    setEvalComparison(comp);
+                  }}
+                  className="px-3 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold rounded-xl cursor-pointer"
+                >
+                  Re-evaluate
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Baseline Column */}
+                <div className="space-y-3">
+                  <div className="px-3 py-1.5 bg-stone-100 rounded-xl text-stone-800 font-bold text-xs flex justify-between">
+                    <span>Baseline (5 Factors Heuristic)</span>
+                    <span>Avg: {evalComparison.metrics?.avgBaselineScore}%</span>
+                  </div>
+
+                  <div className="space-y-2">
+                    {evalComparison.baselineResults?.map((r: any) => (
+                      <div key={r.practiceId} className="p-3 rounded-xl border border-stone-200 bg-stone-50/40 text-xs space-y-1">
+                        <div className="flex justify-between font-bold text-stone-900">
+                          <span>#{r.rank} {r.title}</span>
+                          <span className="text-stone-700">{r.matchScore}%</span>
+                        </div>
+                        <p className="text-[11px] text-stone-500">{r.category}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Multi-Factor Column */}
+                <div className="space-y-3">
+                  <div className="px-3 py-1.5 bg-emerald-100 text-emerald-900 rounded-xl font-bold text-xs flex justify-between">
+                    <span>Multi-Factor NAW (7 Factors Weighted)</span>
+                    <span>Avg: {evalComparison.metrics?.avgMultiFactorScore}%</span>
+                  </div>
+
+                  <div className="space-y-2">
+                    {evalComparison.multiFactorResults?.map((r: any) => (
+                      <div key={r.practiceId} className="p-3 rounded-xl border border-emerald-200 bg-emerald-50/30 text-xs space-y-1">
+                        <div className="flex justify-between font-bold text-stone-900">
+                          <span>#{r.rank} {r.title}</span>
+                          <span className="text-emerald-800 font-black">{r.matchScore}%</span>
+                        </div>
+                        <p className="text-[11px] text-stone-600">{r.category}</p>
+                        {r.factorScores && (
+                          <div className="grid grid-cols-4 gap-1 text-[10px] text-stone-500 pt-1 border-t border-emerald-100">
+                            <span>Crop: {r.factorScores.cropScore}</span>
+                            <span>Soil: {r.factorScores.soilScore}</span>
+                            <span>Season: {r.factorScores.seasonScore}</span>
+                            <span>Loc: {r.factorScores.locationScore}</span>
+                          </div>
+                        )}
+                        {r.isSafetyFiltered && (
+                          <span className="inline-block mt-1 px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-[10px]">
+                            Safety filter active
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

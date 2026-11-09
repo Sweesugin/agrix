@@ -1,5 +1,5 @@
 import { GoogleGenAI } from '@google/genai';
-import { User } from '../db/types';
+import { User, SustainablePractice } from '../db/types';
 
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY || '',
@@ -11,7 +11,112 @@ const ai = new GoogleGenAI({
 });
 
 export const DISCLAIMER_TEXT =
-  '⚠️ Note: AgriX AI Assistant provides educational guidance based on sustainable agronomy principles. This is an experimental prototype. For critical pest outbreaks, chemical dosages, or commercial investments, please verify recommendations with your local agricultural extension officer or Krishi Vigyan Kendra (KVK).';
+  '⚠️ Note: AgriX AI Assistant provides educational guidance based on verified sustainable agronomy principles (ICAR / TNAU). This is an experimental prototype. For critical pest outbreaks, chemical dosages, or commercial investments, please verify recommendations with your local agricultural extension officer or Krishi Vigyan Kendra (KVK).';
+
+export interface AIExplainedPractice {
+  practiceId: string;
+  practiceTitle: string;
+  overview: string;
+  whyForFarmer: string;
+  stepByStepGuidance: string[];
+  requiredMaterials: string[];
+  precautions: string[];
+  expectedBenefits: string[];
+  relatedChallengeId: string;
+  sourceCitation: string;
+  disclaimer: string;
+  source: 'gemini' | 'rule_fallback';
+}
+
+export async function explainPracticeWithAI(
+  practice: SustainablePractice,
+  userProfile?: Partial<User>
+): Promise<AIExplainedPractice> {
+  const profileContext = userProfile
+    ? `Farmer Details:
+- Name: ${userProfile.name || 'Farmer'}
+- Main Crop: ${userProfile.mainCrop || 'Mixed crops'}
+- Soil Type: ${userProfile.soilType || 'Loamy'}
+- Farming Method: ${userProfile.farmingMethod || 'Mixed'}
+- Farm Size: ${userProfile.farmSize || 2.5} acres
+- State / Region: ${userProfile.state || 'India'}, ${userProfile.location || ''}`
+    : 'Generic smallholder farm in India';
+
+  const systemInstruction = `You are AgriX Agronomy AI, a specialist in Indian agro-ecological practices grounded in ICAR and State Agricultural University research.
+Provide a clear, farmer-accessible structured explanation of the specified practice, customized for the farmer's crop, soil, and region.
+Never make unrealistic yield claims. Frame all advice around practical stewardship.`;
+
+  const prompt = `Please provide an educational agronomic explanation for the sustainable practice:
+Title: ${practice.title}
+Category: ${practice.category}
+Standard Description: ${practice.description}
+Standard Benefits: ${practice.sustainabilityBenefit}
+Farmer Profile:
+${profileContext}
+
+Explain clearly:
+1. Overview and working principle in simple vernacular English.
+2. Why this practice specifically suits this farmer's ${userProfile?.mainCrop || 'crop'} and ${userProfile?.soilType || 'soil'}.
+3. Step-by-step practical implementation tips.
+4. Essential precautions to avoid crop damage.`;
+
+  try {
+    if (!process.env.GEMINI_API_KEY) {
+      throw new Error('GEMINI_API_KEY not configured');
+    }
+
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Gemini API timeout')), 6000)
+    );
+
+    const generatePromise = ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: prompt,
+      config: {
+        systemInstruction,
+        temperature: 0.5,
+      },
+    });
+
+    const response: any = await Promise.race([generatePromise, timeoutPromise]);
+    const rawText = response.text || '';
+
+    return {
+      practiceId: practice.id,
+      practiceTitle: practice.title,
+      overview: rawText.slice(0, 350).trim() || practice.description,
+      whyForFarmer: `Optimized for ${userProfile?.mainCrop || 'your crop'} on ${userProfile?.soilType || 'your soil'}. ${practice.sustainabilityBenefit}`,
+      stepByStepGuidance: practice.steps && practice.steps.length > 0 ? practice.steps : [
+        'Inspect field conditions and gather necessary tools.',
+        'Follow recommended timing (early morning / late evening).',
+        'Monitor crop response over the subsequent 48-72 hours.',
+      ],
+      requiredMaterials: practice.requiredMaterials || ['Basic agricultural implements', 'Protective gear'],
+      precautions: practice.precautions || ['Follow local agricultural guidelines', 'Avoid adverse weather application'],
+      expectedBenefits: practice.expectedBenefits || [practice.sustainabilityBenefit],
+      relatedChallengeId: practice.relatedChallengeId,
+      sourceCitation: practice.sourceCitation || 'ICAR Compendium of Sustainable Agricultural Practices',
+      disclaimer: DISCLAIMER_TEXT,
+      source: 'gemini',
+    };
+  } catch (err: any) {
+    console.warn('Gemini explainPractice fallback activated:', err?.message || err);
+    return {
+      practiceId: practice.id,
+      practiceTitle: practice.title,
+      overview: practice.description,
+      whyForFarmer: `Recommended specifically for ${userProfile?.mainCrop || 'your main crop'} on ${userProfile?.soilType || 'your soil type'} under ${userProfile?.farmingMethod || 'sustainable'} farming. ${practice.whyRecommended || practice.sustainabilityBenefit}`,
+      stepByStepGuidance: practice.steps,
+      requiredMaterials: practice.requiredMaterials || ['Standard farming tools', 'Measuring aids'],
+      precautions: practice.precautions || ['Verify soil moisture before starting', 'Do not apply during intense midday heat'],
+      expectedBenefits: practice.expectedBenefits || [practice.sustainabilityBenefit],
+      relatedChallengeId: practice.relatedChallengeId,
+      sourceCitation: practice.sourceCitation || 'ICAR Sustainable Farming Practice Guidelines',
+      disclaimer: DISCLAIMER_TEXT,
+      source: 'rule_fallback',
+    };
+  }
+}
 
 export async function askAgriXAssistant(
   prompt: string,
@@ -46,7 +151,6 @@ Rules:
       throw new Error('GEMINI_API_KEY not configured');
     }
 
-    // Build contents array
     const contents: any[] = [];
     contents.push({
       role: 'user',
@@ -74,7 +178,7 @@ Rules:
     );
 
     const generatePromise = ai.models.generateContent({
-      model: 'gemini-3.8-flash',
+      model: 'gemini-2.5-flash',
       contents,
       config: {
         systemInstruction,
@@ -83,7 +187,6 @@ Rules:
     });
 
     const response: any = await Promise.race([generatePromise, timeoutPromise]);
-
     const reply = response.text || 'I could not generate an answer right now. Please try asking again.';
     return {
       reply,
@@ -92,7 +195,6 @@ Rules:
     };
   } catch (err: any) {
     console.warn('Gemini API call fallback:', err?.message || err);
-    // Realistic agricultural rule-based response when API key is unavailable or throttled
     const fallbackReply = generateFallbackAdvice(prompt, userProfile);
     return {
       reply: fallbackReply,

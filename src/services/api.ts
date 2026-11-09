@@ -102,11 +102,13 @@ export const api = {
   },
 
   // Recommendations
-  async getRecommendations(): Promise<{
+  async getRecommendations(algorithm: 'weighted_multifactor' | 'baseline' = 'weighted_multifactor'): Promise<{
+    algorithm?: string;
+    factorWeights?: any;
     farmerContext: any;
     recommendations: ScoredPractice[];
   }> {
-    const res = await fetch(`${API_BASE}/recommendations`, {
+    const res = await fetch(`${API_BASE}/recommendations?algorithm=${algorithm}`, {
       headers: getAuthHeader(),
     });
     const data = await res.json();
@@ -152,6 +154,37 @@ export const api = {
     return data;
   },
 
+  async submitChallenge(challengeId: string, proofNote: string, proofImageUrl?: string): Promise<any> {
+    const res = await fetch(`${API_BASE}/challenges/${challengeId}/submit`, {
+      method: 'POST',
+      headers: getAuthHeader(),
+      body: JSON.stringify({ proofNote, proofImageUrl }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to submit challenge proof');
+    return data;
+  },
+
+  async verifyChallenge(challengeId: string, targetUserId?: string, verificationNotes?: string): Promise<any> {
+    const res = await fetch(`${API_BASE}/challenges/${challengeId}/verify`, {
+      method: 'POST',
+      headers: getAuthHeader(),
+      body: JSON.stringify({ targetUserId, verificationNotes }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to verify challenge');
+    return data;
+  },
+
+  async getPendingSubmissions(): Promise<{ count: number; pendingSubmissions: any[] }> {
+    const res = await fetch(`${API_BASE}/challenges/pending-verification`, {
+      headers: getAuthHeader(),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch pending submissions');
+    return data;
+  },
+
   async completeChallenge(challengeId: string, proofNote?: string, proofImageUrl?: string): Promise<{
     message: string;
     pointsEarned: number;
@@ -172,6 +205,15 @@ export const api = {
   },
 
   // Gamification & Leaderboard
+  async getTransactions(): Promise<{ userId: string; count: number; transactions: any[] }> {
+    const res = await fetch(`${API_BASE}/gamification/transactions`, {
+      headers: getAuthHeader(),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch reward transactions');
+    return data;
+  },
+
   async getGamificationProfile(): Promise<{
     user: any;
     levelInfo: LevelInfo;
@@ -337,6 +379,40 @@ export const api = {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'AI Assistant is currently unavailable');
+    return data;
+  },
+
+  async explainPractice(practiceId: string): Promise<{
+    success: boolean;
+    explanation: any;
+  }> {
+    const res = await fetch(`${API_BASE}/ai/explain-practice`, {
+      method: 'POST',
+      headers: getAuthHeader(),
+      body: JSON.stringify({ practiceId }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to generate practice explanation');
+    return data;
+  },
+
+  // Research Evaluation APIs
+  async compareAlgorithms(params?: any): Promise<any> {
+    const query = params ? new URLSearchParams(params).toString() : '';
+    const res = await fetch(`${API_BASE}/evaluation/recommendations/compare?${query}`, {
+      headers: getAuthHeader(),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to compare algorithms');
+    return data;
+  },
+
+  async getEvaluationMetrics(): Promise<any> {
+    const res = await fetch(`${API_BASE}/evaluation/metrics`, {
+      headers: getAuthHeader(),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch evaluation metrics');
     return data;
   },
 

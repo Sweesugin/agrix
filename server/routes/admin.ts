@@ -87,6 +87,7 @@ router.post('/challenges', (req: AuthRequest, res: Response) => {
   const id = `chal_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
   const newChallenge: Challenge = {
     id,
+    practiceId: req.body.practiceId || 'prac_custom',
     title,
     description: description || '',
     category,
@@ -152,6 +153,10 @@ router.post('/practices', (req: AuthRequest, res: Response) => {
     estimatedCompletion: '1 day',
     points: Number(points) || 50,
     steps: steps || ['Plan plot', 'Implement method', 'Monitor impact'],
+    requiredMaterials: req.body.requiredMaterials || ['Standard agricultural implements'],
+    precautions: req.body.precautions || ['Follow local extension advisories'],
+    expectedBenefits: req.body.expectedBenefits || [sustainabilityBenefit || 'Resource conservation'],
+    relatedChallengeId: req.body.relatedChallengeId || 'chal_custom',
   };
 
   db.practices.set(id, newPractice);

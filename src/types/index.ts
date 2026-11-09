@@ -50,6 +50,26 @@ export interface User {
   createdAt: string;
 }
 
+export interface FactorWeights {
+  crop: number; // 0.25
+  soil: number; // 0.20
+  season: number; // 0.15
+  location: number; // 0.15
+  farmingMethod: number; // 0.10
+  experience: number; // 0.10
+  farmSize: number; // 0.05
+}
+
+export interface FactorScores {
+  cropScore: number; // 0 - 100
+  soilScore: number; // 0 - 100
+  seasonScore: number; // 0 - 100
+  locationScore: number; // 0 - 100
+  farmingMethodScore: number; // 0 - 100
+  experienceScore: number; // 0 - 100
+  farmSizeScore: number; // 0 - 100
+}
+
 export interface SustainablePractice {
   id: string;
   title: string;
@@ -57,6 +77,8 @@ export interface SustainablePractice {
   suitableCrops: string[];
   suitableSoilTypes: SoilType[];
   suitableSeasons: string[];
+  suitableAgroClimates?: string[];
+  suitableStates?: string[];
   suitableFarmingMethods: FarmingMethod[];
   difficulty: DifficultyLevel;
   description: string;
@@ -65,21 +87,32 @@ export interface SustainablePractice {
   estimatedCompletion: string;
   points: number;
   steps: string[];
+  requiredMaterials: string[];
+  precautions: string[];
+  expectedBenefits: string[];
   scientificContext?: string;
+  sourceCitation?: string;
+  relatedChallengeId: string;
+  minFarmSize?: number;
+  maxFarmSize?: number;
+  safetyCritical?: boolean;
 }
 
 export interface ScoredPractice {
   practice: SustainablePractice;
-  matchScore: number;
+  matchScore: number; // 0 to 100
+  factorScores?: FactorScores;
+  factorContributions?: Record<string, number>;
   matchReasons: string[];
   whyRecommended: string;
   challenge?: Challenge;
-  userChallengeStatus?: 'not_started' | 'in_progress' | 'completed';
+  userChallengeStatus?: ChallengeStatus;
+  algorithm?: 'baseline' | 'weighted_multifactor';
 }
 
 export interface Challenge {
   id: string;
-  practiceId?: string;
+  practiceId: string;
   title: string;
   description: string;
   category: ChallengeCategory;
@@ -89,11 +122,47 @@ export interface Challenge {
   sustainabilityBenefit: string;
   instructions: string[];
   verificationHint: string;
-  userStatus?: 'not_started' | 'in_progress' | 'completed';
+  userStatus?: ChallengeStatus;
   startedAt?: string;
+  submittedAt?: string;
+  verifiedAt?: string;
+  rejectedAt?: string;
   completedAt?: string;
   proofNote?: string;
+  proofImageUrl?: string;
+  verificationNotes?: string;
   createdAt: string;
+}
+
+export type ChallengeStatus = 'not_started' | 'in_progress' | 'submitted' | 'verified' | 'rejected' | 'completed';
+
+export interface RewardTransaction {
+  id: string;
+  userId: string;
+  challengeId: string;
+  practiceId?: string;
+  pointsAwarded: number;
+  reason: string;
+  status: 'awarded' | 'revoked';
+  timestamp: string;
+  verifiedBy?: string;
+}
+
+export interface RecommendationLog {
+  id: string;
+  userId: string;
+  algorithm: 'baseline' | 'weighted_multifactor';
+  farmerProfileSnapshot: any;
+  recommendations: Array<{
+    practiceId: string;
+    title: string;
+    compatibilityScore: number;
+    factorScores: FactorScores;
+    rank: number;
+  }>;
+  executionTimeMs: number;
+  timestamp: string;
+  userFeedback?: 'helpful' | 'unhelpful';
 }
 
 export interface Badge {
@@ -184,4 +253,19 @@ export interface LevelInfo {
   levelTitle: string;
   nextLevelPoints: number;
   progressPercent: number;
+}
+
+export interface AIExplainedPractice {
+  practiceId: string;
+  practiceTitle: string;
+  overview: string;
+  whyForFarmer: string;
+  stepByStepGuidance: string[];
+  requiredMaterials: string[];
+  precautions: string[];
+  expectedBenefits: string[];
+  relatedChallengeId: string;
+  sourceCitation: string;
+  disclaimer: string;
+  source: 'gemini' | 'rule_fallback';
 }
