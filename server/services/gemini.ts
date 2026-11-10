@@ -39,7 +39,7 @@ export interface AIExplainedPractice {
  * Validates and sanitizes structured AI-generated practice explanation.
  * Ensures no empty fields, attaches verified record citations, and preserves safe boundaries.
  */
-function validateAndSanitizeExplanation(
+export function validateAndSanitizeExplanation(
   raw: Partial<AIExplainedPractice>,
   practice: SustainablePractice,
   userProfile?: Partial<User>,

@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 import jwt from 'jsonwebtoken';
-import { getJwtSecret, generateToken, authenticate, requireAdmin, AuthRequest } from '../server/middleware/auth';
+import { getJwtSecret, generateToken, authenticate, requireAdmin, requireVerifier, AuthRequest } from '../server/middleware/auth';
 import { db } from '../server/db/store';
 import { User } from '../server/db/types';
 
@@ -113,35 +113,72 @@ test('Auth Security - Restricts x-demo-user-id to development mode only', () => 
   process.env.NODE_ENV = 'development';
 });
 
-test('Auth Security - Enforces role-based authorization in requireAdmin middleware', () => {
-  // Farmer role attempt
-  let farmerAllowed = false;
-  let farmerStatusCode = 0;
+test('Auth Security - Enforces role-based authorization in requireAdmin and requireVerifier', () => {
+  // Farmer role check on requireAdmin
+  let farmerAllowedAdmin = false;
+  let farmerAdminStatus = 0;
   const farmerReq: AuthRequest = {
     user: { id: 'farmer_1', role: 'farmer' } as any,
   } as any;
   const farmerRes: any = {
     status: (code: number) => {
-      farmerStatusCode = code;
+      farmerAdminStatus = code;
       return { json: (d: any) => d };
     },
   };
   requireAdmin(farmerReq, farmerRes, () => {
-    farmerAllowed = true;
+    farmerAllowedAdmin = true;
   });
-  assert.strictEqual(farmerAllowed, false, 'Farmer must not access admin endpoints');
-  assert.strictEqual(farmerStatusCode, 403, 'Must return 403 Forbidden');
+  assert.strictEqual(farmerAllowedAdmin, false, 'Farmer must not access admin endpoints');
+  assert.strictEqual(farmerAdminStatus, 403, 'Must return 403 Forbidden for farmer on requireAdmin');
 
-  // Admin role attempt
-  let adminAllowed = false;
+  // Inspector role check on requireAdmin (inspector is not superadmin)
+  let inspectorAllowedAdmin = false;
+  let inspectorAdminStatus = 0;
+  const inspectorReq: AuthRequest = {
+    user: { id: 'inspector_1', role: 'inspector' } as any,
+  } as any;
+  const inspectorRes: any = {
+    status: (code: number) => {
+      inspectorAdminStatus = code;
+      return { json: (d: any) => d };
+    },
+  };
+  requireAdmin(inspectorReq, inspectorRes, () => {
+    inspectorAllowedAdmin = true;
+  });
+  assert.strictEqual(inspectorAllowedAdmin, false, 'Inspector must not access superadmin endpoints');
+  assert.strictEqual(inspectorAdminStatus, 403);
+
+  // Inspector role check on requireVerifier (inspector IS allowed to verify)
+  let inspectorAllowedVerifier = false;
+  requireVerifier(inspectorReq, inspectorRes, () => {
+    inspectorAllowedVerifier = true;
+  });
+  assert.strictEqual(inspectorAllowedVerifier, true, 'Inspector MUST be allowed on requireVerifier');
+
+  // Admin role check on requireVerifier (admin IS allowed to verify)
+  let adminAllowedVerifier = false;
   const adminReq: AuthRequest = {
     user: { id: 'admin_1', role: 'admin' } as any,
   } as any;
-  const adminRes: any = {
-    status: (code: number) => ({ json: (d: any) => d }),
-  };
-  requireAdmin(adminReq, adminRes, () => {
-    adminAllowed = true;
+  requireVerifier(adminReq, farmerRes, () => {
+    adminAllowedVerifier = true;
   });
-  assert.strictEqual(adminAllowed, true, 'Administrator must be allowed');
+  assert.strictEqual(adminAllowedVerifier, true, 'Admin MUST be allowed on requireVerifier');
+
+  // Farmer role check on requireVerifier (farmer CANNOT verify)
+  let farmerAllowedVerifier = false;
+  let farmerVerifierStatus = 0;
+  const verifierRes: any = {
+    status: (code: number) => {
+      farmerVerifierStatus = code;
+      return { json: (d: any) => d };
+    },
+  };
+  requireVerifier(farmerReq, verifierRes, () => {
+    farmerAllowedVerifier = true;
+  });
+  assert.strictEqual(farmerAllowedVerifier, false, 'Farmer MUST NOT be allowed on requireVerifier');
+  assert.strictEqual(farmerVerifierStatus, 403, 'Must return 403 Forbidden');
 });

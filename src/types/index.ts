@@ -1,4 +1,4 @@
-export type UserRole = 'farmer' | 'admin';
+export type UserRole = 'farmer' | 'admin' | 'inspector';
 
 export type SoilType =
   | 'Sandy'

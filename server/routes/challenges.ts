@@ -1,6 +1,6 @@
 import { Router, Response } from 'express';
 import { db, calculateLevel } from '../db/store';
-import { authenticate, optionalAuthenticate, AuthRequest } from '../middleware/auth';
+import { authenticate, optionalAuthenticate, requireVerifier, AuthRequest } from '../middleware/auth';
 import { UserChallenge } from '../db/types';
 
 const router = Router();
@@ -57,8 +57,8 @@ router.get('/', optionalAuthenticate, (req: AuthRequest, res: Response) => {
   });
 });
 
-// GET /api/challenges/pending-verification (Admin or inspector endpoint)
-router.get('/pending-verification', authenticate, (req: AuthRequest, res: Response) => {
+// GET /api/challenges/pending-verification (Admin or authorized inspector endpoint only)
+router.get('/pending-verification', authenticate, requireVerifier, (req: AuthRequest, res: Response) => {
   const pending = Array.from(db.userChallenges.values()).filter((uc) => uc.status === 'submitted');
 
   const enriched = pending.map((uc) => {
@@ -156,6 +156,7 @@ router.post('/:id/submit', authenticate, (req: AuthRequest, res: Response) => {
     if (userChallenge.status === 'submitted') {
       return res.status(400).json({ error: 'Invalid transition: Proof has already been submitted and is awaiting verification.' });
     }
+    // Note: status 'rejected' and 'in_progress' are valid states that can transition to 'submitted'!
   }
 
   const now = new Date().toISOString();
@@ -196,7 +197,7 @@ router.post('/:id/verify', authenticate, (req: AuthRequest, res: Response) => {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized: Authentication required.' });
 
   // STRICT SECURITY CHECK 1: Only administrators or certified inspectors can verify challenges
-  if (req.user.role !== 'admin') {
+  if (req.user.role !== 'admin' && req.user.role !== 'inspector') {
     return res.status(403).json({
       error: 'Forbidden: Challenge verification requires administrator or certified agricultural inspector privileges.',
     });
@@ -209,7 +210,13 @@ router.post('/:id/verify', authenticate, (req: AuthRequest, res: Response) => {
     return res.status(400).json({ error: 'Validation error: targetUserId is required for verification.' });
   }
 
-  // STRICT SECURITY CHECK 2: Normal farmers must not verify themselves, and even admins verifying must target a valid user
+  // STRICT SECURITY CHECK 2: Verifiers cannot verify their own submissions
+  if (req.user.id === targetUserId) {
+    return res.status(403).json({
+      error: 'Forbidden: Self-verification is strictly prohibited. Verifiers cannot inspect or approve their own submissions.',
+    });
+  }
+
   const beneficiaryUser = db.getUserById(targetUserId);
   if (!beneficiaryUser) {
     return res.status(404).json({ error: 'Beneficiary farmer not found.' });
@@ -244,8 +251,8 @@ router.post('/:id/verify', authenticate, (req: AuthRequest, res: Response) => {
     });
   }
 
-  // STRICT SECURITY CHECK 5: Prevent duplicate rewards via deduplicated ledger transaction
-  const rewardResult = db.recordRewardTransaction(
+  // STRICT SECURITY CHECK 5: Atomic reward recording and farmer-point updates preventing partial updates or duplicates
+  const rewardResult = db.awardChallengePoints(
     targetUserId,
     challengeId,
     challenge.points,
@@ -261,6 +268,10 @@ router.post('/:id/verify', authenticate, (req: AuthRequest, res: Response) => {
     });
   }
 
+  if (!rewardResult.success) {
+    return res.status(500).json({ error: rewardResult.error || 'Failed to award challenge points.' });
+  }
+
   const now = new Date().toISOString();
   userChallenge.status = 'verified';
   userChallenge.verifiedAt = now;
@@ -270,42 +281,13 @@ router.post('/:id/verify', authenticate, (req: AuthRequest, res: Response) => {
 
   db.saveUserChallenge(userChallenge);
 
-  // Award points to beneficiary farmer
-  const updatedPoints = beneficiaryUser.points + challenge.points;
-  const levelData = calculateLevel(updatedPoints);
-
-  const today = now.split('T')[0];
-  let newStreak = beneficiaryUser.streak;
-  if (beneficiaryUser.lastActiveDate !== today) {
-    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
-    newStreak = beneficiaryUser.lastActiveDate === yesterday ? beneficiaryUser.streak + 1 : 1;
-  }
-
-  db.updateUser(targetUserId, {
-    points: updatedPoints,
-    level: levelData.level,
-    levelTitle: levelData.levelTitle,
-    streak: newStreak,
-    lastActiveDate: today,
-  });
-
-  db.logActivity(
-    targetUserId,
-    'challenge_completed',
-    `Verified completion: ${challenge.title} (+${challenge.points} pts verified by ${req.user.name})`,
-    challenge.points
-  );
-
-  const newlyUnlockedBadges = db.checkAndAwardBadges(targetUserId);
-  const updatedUser = db.getUserById(targetUserId);
-
   return res.json({
     message: `Challenge "${challenge.title}" successfully verified! Awarded ${challenge.points} points to ${beneficiaryUser.name}.`,
     pointsEarned: challenge.points,
-    totalPoints: updatedUser?.points || 0,
-    currentLevel: updatedUser?.level || 1,
-    levelTitle: updatedUser?.levelTitle || 'Seedling',
-    newlyUnlockedBadges,
+    totalPoints: rewardResult.updatedUser?.points || 0,
+    currentLevel: rewardResult.updatedUser?.level || 1,
+    levelTitle: rewardResult.updatedUser?.levelTitle || 'Seedling',
+    newlyUnlockedBadges: rewardResult.newlyUnlockedBadges || [],
     userChallenge,
     transaction: rewardResult.transaction,
     isDuplicate: false,
@@ -316,7 +298,7 @@ router.post('/:id/verify', authenticate, (req: AuthRequest, res: Response) => {
 router.post('/:id/reject', authenticate, (req: AuthRequest, res: Response) => {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized: Authentication required.' });
 
-  if (req.user.role !== 'admin') {
+  if (req.user.role !== 'admin' && req.user.role !== 'inspector') {
     return res.status(403).json({
       error: 'Forbidden: Challenge rejection requires administrator or inspector privileges.',
     });
@@ -329,6 +311,10 @@ router.post('/:id/reject', authenticate, (req: AuthRequest, res: Response) => {
     return res.status(400).json({ error: 'Validation error: targetUserId is required.' });
   }
 
+  if (req.user.id === targetUserId) {
+    return res.status(403).json({ error: 'Forbidden: Verifiers cannot reject their own submissions.' });
+  }
+
   const userChallenge = db.getUserChallenge(targetUserId, challengeId);
   if (!userChallenge || userChallenge.status !== 'submitted') {
     return res.status(400).json({ error: 'Invalid state: No pending submission to reject.' });
@@ -337,7 +323,8 @@ router.post('/:id/reject', authenticate, (req: AuthRequest, res: Response) => {
   const challenge = db.challenges.get(challengeId);
   const rejectionFeedback = notes || 'Proof does not meet protocol criteria. Please inspect guidelines and resubmit.';
 
-  userChallenge.status = 'in_progress'; // Return to in_progress so farmer can fix and resubmit
+  // Transition to 'rejected' so farmer can correct evidence and resubmit
+  userChallenge.status = 'rejected';
   userChallenge.verificationNotes = `Revision Requested: ${rejectionFeedback}`;
   db.saveUserChallenge(userChallenge);
 
@@ -349,10 +336,11 @@ router.post('/:id/reject', authenticate, (req: AuthRequest, res: Response) => {
   );
 
   return res.json({
-    message: 'Submission returned to in-progress for farmer revision.',
+    message: 'Submission rejected and returned to farmer with feedback for correction and resubmission.',
     userChallenge,
   });
 });
+
 
 // POST /api/challenges/:id/complete (Self-completion endpoint - DISABLED in production)
 router.post('/:id/complete', authenticate, (req: AuthRequest, res: Response) => {

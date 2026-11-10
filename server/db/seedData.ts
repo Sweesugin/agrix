@@ -168,7 +168,30 @@ export const SEED_USERS: User[] = [
     lastActiveDate: '2026-10-07',
     createdAt: '2026-06-01T08:00:00Z',
   },
+  {
+    id: 'user_inspector',
+    name: 'Inspector Rajesh Kumar (Field Officer)',
+    email: 'inspector@agrix.org',
+    passwordHash: DEMO_PASSWORD_HASH,
+    role: 'inspector',
+    phone: '+91 98111 22334',
+    location: 'Anand',
+    state: 'Gujarat',
+    farmSize: 5.0,
+    soilType: 'Loamy',
+    mainCrop: 'Multi-Crop Extension',
+    farmingMethod: 'Organic',
+    experienceLevel: 'Experienced',
+    avatarUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&auto=format&fit=crop&q=80',
+    points: 1500,
+    level: 5,
+    levelTitle: 'Green Champion',
+    streak: 20,
+    lastActiveDate: '2026-10-07',
+    createdAt: '2026-06-15T08:00:00Z',
+  },
 ];
+
 
 export const SEED_PRACTICES: SustainablePractice[] = [
   {

@@ -185,7 +185,7 @@ export class WeightedMultiFactorRecommendationEngine {
     // Rule: AWD (Alternate Wetting and Drying) is strictly contraindicated in coarse Sandy soils
     // due to excessive hydraulic conductivity, lack of hardpan water retention, and severe drought stress risk.
     if ((practice.id === 'prac_1' || practice.title.includes('Alternate Wetting and Drying')) && user.soilType === 'Sandy') {
-      safetyWarning = 'Safety Alert: Alternate Wetting and Drying (AWD) is contraindicated in coarse Sandy soil due to high hydraulic percolation and crop moisture stress.';
+      safetyWarning = 'Safety Notice: Alternate Wetting and Drying (AWD) is contraindicated in coarse Sandy soil due to high hydraulic percolation and crop moisture stress.';
       isSafetyFiltered = true;
     }
 
@@ -299,11 +299,15 @@ export class WeightedMultiFactorRecommendationEngine {
     }
 
     // --- Factor 6: Farmer Experience & Practice Difficulty (0-100) ---
+    // Do not silently assume 'Intermediate' when experience is missing.
     let experienceScore = 50;
-    const exp = user.experienceLevel || 'Intermediate';
+    const exp = user.experienceLevel;
     const diff = practice.difficulty;
 
-    if (exp === 'Beginner') {
+    if (!exp) {
+      experienceScore = 50; // Neutral baseline when experience is unspecified
+      matchReasons.push('Experience level unspecified: neutral baseline applied');
+    } else if (exp === 'Beginner') {
       if (diff === 'Easy') experienceScore = 100;
       else if (diff === 'Medium') experienceScore = 60;
       else experienceScore = 25;
@@ -319,18 +323,27 @@ export class WeightedMultiFactorRecommendationEngine {
     }
 
     // --- Factor 7: Farm Size Suitability (0-100) ---
-    let farmSizeScore = 60;
-    const size = typeof user.farmSize === 'number' && !isNaN(user.farmSize) ? user.farmSize : 2;
-    const minSize = practice.minFarmSize ?? 0;
-    const maxSize = practice.maxFarmSize ?? 100;
+    // Do not silently assume acreage when farmSize is missing or invalid.
+    let farmSizeScore = 50;
+    const hasValidFarmSize = typeof user.farmSize === 'number' && !isNaN(user.farmSize) && user.farmSize >= 0;
 
-    if (size >= minSize && size <= maxSize) {
-      farmSizeScore = 100;
-    } else if (size < minSize) {
-      farmSizeScore = Math.max(30, 100 - Math.round((minSize - size) * 20));
+    if (!hasValidFarmSize) {
+      farmSizeScore = 50; // Neutral baseline when farm size is missing or invalid
+      matchReasons.push('Farm size unspecified or invalid: neutral baseline applied');
     } else {
-      farmSizeScore = Math.max(40, 100 - Math.round((size - maxSize) * 5));
+      const size = Math.min(1000, user.farmSize!); // clamp extreme boundaries
+      const minSize = practice.minFarmSize ?? 0;
+      const maxSize = practice.maxFarmSize ?? 100;
+
+      if (size >= minSize && size <= maxSize) {
+        farmSizeScore = 100;
+      } else if (size < minSize) {
+        farmSizeScore = Math.max(30, 100 - Math.round((minSize - size) * 20));
+      } else {
+        farmSizeScore = Math.max(40, 100 - Math.round((size - maxSize) * 5));
+      }
     }
+
 
     // Ensure all individual factor scores are bounded strictly in [0, 100]
     cropScore = Math.max(0, Math.min(100, cropScore));

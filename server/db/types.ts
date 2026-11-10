@@ -1,4 +1,4 @@
-export type UserRole = 'farmer' | 'admin';
+export type UserRole = 'farmer' | 'admin' | 'inspector';
 
 export type SoilType =
   | 'Sandy'
@@ -121,16 +121,19 @@ export interface UserChallenge {
   id: string;
   userId: string;
   challengeId: string;
-  practiceId: string;
+  practiceId?: string;
   status: ChallengeStatus;
   startedAt?: string;
   submittedAt?: string;
   verifiedAt?: string;
   rejectedAt?: string;
   completedAt?: string;
+  progress?: number;
   proofNote?: string;
+  evidenceNote?: string;
   proofImageUrl?: string;
   verificationNotes?: string;
+  feedback?: string;
   verifiedBy?: string;
 }
 
@@ -272,5 +275,25 @@ export interface ReportItem {
   reportedByUserId: string;
   reason: string;
   status: 'pending' | 'resolved' | 'dismissed';
+  resolvedAt?: string;
   createdAt: string;
 }
+
+export interface ExpertAssessment {
+  id: string;
+  expertName?: string;
+  evaluatorRole?: string;
+  organization?: string;
+  archetypeId: string;
+  practiceId?: string;
+  practiceTitle?: string;
+  relevanceScore?: number;
+  ecologicalValidity?: number;
+  actionabilityScore?: number;
+  expertNotes?: string;
+  practiceRatings?: Record<string, number>; // practiceId -> grade 0-3
+  notes?: string;
+  timestamp?: string;
+  createdAt?: string;
+}
+

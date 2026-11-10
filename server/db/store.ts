@@ -16,6 +16,7 @@ import {
   ReportItem,
   RewardTransaction,
   RecommendationLog,
+  ExpertAssessment,
 } from './types';
 import {
   SEED_USERS,
@@ -78,7 +79,7 @@ export function calculateLevel(points: number): {
   };
 }
 
-class DataStore {
+export class DataStore {
   users: Map<string, User> = new Map();
   practices: Map<string, SustainablePractice> = new Map();
   challenges: Map<string, Challenge> = new Map();
@@ -93,6 +94,7 @@ class DataStore {
   reports: Map<string, ReportItem> = new Map();
   rewardTransactions: Map<string, RewardTransaction> = new Map();
   recommendationLogs: RecommendationLog[] = [];
+  expertAssessments: Map<string, ExpertAssessment> = new Map();
 
   constructor() {
     this.init();
@@ -139,10 +141,12 @@ class DataStore {
         activities: this.activities,
         rewardTransactions: Array.from(this.rewardTransactions.entries()),
         recommendationLogs: this.recommendationLogs,
+        expertAssessments: Array.from(this.expertAssessments.entries()),
       };
 
       const jsonString = JSON.stringify(serialized, null, 2);
       const tempFile = `${DATA_FILE}.tmp.${process.pid}.${Date.now()}`;
+
 
       // Write to temporary file first
       fs.writeFileSync(tempFile, jsonString, 'utf-8');
@@ -176,6 +180,7 @@ class DataStore {
       this.activities = data.activities || [];
       this.rewardTransactions = new Map(data.rewardTransactions || []);
       this.recommendationLogs = data.recommendationLogs || [];
+      this.expertAssessments = new Map(data.expertAssessments || []);
 
       // Ensure seed practices are current with newly added properties
       SEED_PRACTICES.forEach((sp) => {
@@ -482,6 +487,135 @@ class DataStore {
 
     return transactions.reduce((acc, tx) => acc + tx.pointsAwarded, 0);
   }
+
+  /**
+   * Atomically executes challenge reward transaction and updates farmer points, level,
+   * streak, activity log, and badge unlocks in a single coordinated operation.
+   * Prevents partial updates or desynchronization between ledger and user points.
+   */
+  awardChallengePoints(
+    userId: string,
+    challengeId: string,
+    points: number,
+    reason: string,
+    practiceId?: string,
+    verifiedBy?: string
+  ): {
+    success: boolean;
+    isDuplicate: boolean;
+    pointsAwarded?: number;
+    transaction?: RewardTransaction;
+    updatedUser?: User;
+    newlyUnlockedBadges?: Badge[];
+    error?: string;
+  } {
+    // 1. Prevent duplicate rewards: check if awarded transaction already exists
+    const existing = Array.from(this.rewardTransactions.values()).find(
+      (tx) => tx.userId === userId && tx.challengeId === challengeId && tx.status === 'awarded'
+    );
+    if (existing) {
+      return { success: false, isDuplicate: true, pointsAwarded: 0, transaction: existing };
+    }
+
+    const user = this.getUserById(userId);
+    if (!user) {
+      return { success: false, isDuplicate: false, pointsAwarded: 0, error: 'Beneficiary user not found' };
+    }
+
+    const now = new Date().toISOString();
+    const id = `tx_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const tx: RewardTransaction = {
+      id,
+      userId,
+      challengeId,
+      practiceId,
+      pointsAwarded: points,
+      reason,
+      status: 'awarded',
+      timestamp: now,
+      verifiedBy,
+    };
+
+    // 2. Add transaction to ledger
+    this.rewardTransactions.set(id, tx);
+
+    // 3. Atomically update user profile points & level
+    const updatedPoints = user.points + points;
+    const levelData = calculateLevel(updatedPoints);
+
+    const today = now.split('T')[0];
+    let newStreak = user.streak;
+    if (user.lastActiveDate !== today) {
+      const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+      newStreak = user.lastActiveDate === yesterday ? user.streak + 1 : 1;
+    }
+
+    user.points = updatedPoints;
+    user.level = levelData.level;
+    user.levelTitle = levelData.levelTitle;
+    user.streak = newStreak;
+    user.lastActiveDate = today;
+    this.users.set(userId, user);
+
+    // 4. Log activity
+    const act: UserActivity = {
+      id: `act_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      userId,
+      type: 'challenge_completed',
+      title: reason,
+      pointsEarned: points,
+      timestamp: now,
+    };
+    this.activities.unshift(act);
+    if (this.activities.length > 100) this.activities.pop();
+
+    // 5. Check and award any earned badges
+    const newlyUnlockedBadges = this.checkAndAwardBadges(userId);
+
+    // 6. Atomically synchronize UserChallenge state if present
+    if (challengeId) {
+      const existingUc = this.getUserChallenge(userId, challengeId);
+      if (existingUc) {
+        existingUc.status = 'verified';
+        existingUc.progress = 100;
+        existingUc.verifiedBy = verifiedBy || 'system';
+        existingUc.completedAt = now;
+        this.saveUserChallenge(existingUc);
+      }
+    }
+
+    // 7. Safe atomic persistence
+    this.persist();
+
+    return {
+      success: true,
+      isDuplicate: false,
+      pointsAwarded: points,
+      transaction: tx,
+      updatedUser: user,
+      newlyUnlockedBadges,
+    };
+  }
+
+  // --- Expert Assessments for Research Evaluation ---
+  saveExpertAssessment(assessment: ExpertAssessment): ExpertAssessment {
+    this.expertAssessments.set(assessment.id, assessment);
+    this.persist();
+    return assessment;
+  }
+
+  getExpertAssessments(archetypeId?: string): ExpertAssessment[] {
+    const all = Array.from(this.expertAssessments.values());
+    if (archetypeId) {
+      return all.filter((a) => a.archetypeId === archetypeId);
+    }
+    return all;
+  }
+
+  getAllExpertAssessments(): ExpertAssessment[] {
+    return this.getExpertAssessments();
+  }
+
 
   // --- Recommendation Logging ---
   logRecommendation(log: Omit<RecommendationLog, 'id' | 'timestamp'>): RecommendationLog {

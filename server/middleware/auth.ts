@@ -137,3 +137,19 @@ export function requireAdmin(req: AuthRequest, res: Response, next: NextFunction
   next();
 }
 
+/**
+ * Role-based authorization middleware requiring 'admin' or 'inspector' privileges.
+ */
+export function requireVerifier(req: AuthRequest, res: Response, next: NextFunction) {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized: Authentication required.' });
+  }
+  if (req.user.role !== 'admin' && req.user.role !== 'inspector') {
+    return res.status(403).json({
+      error: 'Forbidden: Administrator or certified agricultural inspector privileges required.',
+    });
+  }
+  next();
+}
+
+

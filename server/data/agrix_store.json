@@ -174,6 +174,356 @@
         "lastActiveDate": "2026-10-07",
         "createdAt": "2026-06-01T08:00:00Z"
       }
+    ],
+    [
+      "test_user_auth_1",
+      {
+        "id": "test_user_auth_1",
+        "name": "Test Farmer",
+        "email": "farmer@test.org",
+        "passwordHash": "hashed_password",
+        "role": "farmer",
+        "phone": "",
+        "location": "Anand",
+        "state": "Gujarat",
+        "farmSize": 2,
+        "soilType": "Loamy",
+        "mainCrop": "Tomato",
+        "farmingMethod": "Organic",
+        "experienceLevel": "Intermediate",
+        "avatarUrl": "",
+        "points": 100,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 1,
+        "lastActiveDate": "2026-10-10",
+        "createdAt": "2026-10-10T00:00:00Z"
+      }
+    ],
+    [
+      "inspector_self_test",
+      {
+        "id": "inspector_self_test",
+        "name": "Inspector Self Test",
+        "email": "inspector_self@agrix.test",
+        "passwordHash": "hash",
+        "role": "inspector",
+        "phone": "",
+        "location": "",
+        "state": "",
+        "farmSize": 2,
+        "soilType": "Loamy",
+        "mainCrop": "Wheat",
+        "farmingMethod": "Natural farming",
+        "experienceLevel": "Experienced",
+        "avatarUrl": "",
+        "points": 100,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 0,
+        "lastActiveDate": "",
+        "createdAt": "2026-11-10T11:41:14.352Z"
+      }
+    ],
+    [
+      "farmer_lifecycle_1",
+      {
+        "id": "farmer_lifecycle_1",
+        "name": "Lifecycle Farmer",
+        "email": "lifecycle@agrix.test",
+        "passwordHash": "hash",
+        "role": "farmer",
+        "phone": "",
+        "location": "Coimbatore",
+        "state": "Tamil Nadu",
+        "farmSize": 3,
+        "soilType": "Clay",
+        "mainCrop": "Rice",
+        "farmingMethod": "Organic",
+        "experienceLevel": "Intermediate",
+        "avatarUrl": "",
+        "points": 50,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 1,
+        "lastActiveDate": "2026-10-10",
+        "createdAt": "2026-11-10T11:38:16.498Z"
+      }
+    ],
+    [
+      "farmer_resubmit_test",
+      {
+        "id": "farmer_resubmit_test",
+        "name": "Resubmit Farmer",
+        "email": "resubmit@agrix.test",
+        "passwordHash": "hash",
+        "role": "farmer",
+        "phone": "",
+        "location": "Madurai",
+        "state": "Tamil Nadu",
+        "farmSize": 2,
+        "soilType": "Loamy",
+        "mainCrop": "Vegetables",
+        "farmingMethod": "Natural farming",
+        "experienceLevel": "Beginner",
+        "avatarUrl": "",
+        "points": 10,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 0,
+        "lastActiveDate": "",
+        "createdAt": "2026-11-10T11:38:16.502Z"
+      }
+    ],
+    [
+      "farmer_dedup_test",
+      {
+        "id": "farmer_dedup_test",
+        "name": "Dedup Farmer",
+        "email": "dedup@agrix.test",
+        "passwordHash": "hash",
+        "role": "farmer",
+        "phone": "",
+        "location": "Salem",
+        "state": "Tamil Nadu",
+        "farmSize": 1,
+        "soilType": "Loamy",
+        "mainCrop": "Banana",
+        "farmingMethod": "Organic",
+        "experienceLevel": "Beginner",
+        "avatarUrl": "",
+        "points": 100,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 1,
+        "lastActiveDate": "",
+        "createdAt": "2026-11-10T11:38:16.508Z"
+      }
+    ],
+    [
+      "farmer_lifecycle_1794310735590_dlvj",
+      {
+        "id": "farmer_lifecycle_1794310735590_dlvj",
+        "name": "Lifecycle Farmer",
+        "email": "lifecycle@agrix.test",
+        "passwordHash": "hash",
+        "role": "farmer",
+        "phone": "",
+        "location": "Coimbatore",
+        "state": "Tamil Nadu",
+        "farmSize": 3,
+        "soilType": "Clay",
+        "mainCrop": "Rice",
+        "farmingMethod": "Organic",
+        "experienceLevel": "Intermediate",
+        "avatarUrl": "",
+        "points": 100,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 1,
+        "lastActiveDate": "2026-11-10",
+        "createdAt": "2026-11-10T11:38:55.590Z"
+      }
+    ],
+    [
+      "farmer_resubmit_1794310735602_1m9v",
+      {
+        "id": "farmer_resubmit_1794310735602_1m9v",
+        "name": "Resubmit Farmer",
+        "email": "resubmit@agrix.test",
+        "passwordHash": "hash",
+        "role": "farmer",
+        "phone": "",
+        "location": "Madurai",
+        "state": "Tamil Nadu",
+        "farmSize": 2,
+        "soilType": "Loamy",
+        "mainCrop": "Vegetables",
+        "farmingMethod": "Natural farming",
+        "experienceLevel": "Beginner",
+        "avatarUrl": "",
+        "points": 10,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 0,
+        "lastActiveDate": "",
+        "createdAt": "2026-11-10T11:38:55.602Z"
+      }
+    ],
+    [
+      "farmer_dedup_1794310735608_e5zt",
+      {
+        "id": "farmer_dedup_1794310735608_e5zt",
+        "name": "Dedup Farmer",
+        "email": "dedup@agrix.test",
+        "passwordHash": "hash",
+        "role": "farmer",
+        "phone": "",
+        "location": "Salem",
+        "state": "Tamil Nadu",
+        "farmSize": 1,
+        "soilType": "Loamy",
+        "mainCrop": "Banana",
+        "farmingMethod": "Organic",
+        "experienceLevel": "Beginner",
+        "avatarUrl": "",
+        "points": 160,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 1,
+        "lastActiveDate": "2026-11-10",
+        "createdAt": "2026-11-10T11:38:55.608Z"
+      }
+    ],
+    [
+      "farmer_lifecycle_1794310755858_vzw3",
+      {
+        "id": "farmer_lifecycle_1794310755858_vzw3",
+        "name": "Lifecycle Farmer",
+        "email": "lifecycle@agrix.test",
+        "passwordHash": "hash",
+        "role": "farmer",
+        "phone": "",
+        "location": "Coimbatore",
+        "state": "Tamil Nadu",
+        "farmSize": 3,
+        "soilType": "Clay",
+        "mainCrop": "Rice",
+        "farmingMethod": "Organic",
+        "experienceLevel": "Intermediate",
+        "avatarUrl": "",
+        "points": 100,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 1,
+        "lastActiveDate": "2026-11-10",
+        "createdAt": "2026-11-10T11:39:15.858Z"
+      }
+    ],
+    [
+      "farmer_resubmit_1794310755869_4b6r",
+      {
+        "id": "farmer_resubmit_1794310755869_4b6r",
+        "name": "Resubmit Farmer",
+        "email": "resubmit@agrix.test",
+        "passwordHash": "hash",
+        "role": "farmer",
+        "phone": "",
+        "location": "Madurai",
+        "state": "Tamil Nadu",
+        "farmSize": 2,
+        "soilType": "Loamy",
+        "mainCrop": "Vegetables",
+        "farmingMethod": "Natural farming",
+        "experienceLevel": "Beginner",
+        "avatarUrl": "",
+        "points": 10,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 0,
+        "lastActiveDate": "",
+        "createdAt": "2026-11-10T11:39:15.869Z"
+      }
+    ],
+    [
+      "farmer_dedup_1794310755875_41jl",
+      {
+        "id": "farmer_dedup_1794310755875_41jl",
+        "name": "Dedup Farmer",
+        "email": "dedup@agrix.test",
+        "passwordHash": "hash",
+        "role": "farmer",
+        "phone": "",
+        "location": "Salem",
+        "state": "Tamil Nadu",
+        "farmSize": 1,
+        "soilType": "Loamy",
+        "mainCrop": "Banana",
+        "farmingMethod": "Organic",
+        "experienceLevel": "Beginner",
+        "avatarUrl": "",
+        "points": 160,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 1,
+        "lastActiveDate": "2026-11-10",
+        "createdAt": "2026-11-10T11:39:15.875Z"
+      }
+    ],
+    [
+      "farmer_lifecycle_1794310874355_o7bf",
+      {
+        "id": "farmer_lifecycle_1794310874355_o7bf",
+        "name": "Lifecycle Farmer",
+        "email": "lifecycle@agrix.test",
+        "passwordHash": "hash",
+        "role": "farmer",
+        "phone": "",
+        "location": "Coimbatore",
+        "state": "Tamil Nadu",
+        "farmSize": 3,
+        "soilType": "Clay",
+        "mainCrop": "Rice",
+        "farmingMethod": "Organic",
+        "experienceLevel": "Intermediate",
+        "avatarUrl": "",
+        "points": 100,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 1,
+        "lastActiveDate": "2026-11-10",
+        "createdAt": "2026-11-10T11:41:14.355Z"
+      }
+    ],
+    [
+      "farmer_resubmit_1794310874364_wo44",
+      {
+        "id": "farmer_resubmit_1794310874364_wo44",
+        "name": "Resubmit Farmer",
+        "email": "resubmit@agrix.test",
+        "passwordHash": "hash",
+        "role": "farmer",
+        "phone": "",
+        "location": "Madurai",
+        "state": "Tamil Nadu",
+        "farmSize": 2,
+        "soilType": "Loamy",
+        "mainCrop": "Vegetables",
+        "farmingMethod": "Natural farming",
+        "experienceLevel": "Beginner",
+        "avatarUrl": "",
+        "points": 10,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 0,
+        "lastActiveDate": "",
+        "createdAt": "2026-11-10T11:41:14.364Z"
+      }
+    ],
+    [
+      "farmer_dedup_1794310874369_x4xp",
+      {
+        "id": "farmer_dedup_1794310874369_x4xp",
+        "name": "Dedup Farmer",
+        "email": "dedup@agrix.test",
+        "passwordHash": "hash",
+        "role": "farmer",
+        "phone": "",
+        "location": "Salem",
+        "state": "Tamil Nadu",
+        "farmSize": 1,
+        "soilType": "Loamy",
+        "mainCrop": "Banana",
+        "farmingMethod": "Organic",
+        "experienceLevel": "Beginner",
+        "avatarUrl": "",
+        "points": 160,
+        "level": 1,
+        "levelTitle": "Seedling",
+        "streak": 1,
+        "lastActiveDate": "2026-11-10",
+        "createdAt": "2026-11-10T11:41:14.369Z"
+      }
     ]
   ],
   "practices": [
@@ -1721,6 +2071,140 @@
         "completedAt": "2026-09-30T17:00:00Z",
         "verifiedBy": "user_admin"
       }
+    ],
+    [
+      "uc_farmer_lifecycle_1_chal_soil_testing",
+      {
+        "id": "uc_farmer_lifecycle_1_chal_soil_testing",
+        "userId": "farmer_lifecycle_1",
+        "challengeId": "chal_soil_testing",
+        "status": "submitted",
+        "progress": 100,
+        "startedAt": "2026-11-10T11:36:16.954Z",
+        "evidenceNote": "Collected 5 soil samples in a zig-zag pattern and sent to Krishi Vigyan Kendra.",
+        "submittedAt": "2026-11-10T11:36:16.956Z"
+      }
+    ],
+    [
+      "uc_farmer_resubmit_test_chal_vermicompost",
+      {
+        "id": "uc_farmer_resubmit_test_chal_vermicompost",
+        "userId": "farmer_resubmit_test",
+        "challengeId": "chal_vermicompost",
+        "status": "submitted",
+        "progress": 100,
+        "startedAt": "2026-11-10T11:36:16.973Z",
+        "submittedAt": "2026-11-10T11:36:16.975Z",
+        "evidenceNote": "Added 1kg Eisenia fetida culture from local KVK with moisture cover."
+      }
+    ],
+    [
+      "uc_farmer_lifecycle_1_chal_1",
+      {
+        "id": "uc_farmer_lifecycle_1_chal_1",
+        "userId": "farmer_lifecycle_1",
+        "challengeId": "chal_1",
+        "status": "submitted",
+        "progress": 100,
+        "startedAt": "2026-11-10T11:37:43.836Z",
+        "evidenceNote": "Collected 5 soil samples in a zig-zag pattern and sent to Krishi Vigyan Kendra.",
+        "submittedAt": "2026-11-10T11:37:43.839Z"
+      }
+    ],
+    [
+      "uc_farmer_resubmit_test_chal_2",
+      {
+        "id": "uc_farmer_resubmit_test_chal_2",
+        "userId": "farmer_resubmit_test",
+        "challengeId": "chal_2",
+        "status": "submitted",
+        "progress": 100,
+        "startedAt": "2026-11-10T11:38:16.504Z",
+        "submittedAt": "2026-11-10T11:38:16.506Z",
+        "evidenceNote": "Added 1kg Eisenia fetida culture from local KVK with moisture cover."
+      }
+    ],
+    [
+      "uc_farmer_lifecycle_1794310735590_dlvj_chal_1",
+      {
+        "id": "uc_farmer_lifecycle_1794310735590_dlvj_chal_1",
+        "userId": "farmer_lifecycle_1794310735590_dlvj",
+        "challengeId": "chal_1",
+        "status": "submitted",
+        "progress": 100,
+        "startedAt": "2026-11-10T11:38:55.592Z",
+        "evidenceNote": "Collected 5 soil samples in a zig-zag pattern and sent to Krishi Vigyan Kendra.",
+        "submittedAt": "2026-11-10T11:38:55.595Z"
+      }
+    ],
+    [
+      "uc_farmer_resubmit_1794310735602_1m9v_chal_2",
+      {
+        "id": "uc_farmer_resubmit_1794310735602_1m9v_chal_2",
+        "userId": "farmer_resubmit_1794310735602_1m9v",
+        "challengeId": "chal_2",
+        "status": "submitted",
+        "progress": 100,
+        "startedAt": "2026-11-10T11:38:55.604Z",
+        "submittedAt": "2026-11-10T11:38:55.606Z",
+        "evidenceNote": "Added 1kg Eisenia fetida culture from local KVK with moisture cover."
+      }
+    ],
+    [
+      "uc_farmer_lifecycle_1794310755858_vzw3_chal_1",
+      {
+        "id": "uc_farmer_lifecycle_1794310755858_vzw3_chal_1",
+        "userId": "farmer_lifecycle_1794310755858_vzw3",
+        "challengeId": "chal_1",
+        "status": "verified",
+        "progress": 100,
+        "startedAt": "2026-11-10T11:39:15.860Z",
+        "evidenceNote": "Collected 5 soil samples in a zig-zag pattern and sent to Krishi Vigyan Kendra.",
+        "submittedAt": "2026-11-10T11:39:15.863Z",
+        "verifiedBy": "user_inspector",
+        "completedAt": "2026-11-10T11:39:15.864Z"
+      }
+    ],
+    [
+      "uc_farmer_resubmit_1794310755869_4b6r_chal_2",
+      {
+        "id": "uc_farmer_resubmit_1794310755869_4b6r_chal_2",
+        "userId": "farmer_resubmit_1794310755869_4b6r",
+        "challengeId": "chal_2",
+        "status": "submitted",
+        "progress": 100,
+        "startedAt": "2026-11-10T11:39:15.870Z",
+        "submittedAt": "2026-11-10T11:39:15.873Z",
+        "evidenceNote": "Added 1kg Eisenia fetida culture from local KVK with moisture cover."
+      }
+    ],
+    [
+      "uc_farmer_lifecycle_1794310874355_o7bf_chal_1",
+      {
+        "id": "uc_farmer_lifecycle_1794310874355_o7bf_chal_1",
+        "userId": "farmer_lifecycle_1794310874355_o7bf",
+        "challengeId": "chal_1",
+        "status": "verified",
+        "progress": 100,
+        "startedAt": "2026-11-10T11:41:14.356Z",
+        "evidenceNote": "Collected 5 soil samples in a zig-zag pattern and sent to Krishi Vigyan Kendra.",
+        "submittedAt": "2026-11-10T11:41:14.358Z",
+        "verifiedBy": "user_inspector",
+        "completedAt": "2026-11-10T11:41:14.360Z"
+      }
+    ],
+    [
+      "uc_farmer_resubmit_1794310874364_wo44_chal_2",
+      {
+        "id": "uc_farmer_resubmit_1794310874364_wo44_chal_2",
+        "userId": "farmer_resubmit_1794310874364_wo44",
+        "challengeId": "chal_2",
+        "status": "submitted",
+        "progress": 100,
+        "startedAt": "2026-11-10T11:41:14.365Z",
+        "submittedAt": "2026-11-10T11:41:14.367Z",
+        "evidenceNote": "Added 1kg Eisenia fetida culture from local KVK with moisture cover."
+      }
     ]
   ],
   "badges": [
@@ -2436,7 +2920,81 @@
       }
     ]
   ],
+  "cartItems": [],
+  "reports": [],
   "activities": [
+    {
+      "id": "act_1794310874370_fzjni",
+      "userId": "farmer_dedup_1794310874369_x4xp",
+      "type": "challenge_completed",
+      "title": "Organic Mulching",
+      "pointsEarned": 60,
+      "timestamp": "2026-11-10T11:41:14.370Z"
+    },
+    {
+      "id": "act_1794310874360_9rxjj",
+      "userId": "farmer_lifecycle_1794310874355_o7bf",
+      "type": "challenge_completed",
+      "title": "Start Mulching Your Crop Rows",
+      "pointsEarned": 50,
+      "timestamp": "2026-11-10T11:41:14.360Z"
+    },
+    {
+      "id": "act_1794310755876_itzma",
+      "userId": "farmer_dedup_1794310755875_41jl",
+      "type": "challenge_completed",
+      "title": "Organic Mulching",
+      "pointsEarned": 60,
+      "timestamp": "2026-11-10T11:39:15.876Z"
+    },
+    {
+      "id": "act_1794310755864_ymtbl",
+      "userId": "farmer_lifecycle_1794310755858_vzw3",
+      "type": "challenge_completed",
+      "title": "Start Mulching Your Crop Rows",
+      "pointsEarned": 50,
+      "timestamp": "2026-11-10T11:39:15.864Z"
+    },
+    {
+      "id": "act_1794310735609_3mzyt",
+      "userId": "farmer_dedup_1794310735608_e5zt",
+      "type": "challenge_completed",
+      "title": "Organic Mulching",
+      "pointsEarned": 60,
+      "timestamp": "2026-11-10T11:38:55.609Z"
+    },
+    {
+      "id": "act_1794310735596_iujy1",
+      "userId": "farmer_lifecycle_1794310735590_dlvj",
+      "type": "challenge_completed",
+      "title": "Start Mulching Your Crop Rows",
+      "pointsEarned": 50,
+      "timestamp": "2026-11-10T11:38:55.596Z"
+    },
+    {
+      "id": "act_1794310663851_j501i",
+      "userId": "farmer_dedup_test",
+      "type": "challenge_completed",
+      "title": 60,
+      "pointsEarned": "Organic Mulching",
+      "timestamp": "2026-11-10T11:37:43.851Z"
+    },
+    {
+      "id": "act_1794310663841_8ngnz",
+      "userId": "farmer_lifecycle_1",
+      "type": "challenge_completed",
+      "title": 50,
+      "pointsEarned": "Start Mulching Your Crop Rows",
+      "timestamp": "2026-11-10T11:37:43.840Z"
+    },
+    {
+      "id": "act_1794310576979_yslr7",
+      "userId": "farmer_dedup_test",
+      "type": "challenge_completed",
+      "title": 60,
+      "pointsEarned": "Organic Mulching",
+      "timestamp": "2026-11-10T11:36:16.979Z"
+    },
     {
       "id": "act_1",
       "userId": "user_ananya",
@@ -2630,7 +3188,393 @@
         "status": "awarded",
         "timestamp": "2026-11-09T18:38:45.272Z"
       }
+    ],
+    [
+      "tx_1794310449673_c6n9o",
+      {
+        "id": "tx_1794310449673_c6n9o",
+        "userId": "test_farmer_1794310449673",
+        "challengeId": "chal_test_dedup",
+        "pointsAwarded": 50,
+        "reason": "First time completion",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:34:09.673Z"
+      }
+    ],
+    [
+      "tx_1794310449676_010pa",
+      {
+        "id": "tx_1794310449676_010pa",
+        "userId": "monthly_farmer_1794310449676",
+        "challengeId": "chal_monthly_1",
+        "pointsAwarded": 75,
+        "reason": "Current month verified challenge",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:34:09.676Z"
+      }
+    ],
+    [
+      "tx_1794310576979_6bgba",
+      {
+        "id": "tx_1794310576979_6bgba",
+        "userId": "farmer_dedup_test",
+        "challengeId": "chal_mulching",
+        "practiceId": "user_inspector",
+        "pointsAwarded": "Organic Mulching",
+        "reason": 60,
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:36:16.979Z",
+        "verifiedBy": "Verified straw mulch"
+      }
+    ],
+    [
+      "tx_1794310577299_jee2g",
+      {
+        "id": "tx_1794310577299_jee2g",
+        "userId": "test_farmer_1794310577299",
+        "challengeId": "chal_test_dedup",
+        "pointsAwarded": 50,
+        "reason": "First time completion",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:36:17.300Z"
+      }
+    ],
+    [
+      "tx_1794310577304_pnr3v",
+      {
+        "id": "tx_1794310577304_pnr3v",
+        "userId": "monthly_farmer_1794310577304",
+        "challengeId": "chal_monthly_1",
+        "pointsAwarded": 75,
+        "reason": "Current month verified challenge",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:36:17.304Z"
+      }
+    ],
+    [
+      "tx_1794310663840_w8xdi",
+      {
+        "id": "tx_1794310663840_w8xdi",
+        "userId": "farmer_lifecycle_1",
+        "challengeId": "chal_1",
+        "practiceId": "user_inspector",
+        "pointsAwarded": "Start Mulching Your Crop Rows",
+        "reason": 50,
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:37:43.840Z",
+        "verifiedBy": "High quality soil sampling documentation verified"
+      }
+    ],
+    [
+      "tx_1794310663851_cqly9",
+      {
+        "id": "tx_1794310663851_cqly9",
+        "userId": "farmer_dedup_test",
+        "challengeId": "chal_3",
+        "practiceId": "user_inspector",
+        "pointsAwarded": "Organic Mulching",
+        "reason": 60,
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:37:43.851Z",
+        "verifiedBy": "Verified straw mulch"
+      }
+    ],
+    [
+      "tx_1794310664263_cnhhm",
+      {
+        "id": "tx_1794310664263_cnhhm",
+        "userId": "test_farmer_1794310664263",
+        "challengeId": "chal_test_dedup",
+        "pointsAwarded": 50,
+        "reason": "First time completion",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:37:44.263Z"
+      }
+    ],
+    [
+      "tx_1794310664267_ffbe3",
+      {
+        "id": "tx_1794310664267_ffbe3",
+        "userId": "monthly_farmer_1794310664267",
+        "challengeId": "chal_monthly_1",
+        "pointsAwarded": 75,
+        "reason": "Current month verified challenge",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:37:44.267Z"
+      }
+    ],
+    [
+      "tx_1794310696851_gz0oc",
+      {
+        "id": "tx_1794310696851_gz0oc",
+        "userId": "test_farmer_1794310696851",
+        "challengeId": "chal_test_dedup",
+        "pointsAwarded": 50,
+        "reason": "First time completion",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:38:16.851Z"
+      }
+    ],
+    [
+      "tx_1794310696854_vq2io",
+      {
+        "id": "tx_1794310696854_vq2io",
+        "userId": "monthly_farmer_1794310696854",
+        "challengeId": "chal_monthly_1",
+        "pointsAwarded": 75,
+        "reason": "Current month verified challenge",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:38:16.854Z"
+      }
+    ],
+    [
+      "tx_1794310735596_6t3a5",
+      {
+        "id": "tx_1794310735596_6t3a5",
+        "userId": "farmer_lifecycle_1794310735590_dlvj",
+        "challengeId": "chal_1",
+        "practiceId": "prac_3",
+        "pointsAwarded": 50,
+        "reason": "Start Mulching Your Crop Rows",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:38:55.596Z",
+        "verifiedBy": "user_inspector"
+      }
+    ],
+    [
+      "tx_1794310735609_uwy5y",
+      {
+        "id": "tx_1794310735609_uwy5y",
+        "userId": "farmer_dedup_1794310735608_e5zt",
+        "challengeId": "chal_3",
+        "practiceId": "prac_3",
+        "pointsAwarded": 60,
+        "reason": "Organic Mulching",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:38:55.609Z",
+        "verifiedBy": "user_inspector"
+      }
+    ],
+    [
+      "tx_1794310735939_e027c",
+      {
+        "id": "tx_1794310735939_e027c",
+        "userId": "test_farmer_1794310735939",
+        "challengeId": "chal_test_dedup",
+        "pointsAwarded": 50,
+        "reason": "First time completion",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:38:55.939Z"
+      }
+    ],
+    [
+      "tx_1794310735942_vwh5k",
+      {
+        "id": "tx_1794310735942_vwh5k",
+        "userId": "monthly_farmer_1794310735942",
+        "challengeId": "chal_monthly_1",
+        "pointsAwarded": 75,
+        "reason": "Current month verified challenge",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:38:55.942Z"
+      }
+    ],
+    [
+      "tx_1794310755864_gabbj",
+      {
+        "id": "tx_1794310755864_gabbj",
+        "userId": "farmer_lifecycle_1794310755858_vzw3",
+        "challengeId": "chal_1",
+        "practiceId": "prac_3",
+        "pointsAwarded": 50,
+        "reason": "Start Mulching Your Crop Rows",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:39:15.864Z",
+        "verifiedBy": "user_inspector"
+      }
+    ],
+    [
+      "tx_1794310755876_ttrp4",
+      {
+        "id": "tx_1794310755876_ttrp4",
+        "userId": "farmer_dedup_1794310755875_41jl",
+        "challengeId": "chal_3",
+        "practiceId": "prac_3",
+        "pointsAwarded": 60,
+        "reason": "Organic Mulching",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:39:15.876Z",
+        "verifiedBy": "user_inspector"
+      }
+    ],
+    [
+      "tx_1794310756237_1q2h8",
+      {
+        "id": "tx_1794310756237_1q2h8",
+        "userId": "test_farmer_1794310756237",
+        "challengeId": "chal_test_dedup",
+        "pointsAwarded": 50,
+        "reason": "First time completion",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:39:16.237Z"
+      }
+    ],
+    [
+      "tx_1794310756240_2n5cv",
+      {
+        "id": "tx_1794310756240_2n5cv",
+        "userId": "monthly_farmer_1794310756240",
+        "challengeId": "chal_monthly_1",
+        "pointsAwarded": 75,
+        "reason": "Current month verified challenge",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:39:16.240Z"
+      }
+    ],
+    [
+      "tx_1794310874360_hqews",
+      {
+        "id": "tx_1794310874360_hqews",
+        "userId": "farmer_lifecycle_1794310874355_o7bf",
+        "challengeId": "chal_1",
+        "practiceId": "prac_3",
+        "pointsAwarded": 50,
+        "reason": "Start Mulching Your Crop Rows",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:41:14.360Z",
+        "verifiedBy": "user_inspector"
+      }
+    ],
+    [
+      "tx_1794310874370_kwvvf",
+      {
+        "id": "tx_1794310874370_kwvvf",
+        "userId": "farmer_dedup_1794310874369_x4xp",
+        "challengeId": "chal_3",
+        "practiceId": "prac_3",
+        "pointsAwarded": 60,
+        "reason": "Organic Mulching",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:41:14.370Z",
+        "verifiedBy": "user_inspector"
+      }
+    ],
+    [
+      "tx_1794310874678_aemn0",
+      {
+        "id": "tx_1794310874678_aemn0",
+        "userId": "test_farmer_1794310874678",
+        "challengeId": "chal_test_dedup",
+        "pointsAwarded": 50,
+        "reason": "First time completion",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:41:14.678Z"
+      }
+    ],
+    [
+      "tx_1794310874681_0shjy",
+      {
+        "id": "tx_1794310874681_0shjy",
+        "userId": "monthly_farmer_1794310874681",
+        "challengeId": "chal_monthly_1",
+        "pointsAwarded": 75,
+        "reason": "Current month verified challenge",
+        "status": "awarded",
+        "timestamp": "2026-11-10T11:41:14.681Z"
+      }
     ]
   ],
-  "recommendationLogs": []
+  "recommendationLogs": [],
+  "expertAssessments": [
+    [
+      "assess_test_1794310577750",
+      {
+        "id": "assess_test_1794310577750",
+        "archetypeId": "paddy_clay_wetland",
+        "evaluatorRole": "Senior Agronomist, TNAU",
+        "practiceId": "prac_1",
+        "practiceTitle": "Alternate Wetting and Drying (AWD)",
+        "relevanceScore": 3,
+        "ecologicalValidity": 3,
+        "actionabilityScore": 3,
+        "expertNotes": "Gold-standard practice for rice in Cauvery delta clay soils.",
+        "timestamp": "2026-11-10T11:36:17.750Z"
+      }
+    ],
+    [
+      "assess_test_1794310664601",
+      {
+        "id": "assess_test_1794310664601",
+        "archetypeId": "paddy_clay_wetland",
+        "evaluatorRole": "Senior Agronomist, TNAU",
+        "practiceId": "prac_1",
+        "practiceTitle": "Alternate Wetting and Drying (AWD)",
+        "relevanceScore": 3,
+        "ecologicalValidity": 3,
+        "actionabilityScore": 3,
+        "expertNotes": "Gold-standard practice for rice in Cauvery delta clay soils.",
+        "timestamp": "2026-11-10T11:37:44.601Z"
+      }
+    ],
+    [
+      "assess_test_1794310697196",
+      {
+        "id": "assess_test_1794310697196",
+        "archetypeId": "paddy_clay_wetland",
+        "evaluatorRole": "Senior Agronomist, TNAU",
+        "practiceId": "prac_1",
+        "practiceTitle": "Alternate Wetting and Drying (AWD)",
+        "relevanceScore": 3,
+        "ecologicalValidity": 3,
+        "actionabilityScore": 3,
+        "expertNotes": "Gold-standard practice for rice in Cauvery delta clay soils.",
+        "timestamp": "2026-11-10T11:38:17.196Z"
+      }
+    ],
+    [
+      "assess_test_1794310736297",
+      {
+        "id": "assess_test_1794310736297",
+        "archetypeId": "paddy_clay_wetland",
+        "evaluatorRole": "Senior Agronomist, TNAU",
+        "practiceId": "prac_1",
+        "practiceTitle": "Alternate Wetting and Drying (AWD)",
+        "relevanceScore": 3,
+        "ecologicalValidity": 3,
+        "actionabilityScore": 3,
+        "expertNotes": "Gold-standard practice for rice in Cauvery delta clay soils.",
+        "timestamp": "2026-11-10T11:38:56.297Z"
+      }
+    ],
+    [
+      "assess_test_1794310756545",
+      {
+        "id": "assess_test_1794310756545",
+        "archetypeId": "paddy_clay_wetland",
+        "evaluatorRole": "Senior Agronomist, TNAU",
+        "practiceId": "prac_1",
+        "practiceTitle": "Alternate Wetting and Drying (AWD)",
+        "relevanceScore": 3,
+        "ecologicalValidity": 3,
+        "actionabilityScore": 3,
+        "expertNotes": "Gold-standard practice for rice in Cauvery delta clay soils.",
+        "timestamp": "2026-11-10T11:39:16.545Z"
+      }
+    ],
+    [
+      "assess_test_1794310874977",
+      {
+        "id": "assess_test_1794310874977",
+        "archetypeId": "paddy_clay_wetland",
+        "evaluatorRole": "Senior Agronomist, TNAU",
+        "practiceId": "prac_1",
+        "practiceTitle": "Alternate Wetting and Drying (AWD)",
+        "relevanceScore": 3,
+        "ecologicalValidity": 3,
+        "actionabilityScore": 3,
+        "expertNotes": "Gold-standard practice for rice in Cauvery delta clay soils.",
+        "timestamp": "2026-11-10T11:41:14.977Z"
+      }
+    ]
+  ]
 }
