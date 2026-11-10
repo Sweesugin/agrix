@@ -26,14 +26,30 @@ export const AdminPage: React.FC = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<
     'overview' | 'verifications' | 'evaluation' | 'challenges' | 'products' | 'users' | 'moderation'
-  >('overview');
+  >(user?.role === 'inspector' ? 'verifications' : user?.role === 'expert' ? 'evaluation' : 'overview');
   const [dashboardStats, setDashboardStats] = useState<any>(null);
   const [usersList, setUsersList] = useState<User[]>([]);
   const [reportsList, setReportsList] = useState<any[]>([]);
   const [pendingSubmissions, setPendingSubmissions] = useState<any[]>([]);
   const [evalComparison, setEvalComparison] = useState<any>(null);
   const [evalMetrics, setEvalMetrics] = useState<any>(null);
+  const [benchmarkData, setBenchmarkData] = useState<any>(null);
+  const [expertAssessmentsList, setExpertAssessmentsList] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Expert Assessment Form State
+  const [expertArchetype, setExpertArchetype] = useState('archetype_semi_arid_tomato');
+  const [expertRatings, setExpertRatings] = useState<Record<string, number>>({
+    prac_3: 3,
+    prac_7: 3,
+    prac_2: 3,
+    prac_6: 2,
+    prac_10: 2,
+    prac_8: 1,
+    prac_1: 0,
+  });
+  const [expertNotes, setExpertNotes] = useState('');
+  const [isSubmittingAssessment, setIsSubmittingAssessment] = useState(false);
 
   // Challenge form
   const [newChalTitle, setNewChalTitle] = useState('');
@@ -51,18 +67,22 @@ export const AdminPage: React.FC = () => {
   const loadAdminData = async () => {
     try {
       setLoading(true);
-      const [dash, usersRes, repRes, pendingRes, evalRes] = await Promise.all([
-        api.getAdminDashboard(),
-        api.getAdminUsers(),
-        api.getAdminReports(),
+      const [dash, usersRes, repRes, pendingRes, evalRes, benchRes, assessRes] = await Promise.all([
+        api.getAdminDashboard().catch(() => null),
+        api.getAdminUsers().catch(() => ({ users: [] })),
+        api.getAdminReports().catch(() => ({ reports: [] })),
         api.getPendingSubmissions().catch(() => ({ count: 0, pendingSubmissions: [] })),
         api.getEvaluationMetrics().catch(() => null),
+        api.getAccuracyBenchmark().catch(() => null),
+        api.getExpertAssessments().catch(() => ({ count: 0, assessments: [] })),
       ]);
       setDashboardStats(dash);
-      setUsersList(usersRes.users);
-      setReportsList(repRes.reports);
+      setUsersList(usersRes.users || []);
+      setReportsList(repRes.reports || []);
       setPendingSubmissions(pendingRes.pendingSubmissions || []);
       setEvalMetrics(evalRes);
+      setBenchmarkData(benchRes);
+      setExpertAssessmentsList(assessRes.assessments || []);
 
       // Run sample comparison
       const comp = await api.compareAlgorithms().catch(() => null);
@@ -75,14 +95,16 @@ export const AdminPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (user?.role === 'admin') {
+    if (user?.role === 'admin' || user?.role === 'inspector' || user?.role === 'expert') {
+      if (user.role === 'inspector') setActiveTab('verifications');
+      else if (user.role === 'expert') setActiveTab('evaluation');
       loadAdminData();
     }
   }, [user]);
 
   const handleVerifySubmission = async (challengeId: string, targetUserId: string) => {
     try {
-      await api.verifyChallenge(challengeId, targetUserId, 'Verified implementation by Agricultural Extension Officer.');
+      await api.verifyChallenge(challengeId, targetUserId, `Verified implementation by ${user?.name || 'Inspector'}.`);
       alert('Challenge verified and points ledger credited successfully!');
       loadAdminData();
     } catch (err: any) {
@@ -90,15 +112,58 @@ export const AdminPage: React.FC = () => {
     }
   };
 
-  if (user?.role !== 'admin') {
+  const handleRejectSubmission = async (challengeId: string, targetUserId: string) => {
+    const reason = window.prompt(
+      'Enter constructive feedback note for the farmer (explaining what needs improvement before resubmission):',
+      'Please attach clear photo proof and note following protocol guidelines.'
+    );
+    if (!reason || reason.trim().length === 0) return;
+    try {
+      await api.rejectChallenge(challengeId, targetUserId, reason.trim());
+      alert('Submission rejected and returned to farmer with feedback for correction.');
+      loadAdminData();
+    } catch (err: any) {
+      alert(err.message || 'Error rejecting submission');
+    }
+  };
+
+  const handleSubmitExpertAssessment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user || (user.role !== 'expert' && user.role !== 'admin')) {
+      alert('Only verified agricultural experts or administrators can submit formal academic assessments.');
+      return;
+    }
+
+    try {
+      setIsSubmittingAssessment(true);
+      await api.submitExpertAssessment({
+        archetypeId: expertArchetype,
+        practiceRatings: expertRatings,
+        notes: expertNotes.trim() || undefined,
+      });
+      alert('Academic Expert Assessment recorded successfully into the permanent research registry!');
+      setExpertNotes('');
+      const assessRes = await api.getExpertAssessments();
+      setExpertAssessmentsList(assessRes.assessments || []);
+    } catch (err: any) {
+      alert(err.message || 'Failed to submit expert assessment');
+    } finally {
+      setIsSubmittingAssessment(false);
+    }
+  };
+
+  if (!user || (user.role !== 'admin' && user.role !== 'inspector' && user.role !== 'expert')) {
     return (
       <div className="max-w-xl mx-auto py-24 text-center space-y-4">
         <div className="w-16 h-16 mx-auto rounded-full bg-amber-100 text-amber-700 flex items-center justify-center">
           <Shield className="w-8 h-8" />
         </div>
-        <h2 className="text-xl font-bold text-stone-900">Administrator Clearance Required</h2>
+        <h2 className="text-xl font-bold text-stone-900">Privileged Clearance Required</h2>
         <p className="text-xs text-stone-600 max-w-sm mx-auto">
-          Please use the top <strong>Role Switcher</strong> to switch to <strong>Dr. Vandana Rao (Agri Officer)</strong> to access this administrative portal.
+          Please use the top <strong>Role Switcher</strong> to switch to:
+          <br />• <strong>Inspector Rajesh Kumar</strong> (Challenge Verifications)
+          <br />• <strong>Dr. Swaminathan Raman</strong> (Expert Research Evaluations)
+          <br />• <strong>Dr. Vandana Rao</strong> (Platform Administration)
         </p>
       </div>
     );

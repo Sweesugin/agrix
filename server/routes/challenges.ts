@@ -146,42 +146,33 @@ router.post('/:id/submit', authenticate, (req: AuthRequest, res: Response) => {
   }
 
   const userId = req.user.id;
-  let userChallenge = db.getUserChallenge(userId, challengeId);
+  const userChallenge = db.getUserChallenge(userId, challengeId);
 
-  if (userChallenge) {
-    // Validate state transitions
-    if (userChallenge.status === 'verified' || (userChallenge.status as any) === 'completed') {
-      return res.status(400).json({ error: 'Invalid transition: Challenge has already been verified and completed.' });
-    }
-    if (userChallenge.status === 'submitted') {
-      return res.status(400).json({ error: 'Invalid transition: Proof has already been submitted and is awaiting verification.' });
-    }
-    // Note: status 'rejected' and 'in_progress' are valid states that can transition to 'submitted'!
+  // STRICT LIFECYCLE RULE: Farmer must start a challenge (in_progress) before submitting proof
+  if (!userChallenge || userChallenge.status === 'not_started') {
+    return res.status(400).json({
+      error: 'Invalid state transition: Challenge must be started (status: in_progress) before submitting implementation proof.',
+    });
   }
 
+  // Validate state transitions
+  if (userChallenge.status === 'verified' || (userChallenge.status as any) === 'completed') {
+    return res.status(400).json({ error: 'Invalid transition: Challenge has already been verified and completed.' });
+  }
+  if (userChallenge.status === 'submitted') {
+    return res.status(400).json({ error: 'Invalid transition: Proof has already been submitted and is awaiting verification.' });
+  }
+
+  // Only 'in_progress' and 'rejected' (resubmission) can transition to 'submitted'
   const now = new Date().toISOString();
-  if (!userChallenge) {
-    // If not explicitly started, initialize directly to submitted with proof
-    const id = `uc_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
-    userChallenge = {
-      id,
-      userId,
-      challengeId,
-      practiceId: challenge.practiceId,
-      status: 'submitted',
-      startedAt: now,
-      submittedAt: now,
-      proofNote: proofNote.trim(),
-      proofImageUrl: proofImageUrl?.trim() || undefined,
-    };
-  } else {
-    userChallenge.status = 'submitted';
-    userChallenge.submittedAt = now;
-    userChallenge.proofNote = proofNote.trim();
-    if (proofImageUrl?.trim()) {
-      userChallenge.proofImageUrl = proofImageUrl.trim();
-    }
+  userChallenge.status = 'submitted';
+  userChallenge.submittedAt = now;
+  userChallenge.proofNote = proofNote.trim();
+  if (proofImageUrl?.trim()) {
+    userChallenge.proofImageUrl = proofImageUrl.trim();
   }
+  // Clear prior rejection feedback on resubmission
+  userChallenge.verificationNotes = undefined;
 
   db.saveUserChallenge(userChallenge);
   db.logActivity(userId, 'challenge_started', `Submitted proof for review: ${challenge.title}`, 0);

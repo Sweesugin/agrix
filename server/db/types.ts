@@ -1,4 +1,4 @@
-export type UserRole = 'farmer' | 'admin' | 'inspector';
+export type UserRole = 'farmer' | 'admin' | 'inspector' | 'expert';
 
 export type SoilType =
   | 'Sandy'
@@ -43,6 +43,7 @@ export interface User {
   farmingMethod: FarmingMethod;
   experienceLevel: ExperienceLevel;
   avatarUrl?: string;
+  organization?: string; // Verified institutional affiliation (e.g., TNAU, ICAR, KVK)
   points: number;
   level: number;
   levelTitle: string;
@@ -281,6 +282,7 @@ export interface ReportItem {
 
 export interface ExpertAssessment {
   id: string;
+  expertUserId?: string;
   expertName?: string;
   evaluatorRole?: string;
   organization?: string;

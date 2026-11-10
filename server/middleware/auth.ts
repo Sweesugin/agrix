@@ -152,4 +152,20 @@ export function requireVerifier(req: AuthRequest, res: Response, next: NextFunct
   next();
 }
 
+/**
+ * Role-based authorization middleware requiring 'expert' or 'admin' privileges.
+ * For independent agronomic research evaluations and expert assessments.
+ */
+export function requireExpert(req: AuthRequest, res: Response, next: NextFunction) {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized: Authentication required.' });
+  }
+  if (req.user.role !== 'expert' && req.user.role !== 'admin') {
+    return res.status(403).json({
+      error: 'Forbidden: Certified agricultural expert credentials required.',
+    });
+  }
+  next();
+}
+
 

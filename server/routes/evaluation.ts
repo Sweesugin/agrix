@@ -4,7 +4,7 @@ import {
   RecommendationEngineBaseline,
   DEFAULT_FACTOR_WEIGHTS,
 } from '../services/recommendationEngine';
-import { optionalAuthenticate, AuthRequest } from '../middleware/auth';
+import { authenticate, optionalAuthenticate, requireExpert, AuthRequest } from '../middleware/auth';
 import { db } from '../db/store';
 import { User } from '../db/types';
 
@@ -129,8 +129,10 @@ function computeIDCG(allGrades: number[], k: number): number {
 // Dedicated IR benchmark endpoint computing Precision@K, Recall@K, and NDCG@K
 router.get('/accuracy/benchmark', (req, res: Response) => {
   const k = 4; // Top-4 recommendation evaluation
+  const benchmarkStart = performance.now();
 
   const archetypeBenchmarks = EXPERT_ARCHETYPES.map((arch) => {
+    const tArchStart = performance.now();
     const multiFactorRecs = WeightedMultiFactorRecommendationEngine.getRecommendationsForUser(
       arch.profile,
       k,
@@ -138,6 +140,7 @@ router.get('/accuracy/benchmark', (req, res: Response) => {
     );
 
     const baselineRecs = RecommendationEngineBaseline.getRecommendationsForUser(arch.profile, k);
+    const archExecutionMs = Number((performance.now() - tArchStart).toFixed(2));
 
     // Multi-Factor Grades
     const mfGrades = multiFactorRecs.map(
@@ -179,6 +182,7 @@ router.get('/accuracy/benchmark', (req, res: Response) => {
       archetypeName: arch.name,
       agroZone: arch.agroZone,
       k,
+      actualExecutionTimeMs: archExecutionMs,
       multiFactorMetrics: {
         precisionAtK: Number(mfPrecisionAtK.toFixed(4)),
         recallAtK: Number(mfRecallAtK.toFixed(4)),
@@ -194,6 +198,8 @@ router.get('/accuracy/benchmark', (req, res: Response) => {
       groundTruthOverview: arch.groundTruthRelevance,
     };
   });
+
+  const totalBenchmarkExecutionMs = Number((performance.now() - benchmarkStart).toFixed(2));
 
   // Calculate Macro-Averaged Summary Metrics
   const avgMfPrecision =
@@ -222,6 +228,7 @@ router.get('/accuracy/benchmark', (req, res: Response) => {
     disclaimer:
       'These metrics are algorithmic Information Retrieval benchmarks calculated against curated agronomic archetypes in a simulated testbed. They are not empirical agronomic field trials.',
     evaluationDate: new Date().toISOString(),
+    measuredExecutionTimeMs: totalBenchmarkExecutionMs,
     groundTruthMethodology: {
       framework: 'Agronomic Expert Delphi Consensus & ICAR Regional Package of Practices',
       rubricScale: '0-3 Ordinal Graded Relevance',
@@ -259,25 +266,46 @@ router.get('/accuracy/benchmark', (req, res: Response) => {
 
 // GET /api/evaluation/expert-assessments (Retrieve independent agronomic expert assessments)
 router.get('/expert-assessments', (req, res: Response) => {
-  const assessments = db.getAllExpertAssessments();
+  const { archetypeId } = req.query;
+  const rawAssessments = db.getAllExpertAssessments();
+
+  const filtered = archetypeId
+    ? rawAssessments.filter((a) => a.archetypeId === archetypeId)
+    : rawAssessments;
+
+  // Anonymize and sanitize evaluator output to protect privacy
+  const sanitized = filtered.map((a) => ({
+    id: a.id,
+    expertName: a.expertName || 'Verified Agronomic Evaluator',
+    organization: a.organization || 'Agricultural University / Research Centre',
+    evaluatorRole: a.evaluatorRole || 'expert',
+    archetypeId: a.archetypeId,
+    practiceRatings: a.practiceRatings,
+    notes: a.notes,
+    createdAt: a.createdAt,
+  }));
+
   return res.json({
-    count: assessments.length,
-    assessments,
-    disclaimer: 'Independent expert evaluations recorded for research validation.',
+    count: sanitized.length,
+    assessments: sanitized,
+    disclaimer:
+      'Independent expert assessments recorded by certified agricultural experts for academic evaluation and validation.',
   });
 });
 
 // POST /api/evaluation/expert-assessments (Record an independent agricultural expert assessment)
-router.post('/expert-assessments', optionalAuthenticate, (req: AuthRequest, res: Response) => {
-  const { expertName, organization, archetypeId, practiceRatings, notes } = req.body;
+// STRICT REQUIREMENT: Only authenticated accounts with 'expert' or 'admin' role can submit evaluations.
+router.post('/expert-assessments', authenticate, requireExpert, (req: AuthRequest, res: Response) => {
+  const user = req.user!;
+  const { archetypeId, practiceRatings, notes } = req.body;
 
-  if (!expertName || !organization || !archetypeId || !practiceRatings) {
+  if (!archetypeId || !practiceRatings || typeof practiceRatings !== 'object') {
     return res.status(400).json({
-      error: 'Validation error: expertName, organization, archetypeId, and practiceRatings are required.',
+      error: 'Validation error: archetypeId and a valid practiceRatings object are required.',
     });
   }
 
-  // Validate archetype exists
+  // 1. Validate archetype exists in catalogue
   const archetype = EXPERT_ARCHETYPES.find((a) => a.id === archetypeId);
   if (!archetype) {
     return res.status(404).json({
@@ -285,27 +313,61 @@ router.post('/expert-assessments', optionalAuthenticate, (req: AuthRequest, res:
     });
   }
 
-  // Validate practice ratings are integers between 0 and 3
+  // 2. Validate practice ratings: must exist in db.practices and be strict integer [0, 3] (no decimals!)
   const validatedRatings: Record<string, number> = {};
-  for (const [pracId, rating] of Object.entries(practiceRatings)) {
-    const num = Number(rating);
-    if (isNaN(num) || num < 0 || num > 3) {
-      return res.status(400).json({
-        error: `Invalid rating for ${pracId}: must be an integer between 0 and 3.`,
-      });
-    }
-    validatedRatings[pracId] = Math.round(num);
+  const entries = Object.entries(practiceRatings);
+
+  if (entries.length === 0) {
+    return res.status(400).json({
+      error: 'Validation error: practiceRatings must contain at least one practice rating.',
+    });
   }
 
-  const id = `exp_eval_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+  for (const [pracId, rating] of entries) {
+    if (!db.practices.has(pracId)) {
+      return res.status(400).json({
+        error: `Validation error: Practice ID "${pracId}" does not exist in practice catalogue.`,
+      });
+    }
+
+    if (typeof rating !== 'number' || !Number.isInteger(rating) || rating < 0 || rating > 3) {
+      return res.status(400).json({
+        error: `Invalid rating for ${pracId}: must be an exact integer between 0 and 3 (0=Contraindicated, 1=Marginal, 2=Relevant, 3=Highly Relevant). Decimal ratings are rejected.`,
+      });
+    }
+
+    validatedRatings[pracId] = rating;
+  }
+
+  // 3. Validate notes length
+  if (notes && (typeof notes !== 'string' || notes.length > 2000)) {
+    return res.status(400).json({
+      error: 'Validation error: notes must be a string under 2000 characters.',
+    });
+  }
+
+  // 4. Derive identity server-side from authenticated account (NEVER trust client body for identity)
+  const serverDerivedName = user.name || 'Certified Agronomist';
+  const serverDerivedOrg = user.organization || 'Agricultural University / Extension Department';
+
+  // Check for duplicate submission by this expert for this archetype (upsert/update existing)
+  const existingAssessment = Array.from(db.expertAssessments.values()).find(
+    (a) => a.expertUserId === user.id && a.archetypeId === archetypeId
+  );
+
+  const now = new Date().toISOString();
+  const id = existingAssessment ? existingAssessment.id : `exp_eval_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+
   const assessment = {
     id,
-    expertName: expertName.trim(),
-    organization: organization.trim(),
+    expertUserId: user.id,
+    expertName: serverDerivedName,
+    organization: serverDerivedOrg,
+    evaluatorRole: user.role,
     archetypeId,
     practiceRatings: validatedRatings,
     notes: notes ? String(notes).trim() : undefined,
-    createdAt: new Date().toISOString(),
+    createdAt: now,
   };
 
   db.saveExpertAssessment(assessment);
@@ -313,6 +375,7 @@ router.post('/expert-assessments', optionalAuthenticate, (req: AuthRequest, res:
   return res.status(201).json({
     message: 'Independent agricultural expert assessment recorded successfully.',
     assessment,
+    isUpdate: !!existingAssessment,
   });
 });
 

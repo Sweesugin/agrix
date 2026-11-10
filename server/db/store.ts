@@ -119,7 +119,8 @@ export class DataStore {
    * For horizontally scaled multi-container production environments, a centralized relational database
    * (e.g., PostgreSQL / Cloud SQL) with row-level ACID transactions should be used.
    */
-  public persist(): void {
+  public persist(): boolean {
+    let tempFile: string | null = null;
     try {
       const dataDir = path.dirname(DATA_FILE);
       if (!fs.existsSync(dataDir)) {
@@ -145,16 +146,26 @@ export class DataStore {
       };
 
       const jsonString = JSON.stringify(serialized, null, 2);
-      const tempFile = `${DATA_FILE}.tmp.${process.pid}.${Date.now()}`;
-
+      tempFile = `${DATA_FILE}.tmp.${process.pid}.${Date.now()}`;
 
       // Write to temporary file first
       fs.writeFileSync(tempFile, jsonString, 'utf-8');
 
       // Atomic rename over the destination
       fs.renameSync(tempFile, DATA_FILE);
+      tempFile = null; // Successfully committed, no temporary file remains
+      return true;
     } catch (err: any) {
-      console.warn('Atomic persistence warning (in-memory mode maintained):', err?.message || err);
+      console.warn('Atomic persistence failure:', err?.message || err);
+      return false;
+    } finally {
+      if (tempFile && fs.existsSync(tempFile)) {
+        try {
+          fs.unlinkSync(tempFile);
+        } catch {
+          // ignore cleanup error
+        }
+      }
     }
   }
 
@@ -522,6 +533,11 @@ export class DataStore {
       return { success: false, isDuplicate: false, pointsAwarded: 0, error: 'Beneficiary user not found' };
     }
 
+    // Take snapshots prior to mutation for safe rollback if durable persistence fails
+    const previousUserSnapshot = { ...user };
+    const existingUc = challengeId ? this.getUserChallenge(userId, challengeId) : undefined;
+    const previousUcSnapshot = existingUc ? { ...existingUc } : undefined;
+
     const now = new Date().toISOString();
     const id = `tx_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     const tx: RewardTransaction = {
@@ -573,19 +589,32 @@ export class DataStore {
     const newlyUnlockedBadges = this.checkAndAwardBadges(userId);
 
     // 6. Atomically synchronize UserChallenge state if present
-    if (challengeId) {
-      const existingUc = this.getUserChallenge(userId, challengeId);
-      if (existingUc) {
-        existingUc.status = 'verified';
-        existingUc.progress = 100;
-        existingUc.verifiedBy = verifiedBy || 'system';
-        existingUc.completedAt = now;
-        this.saveUserChallenge(existingUc);
-      }
+    if (challengeId && existingUc) {
+      existingUc.status = 'verified';
+      existingUc.progress = 100;
+      existingUc.verifiedBy = verifiedBy || 'system';
+      existingUc.completedAt = now;
+      this.saveUserChallenge(existingUc);
     }
 
-    // 7. Safe atomic persistence
-    this.persist();
+    // 7. Safe atomic persistence with observable failure & rollback
+    const persisted = this.persist();
+    if (!persisted) {
+      // Rollback in-memory mutation to maintain state consistency
+      this.users.set(userId, previousUserSnapshot);
+      this.rewardTransactions.delete(id);
+      if (existingUc && previousUcSnapshot) {
+        this.userChallenges.set(existingUc.id, previousUcSnapshot);
+      }
+      this.activities.shift();
+
+      return {
+        success: false,
+        isDuplicate: false,
+        pointsAwarded: 0,
+        error: 'Durable persistence failure: File write error. Reward transaction was rolled back to prevent state desynchronization.',
+      };
+    }
 
     return {
       success: true,

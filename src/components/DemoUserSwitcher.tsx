@@ -53,6 +53,26 @@ const DEMO_ACCOUNTS = [
     points: 2150,
     avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=100&auto=format&fit=crop&q=80',
   },
+  {
+    id: 'user_inspector',
+    name: 'Inspector Rajesh Kumar',
+    role: 'Inspector (Field Officer)',
+    crop: 'Multi-Crop',
+    soil: 'Loamy',
+    level: 'Green Champion',
+    points: 1500,
+    avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&auto=format&fit=crop&q=80',
+  },
+  {
+    id: 'user_expert',
+    name: 'Dr. Swaminathan Raman',
+    role: 'Agronomy Expert (TNAU)',
+    crop: 'Research',
+    soil: 'Loamy',
+    level: 'Sustainable Farmer',
+    points: 1200,
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
+  },
 ];
 
 export const DemoUserSwitcher: React.FC = () => {

@@ -3,6 +3,7 @@ import {
   WeightedMultiFactorRecommendationEngine,
   RecommendationEngineBaseline,
   DEFAULT_FACTOR_WEIGHTS,
+  validateAndNormalizeWeights,
 } from '../services/recommendationEngine';
 import { optionalAuthenticate, AuthRequest } from '../middleware/auth';
 import { db } from '../db/store';
@@ -26,11 +27,11 @@ router.get('/', optionalAuthenticate, (req: AuthRequest, res: Response) => {
       phone: '',
       location: (location as string) || '',
       state: (state as string) || '',
-      farmSize: farmSize ? Number(farmSize) : 2.5,
+      farmSize: farmSize !== undefined && !isNaN(Number(farmSize)) ? Number(farmSize) : (undefined as any),
       soilType: (soil as any) || '',
       mainCrop: (crop as string) || '',
       farmingMethod: (method as any) || '',
-      experienceLevel: (experience as any) || 'Intermediate',
+      experienceLevel: (experience as any) || (undefined as any),
       points: 100,
       level: 1,
       levelTitle: 'Seedling',
@@ -140,7 +141,7 @@ router.post('/generate', optionalAuthenticate, (req: AuthRequest, res: Response)
   } = req.body;
 
   const weights: FactorWeights = customWeights
-    ? { ...DEFAULT_FACTOR_WEIGHTS, ...customWeights }
+    ? validateAndNormalizeWeights(customWeights)
     : DEFAULT_FACTOR_WEIGHTS;
 
   const mockUser: User = req.user
@@ -149,7 +150,7 @@ router.post('/generate', optionalAuthenticate, (req: AuthRequest, res: Response)
         ...(crop && { mainCrop: crop }),
         ...(soil && { soilType: soil }),
         ...(method && { farmingMethod: method }),
-        ...(farmSize && { farmSize: Number(farmSize) }),
+        ...(farmSize !== undefined && !isNaN(Number(farmSize)) && { farmSize: Number(farmSize) }),
         ...(experienceLevel && { experienceLevel }),
         ...(location && { location }),
         ...(state && { state }),
@@ -161,13 +162,13 @@ router.post('/generate', optionalAuthenticate, (req: AuthRequest, res: Response)
         passwordHash: '',
         role: 'farmer',
         phone: '',
-        location: location || 'General',
-        state: state || 'Gujarat',
-        farmSize: Number(farmSize) || 2,
-        soilType: soil || 'Loamy',
-        mainCrop: crop || 'Tomato',
-        farmingMethod: method || 'Organic',
-        experienceLevel: experienceLevel || 'Beginner',
+        location: location || '',
+        state: state || '',
+        farmSize: farmSize !== undefined && !isNaN(Number(farmSize)) ? Number(farmSize) : (undefined as any),
+        soilType: soil || ('' as any),
+        mainCrop: crop || '',
+        farmingMethod: method || ('' as any),
+        experienceLevel: experienceLevel || (undefined as any),
         points: 0,
         level: 1,
         levelTitle: 'Seedling',

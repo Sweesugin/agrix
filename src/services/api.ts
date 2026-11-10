@@ -176,6 +176,17 @@ export const api = {
     return data;
   },
 
+  async rejectChallenge(challengeId: string, targetUserId: string, notes?: string): Promise<any> {
+    const res = await fetch(`${API_BASE}/challenges/${challengeId}/reject`, {
+      method: 'POST',
+      headers: getAuthHeader(),
+      body: JSON.stringify({ targetUserId, notes }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to return submission with feedback');
+    return data;
+  },
+
   async getPendingSubmissions(): Promise<{ count: number; pendingSubmissions: any[] }> {
     const res = await fetch(`${API_BASE}/challenges/pending-verification`, {
       headers: getAuthHeader(),
@@ -413,6 +424,40 @@ export const api = {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Failed to fetch evaluation metrics');
+    return data;
+  },
+
+  async getAccuracyBenchmark(): Promise<any> {
+    const res = await fetch(`${API_BASE}/evaluation/accuracy/benchmark`, {
+      headers: getAuthHeader(),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch benchmark metrics');
+    return data;
+  },
+
+  async getExpertAssessments(archetypeId?: string): Promise<{ count: number; assessments: any[] }> {
+    const query = archetypeId ? `?archetypeId=${encodeURIComponent(archetypeId)}` : '';
+    const res = await fetch(`${API_BASE}/evaluation/expert-assessments${query}`, {
+      headers: getAuthHeader(),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch expert assessments');
+    return data;
+  },
+
+  async submitExpertAssessment(payload: {
+    archetypeId: string;
+    practiceRatings: Record<string, number>;
+    notes?: string;
+  }): Promise<any> {
+    const res = await fetch(`${API_BASE}/evaluation/expert-assessments`, {
+      method: 'POST',
+      headers: getAuthHeader(),
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to submit expert assessment');
     return data;
   },
 

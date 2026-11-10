@@ -42,6 +42,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, onOpenC
 
   if (user?.role === 'admin') {
     navLinks.push({ id: 'admin', label: 'Admin Portal', icon: Shield });
+  } else if (user?.role === 'inspector') {
+    navLinks.push({ id: 'admin', label: 'Inspector Portal', icon: Shield });
+  } else if (user?.role === 'expert') {
+    navLinks.push({ id: 'admin', label: 'Expert Evaluation', icon: Shield });
   }
 
   const handleNav = (id: string) => {

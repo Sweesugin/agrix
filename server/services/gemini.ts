@@ -140,11 +140,15 @@ Verified Source: ${practice.sourceCitation}
 Farmer Profile:
 ${profileContext}
 
-Explain clearly:
-1. Overview and working principle in simple farmer-accessible language.
-2. Why this practice specifically suits this farmer's ${userProfile?.mainCrop || 'crop'} and ${userProfile?.soilType || 'soil'}.
-3. Practical implementation steps.
-4. Essential precautions to prevent crop damage or resource waste.`;
+Return a structured JSON object with the following schema:
+{
+  "overview": "Clear working principle in farmer-accessible language (max 300 characters)",
+  "whyForFarmer": "Why this specifically suits this farmer's crop and soil conditions",
+  "stepByStepGuidance": ["Step 1...", "Step 2...", "Step 3..."],
+  "requiredMaterials": ["Material 1...", "Material 2..."],
+  "precautions": ["Precaution 1...", "Precaution 2..."],
+  "expectedBenefits": ["Benefit 1...", "Benefit 2..."]
+}`;
 
   try {
     if (!process.env.GEMINI_API_KEY) {
@@ -160,22 +164,29 @@ Explain clearly:
       contents: prompt,
       config: {
         systemInstruction,
-        temperature: 0.4,
+        temperature: 0.3,
+        responseMimeType: 'application/json',
       },
     });
 
     const response: any = await Promise.race([generatePromise, timeoutPromise]);
     const rawText = (response.text || '').trim();
 
+    let parsed: any = {};
+    try {
+      let cleaned = rawText;
+      if (cleaned.startsWith('```json')) {
+        cleaned = cleaned.replace(/^```json\s*/, '').replace(/```\s*$/, '');
+      } else if (cleaned.startsWith('```')) {
+        cleaned = cleaned.replace(/^```\s*/, '').replace(/```\s*$/, '');
+      }
+      parsed = JSON.parse(cleaned.trim());
+    } catch {
+      parsed = { overview: rawText.slice(0, 400).trim() };
+    }
+
     return validateAndSanitizeExplanation(
-      {
-        overview: rawText.slice(0, 400).trim() || practice.description,
-        whyForFarmer: `Agro-climatically adapted for ${userProfile?.mainCrop || 'your crop'} on ${userProfile?.soilType || 'your soil'}. ${practice.sustainabilityBenefit}`,
-        stepByStepGuidance: practice.steps,
-        requiredMaterials: practice.requiredMaterials,
-        precautions: practice.precautions,
-        expectedBenefits: practice.expectedBenefits,
-      },
+      parsed,
       practice,
       userProfile,
       'gemini'
